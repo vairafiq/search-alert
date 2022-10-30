@@ -1,0 +1,19 @@
+# OS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# NPM
+node_modules/
+
+# Map
+*.map
+
+# Others
+__*/
+
+/.cache/*
+
+vite.user-config.js

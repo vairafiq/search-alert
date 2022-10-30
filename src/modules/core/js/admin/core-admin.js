@@ -1,0 +1,1 @@
+import 'CoreCSS/core-admin.scss';
