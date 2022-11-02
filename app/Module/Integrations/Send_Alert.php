@@ -65,6 +65,7 @@ class Send_Alert {
 
       foreach( $subscribers as $subscriber ) {
         $post_link = get_the_permalink( $post );
+        $post_link = sprintf( '<a href="%s" style="color: #1b83fb;">%s</a>', $post_link, $post_link );
         $email =  get_the_author_meta( 'user_email', $subscriber );
         $subject = 'New post available';
         $body = 'Hi there, The post you were searching is just found! Let\'s check this out ' . $post_link ;
@@ -111,7 +112,7 @@ class Send_Alert {
                   <table border="0" cellpadding="10" cellspacing="0" width="100%">
                       <tr>
                           <td colspan="2" valign="middle" id="credit" style="display: flex; justify-content: center; align-items: center">
-                              ' . sprintf( wp_kses_post( wpautop( wptexturize( apply_filters( 'wpwax_customer_support_app_email_footer_text', '<span style=\'font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; font-size: 16px; font-weight: 600;\'>Built with <i style="margin: 0 4px; position: relative; top: 2px;"> ❤️ </i> by %s</span>' ) ) ) ), $author ) . '
+                              ' . sprintf( wp_kses_post( wpautop( wptexturize( apply_filters( 'search_alert_email_footer_text', '<span style=\'font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; font-size: 14px; font-weight: 500;\'>Built with <i style="margin: 0 4px; position: relative; top: 2px;"> ❤️ </i> by %s</span>' ) ) ) ), $author ) . '
                           </td>
                       </tr>
                   </table>
