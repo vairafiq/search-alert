@@ -17,12 +17,6 @@ class Init {
         $controllers = $this->get_controllers();
         Helper\Serve::register_services( $controllers );
 
-        $this->setup_page();
-
-    }
-
-    public function setup_page() {
-        register_activation_hook( )
     }
 
     /**
