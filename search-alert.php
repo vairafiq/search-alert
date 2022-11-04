@@ -11,7 +11,7 @@
  * Plugin Name:       Search Alert - Set Notification on No Result found
  * Plugin URI:        https://wordpress.org/plugins/search-alert/
  * Description:       Notify user based on previous search when a post available in your site.
- * Version:           1.0.2
+ * Version:           1.0.0
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Exlac

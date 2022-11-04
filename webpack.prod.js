@@ -33,6 +33,7 @@ module.exports = merge(common, {
               { source: './languages', destination: './__build/search-alert/search-alert/languages' },
               { source: './vendor', destination: './__build/search-alert/search-alert/vendor' },
               { source: './view', destination: './__build/search-alert/search-alert/view' },
+              { source: './template', destination: './__build/search-alert/search-alert/template' },
               { source: './*.php', destination: './__build/search-alert/search-alert' },
               { source: './*.txt', destination: './__build/search-alert/search-alert' },
             ],
