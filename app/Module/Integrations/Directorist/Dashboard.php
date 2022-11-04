@@ -30,29 +30,38 @@ class Dashboard {
         
         $user_id    = get_current_user_id();   
 		$query_searched   = get_user_meta( $user_id, '_esl_at_biz_dir', true ); 
+		$args = [
+			'meta_key' => '_search_by',
+			'meta_value' => $user_id,
+			'meta_compare' => 'LIKE',
+			'posts_per_page' => '-1',
+		];
+		$searches = Helper\get_search( $args );
         ?>
         <div <?php echo apply_filters( 'wallet_dashboard_content_div_attributes', 'class="directorist-tab__pane" id="saved_search"' ); ?>>
 		<div class="directorist-favourite-items-wrap">
 
 			<div class="directorist-favourirte-items">
 
-				<?php if ( $query_searched['query'] || $query_searched['category'] ): ?>
+				<?php if ( $searches ): ?>
 
 					<div class="directorist-dashboard-items-list">
-						<?php foreach ( $query_searched['query'] as $item ): ?>
+						<?php foreach ( $searches as $item ): 
+							$keyword = get_post_meta( $item, '_keyword', true );
+							?>
 
-							<div class="directorist-dashboard-items-list__single">
+							<div class="directorist-dashboard-items-list__single" id="search-alert-item-to-remove-<?php echo esc_attr( $item); ?>">
 
 								<div class="directorist-dashboard-items-list__single--info">
 
 									<div class="directorist-listing-content">
-										<h4 class="directorist-listing-title"><strong><?php esc_html_e( 'Listing: ', 'search-alert'); ?></strong><?php echo esc_html( $item );?></h4>
+										<h4 class="directorist-listing-title"><?php echo esc_html( $keyword );?></h4>
 									</div>
 
 								</div>
 
 								<div class="directorist-dashboard-items-list__single--action">
-								<a href="#" class="searchalert_delete" data-search-query="<?php echo esc_attr( $item ); ?>">
+								<a href="#" class="searchalert_delete" data-searchalert_delete_from_list="1" data-search-query="<?php echo esc_attr( $keyword ); ?>">
 										<span class="directorist-favourite-remove-text"><?php esc_html_e( 'Remove', 'search-alert' ); ?></span>
 									</a>
 								</div>
@@ -61,30 +70,6 @@ class Dashboard {
 
 						<?php endforeach; ?>
 
-						<?php foreach ( $query_searched['category'] as $item ): 
-							$term = get_term_by( is_numeric( $item ) ? 'id' : 'slug', $item, ATBDP_CATEGORY );
-							$category_name = ! is_wp_error( $term ) ? $term->name : '';
-							?>
-
-							<div class="directorist-dashboard-items-list__single">
-
-								<div class="directorist-dashboard-items-list__single--info">
-
-									<div class="directorist-listing-content">
-										<h4 class="directorist-listing-title"><strong><?php esc_html_e( 'Category: ', 'search-alert'); ?></strong><?php echo esc_html( $category_name );?></h4>
-									</div>
-
-								</div>
-
-								<div class="directorist-dashboard-items-list__single--action>
-									<a href="#" class="searchalert_delete" data-search-category="<?php echo esc_attr( $item ); ?>">
-										<span class="directorist-favourite-remove-text"><?php esc_html_e( 'Remove', 'search-alert' ); ?></span>
-									</a>
-								</div>
-
-							</div>
-
-						<?php endforeach; ?>
 					</div>
 
 				<?php else: ?>

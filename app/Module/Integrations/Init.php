@@ -26,7 +26,7 @@ class Init {
     protected function get_controllers() {
         return [
             Directorist\Init::class,
-            GeoDirectory\Init::class,
+            // GeoDirectory\Init::class,
             Send_Alert::class,
         ];
     }

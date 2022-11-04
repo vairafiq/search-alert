@@ -24,8 +24,8 @@ import './../../sass/core-public.scss';
 	$('body').on('click', '.searchalert_delete', function(e){
 		e.preventDefault();
 		var data	 = {
-			category: $(this).data("search-category"),
 			query: $(this).data("search-query"),
+			archive: $(this).data("searchalert_delete_from_list"),
 		}
 		requet( '.searchalert_delete', 'delete', data );
 	});
@@ -45,7 +45,6 @@ import './../../sass/core-public.scss';
 		form_data.append('search_alert_nonce', searchAlert.nonce);
 		form_data.append('task', task);
 		form_data.append('query', query);
-		form_data.append('category', category);
 
 		$.ajax({
 			method: 'POST',
@@ -57,9 +56,12 @@ import './../../sass/core-public.scss';
 				if( task === 'add' ) {
 					$( selector ).removeClass( 'searchalert_add' ).addClass( 'searchalert_delete' ).text( elmText );
 				}else{
-					$( selector ).removeClass( 'searchalert_delete' ).addClass( 'searchalert_add' ).text( elmText );
+					if( ! data.archive ) {
+						$( selector ).removeClass( 'searchalert_delete' ).addClass( 'searchalert_add' ).text( elmText );
+					}else{
+					$('#search-alert-item-to-remove-' + response.data ).remove();
+					}
 				}
-				console.log( response );
 			},
 			error: function error( response ) {
 				console.log( response );

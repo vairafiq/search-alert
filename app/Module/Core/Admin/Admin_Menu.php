@@ -7,7 +7,7 @@ use searchAlert\Base\Helper;
 class Admin_Menu {
 
     public function __construct() {
-        add_action( 'admin_menu', [ $this, 'admin_menu' ] );
+        // add_action( 'admin_menu', [ $this, 'admin_menu' ] );
         add_action( 'init', [ $this, 'register_new_post_types' ] );
 
         add_filter( 'manage_esl_search_alerts_posts_columns', array( $this, 'new_columns' ) );
