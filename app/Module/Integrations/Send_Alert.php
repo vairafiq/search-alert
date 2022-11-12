@@ -20,9 +20,41 @@ class Send_Alert {
      *
      */
     function __construct() {
-		add_action( 'save_post', array( $this, 'new_post_alert_lookup' ), 10, 3 );
-    // add_filter('template_include', array( $this, 'my_custom_search_template' ) );
+		add_action( 'transition_post_status', array( $this, 'new_post_alert_lookup' ), 10, 3 );
+		// add_action( 'init', array( $this, 'testing' ) );
 		
+    }
+
+    public function testing() {
+
+        $keywords = explode( ' ', 'bmw for sell!!');
+        // $keywords = explode( ' ', 'bmw for sell!!');
+
+        $alerts = new WP_Query([
+            'post_type' => 'esl_search_alerts',
+            'post_status' => 'publish',
+            's' => $keywords,
+            'post_per_page' => -1,
+            'fields' => 'ids',
+          ]);
+          $alerts = $alerts->posts;
+          $all_subscribers = [];
+          foreach( $alerts as $alert ) {
+            $subscribers = get_post_meta( $alert, '_search_by', true );
+            if( ! empty( $subscribers ) ) {
+                foreach( $subscribers as $subscriber ) {
+                    array_push( $all_subscribers, $subscriber );
+                }
+            }
+
+          }
+          var_dump([
+            // 'post' => $alert,
+            'subscribers' => array_unique( $all_subscribers ),
+            'keywords' => $keywords,
+            // 'post' => $alert,
+          ]);
+          die;
     }
 
     public function my_custom_search_template( $template ) {
@@ -34,46 +66,59 @@ class Send_Alert {
       Helper\get_template( 'search' );
     }
 
-    public function new_post_alert_lookup( $post_id, $post, $old_post ) {
+    public function new_post_alert_lookup( $new_status, $old_status, $post ) {
 
-      if( $old_post ) {
-        return;
-      }
-
-      if( ! $post_id ) {
-        return;
-      }
-
-      $alert = new WP_Query([
-        'post_type' => 'esl_search_alerts',
-        'post_status' => 'publish',
-        'meta_key' => '_keyword',
-        'post_per_page' => 1,
-        'meta_value' => get_the_title( $post_id ),
-        'meta_compare' => 'LIKE',
-      ]);
-
-      if( ! $alert->have_posts() ) {
-        return;
-      }
-      $alert = $alert->posts;
-      $subscribers = get_post_meta( $alert[0]->ID, '_search_by', true );
-
-      if( ! $subscribers ) {
-        return;
-      }
-
-      foreach( $subscribers as $subscriber ) {
-        $post_link = get_the_permalink( $post );
-        $post_link = sprintf( '<a href="%s" style="color: #1b83fb;">%s</a>', $post_link, $post_link );
-        $email =  get_the_author_meta( 'user_email', $subscriber );
-        $subject = 'New post available';
-        $body = 'Hi there, The post you were searching is just found! Let\'s check this out ' . $post_link ;
-        $content = self::email_html( $subject, $body );
-
-          wp_mail( $email, $subject, $content,  $this->get_email_headers() );
+        if( ! $post ) {
+            return;
         }
+        $post_id = $post->ID;
 
+        if( is_admin() && ( ( 'publish' === $new_status ) && ( 'publish' !== $old_status ) ) ) {
+            $this->send_notice( $post, $post_id );
+            return;
+
+        }
+        if( ! is_admin() && ( ( 'publish' === $new_status ) && ( 'private' === $old_status ) ) ) {
+            $this->send_notice( $post, $post_id );
+        }
+    }
+
+    public function send_notice( $post, $post_id ) {
+
+        $keywords = explode( ' ', get_the_title( $post_id ) );
+        $alerts = new WP_Query([
+            'post_type' => 'esl_search_alerts',
+            'post_status' => 'publish',
+            's' => $keywords,
+            'post_per_page' => -1,
+            'fields' => 'ids',
+          ]);
+          $alerts = $alerts->posts;
+          $all_subscribers = [];
+          foreach( $alerts as $alert ) {
+            $subscribers = get_post_meta( $alert, '_search_by', true );
+            if( ! empty( $subscribers ) ) {
+                foreach( $subscribers as $subscriber ) {
+                    array_push( $all_subscribers, $subscriber );
+                }
+            }
+
+          }
+
+          if( ! $all_subscribers ) {
+            return;
+          }
+    
+          foreach( array_unique( $all_subscribers ) as $subscriber ) {
+            $post_link = get_the_permalink( $post );
+            $post_link = sprintf( '<a href="%s" style="color: #1b83fb;">%s</a>', $post_link, $post_link );
+            $email =  get_the_author_meta( 'user_email', $subscriber );
+            $subject = 'New post available';
+            $body = 'Hi there, The post you were searching is just found! Let\'s check this out ' . $post_link ;
+            $content = self::email_html( $subject, $body );
+    
+              wp_mail( $email, $subject, $content,  $this->get_email_headers() );
+            }
     }
     
     /**
@@ -100,10 +145,14 @@ class Send_Alert {
     public static function email_html($subject, $message){
       $header = '';
       $footer = '';
-      $email_header_color = Helper\get_option('emailHeaderColor', '#6551f2');
-      $allow_email_header = Helper\get_option('enableEmailHeader', true );
-      $allow_email_footer = Helper\get_option('enableEmailFooter', true );
-      $author = "<a target='_blank' href='https://exlac.com/'>Exlac</a>";
+    //   $email_header_color = Helper\get_option('emailHeaderColor', '#6551f2');
+    //   $allow_email_header = Helper\get_option('enableEmailHeader', true );
+    //   $allow_email_footer = Helper\get_option('enableEmailFooter', true );
+    //   $author = "<a target='_blank' href='https://exlac.com/'>Exlac</a>";
+      $email_header_color = '#6551f2';
+      $allow_email_header = true;
+      $allow_email_footer = true;
+      $author = "<a target='_blank' href='". get_bloginfo( 'url' ) ."'>". get_bloginfo( 'name' ) ."</a>";
 
       if ( $allow_email_footer ){
           $footer = '<table border="0" cellpadding="10" cellspacing="0" width="600" id="template_footer">

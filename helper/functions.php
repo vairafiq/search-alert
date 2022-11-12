@@ -827,16 +827,13 @@ function update_search( $args = [], $task = 'add' ) {
     }
 
     $search = get_search( [ 's' => $args['post_title'] ] );
+
     
     if( $search ) {
         $number_of_search   = get_post_meta( $search[0], '_number_of_search', true );
         $search_by          = get_post_meta( $search[0], '_search_by', true );
-        if( $task == 'add' ) {
-            $number_of_search += 1;
-            if( ! in_array( get_current_user_id(), $search_by ) ) {
-                array_push( $search_by, get_current_user_id() );
-            }
-        }else{
+        
+        if( $task == 'delete' ) {
             $number_of_search -= 1;
             if( ! empty( $search_by ) ) {
                 foreach( $search_by as $key => $user_id ) {
@@ -845,9 +842,24 @@ function update_search( $args = [], $task = 'add' ) {
                     }
                 }
             }
+            
+        }else{
+            $number_of_search += 1;
+            if( ! in_array( get_current_user_id(), $search_by ) ) {
+                array_push( $search_by, get_current_user_id() );
+            }
         }
+        
         update_post_meta( $search[0], '_number_of_search', $number_of_search );
         update_post_meta( $search[0], '_search_by', $search_by );
+
+        // wp_send_json([
+        //     'search' => $number_of_search,
+        //     'args' => $search_by,
+        //     'task' => $task,
+        //     'meta' => get_post_meta( $search[0] ),
+        // ]);
+
         return $search[0];
     }
 

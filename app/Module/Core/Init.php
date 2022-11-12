@@ -29,6 +29,7 @@ class Init {
             Asset\Init::class,
             Admin\Init::class,
             Rest_API\Init::class,
+            Shortcode::class,
         ];
     }
 

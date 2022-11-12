@@ -1,6 +1,7 @@
 <?php
 namespace searchAlert\Module\Integrations\Directorist;
 
+use AazzTech\DirTheme\Helper as DirThemeHelper;
 use \WP_Error;
 use searchAlert\Base\Helper;
 
@@ -43,8 +44,10 @@ class Dashboard {
 
 			<div class="directorist-favourirte-items">
 
-				<?php if ( $searches ): ?>
+				<?php Helper\load_template( 'add-search' )?>
 
+				<?php if ( $searches ): ?>
+					<hr>
 					<div class="directorist-dashboard-items-list">
 						<?php foreach ( $searches as $item ): 
 							$keyword = get_post_meta( $item, '_keyword', true );
@@ -61,9 +64,14 @@ class Dashboard {
 								</div>
 
 								<div class="directorist-dashboard-items-list__single--action">
-								<a href="#" class="searchalert_delete" data-searchalert_delete_from_list="1" data-search-query="<?php echo esc_attr( $keyword ); ?>">
+									<a href="#" class="searchalert_edit" data-searchalert_edit_from_list="1" data-search-query="<?php echo esc_attr( $keyword ); ?>">
+										<span class="directorist-favourite-remove-text"><?php esc_html_e( 'Edit', 'search-alert' ); ?></span>
+									</a>
+									|
+									<a href="#" class="searchalert_delete" data-searchalert_delete_from_list="1" data-search-query="<?php echo esc_attr( $keyword ); ?>">
 										<span class="directorist-favourite-remove-text"><?php esc_html_e( 'Remove', 'search-alert' ); ?></span>
 									</a>
+									
 								</div>
 
 							</div>
