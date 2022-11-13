@@ -73,10 +73,14 @@ __webpack_require__.r(__webpack_exports__);
     }
     return b;
   }(window.location.search.substr(1).split('&'));
+
+  // result pages
   $('body').on('click', '.searchalert_add', function (e) {
     e.preventDefault();
     requet('.searchalert_add');
   });
+
+  // inline form
   $('body').on('click', '.searchalert_add_form', function (e) {
     e.preventDefault();
     var isUpdate = $('.search_alert_update').val();
@@ -102,6 +106,8 @@ __webpack_require__.r(__webpack_exports__);
     // return;
     requet('.searchalert_add_form', '', data);
   });
+
+  // delete form dashboard
   $('body').on('click', '.searchalert_delete', function (e) {
     e.preventDefault();
     var data = {
@@ -110,11 +116,27 @@ __webpack_require__.r(__webpack_exports__);
     };
     requet('.searchalert_delete', 'delete', data);
   });
+
+  // edit from dashboard
   $('body').on('click', '.searchalert_edit', function (e) {
     e.preventDefault();
     $('.search_alert_input').val($(this).data("search-query"));
     $('.search_alert_update').val($(this).data("search-query"));
     $('.searchalert_add_form').text('Update');
+  });
+
+  // full form
+  $('body').on('submit', '#searchalert-form', function (e) {
+    e.preventDefault();
+    var data = {
+      query: $('.searchalert_keyword').val(),
+      email: $('.searchalert_email').val(),
+      form: true,
+      reload: false
+    };
+    requet('.searchalert_form_submit', '', data);
+    $('.searchalert_keyword').val('');
+    $('.searchalert_email').val('');
   });
   function requet(selector) {
     var task = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'add';
@@ -128,13 +150,13 @@ __webpack_require__.r(__webpack_exports__);
     var geodirectory = qs.s ? qs.s : '';
     var query = directorist ? directorist : geodirectory;
     var query = query ? query : data.query ? data.query : '';
-    var category = qs.in_cat ? qs.in_cat : data.category ? data.category : '';
+    var email = data.email ? data.email : '';
     var form_data = new FormData();
     form_data.append('action', 'update_search_notice');
     form_data.append('search_alert_nonce', searchAlert.nonce);
     form_data.append('task', task);
     form_data.append('query', query);
-    console.log(query);
+    form_data.append('email', email);
     $.ajax({
       method: 'POST',
       processData: false,
@@ -148,6 +170,9 @@ __webpack_require__.r(__webpack_exports__);
             $(selector).text(elmText);
             $('.search_alert_input').val('');
           }, 800);
+          if (!data.reload) {
+            return;
+          }
           window.location.reload();
           return;
         }

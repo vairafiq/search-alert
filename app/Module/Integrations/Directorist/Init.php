@@ -21,7 +21,6 @@ class Init {
     private function get_assets_enqueuers() {
         return [
             Screen::class,
-            Controller::class,
             Dashboard::class,
         ];
     }

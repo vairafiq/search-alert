@@ -28,6 +28,7 @@ class Init {
             Directorist\Init::class,
             // GeoDirectory\Init::class,
             Send_Alert::class,
+            Set_Alert::class,
         ];
     }
 

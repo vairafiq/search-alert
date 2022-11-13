@@ -52,6 +52,8 @@ class Admin_Menu {
                 break;
             case 'search_by' :
                 $search_by = get_post_meta( $post_id, '_search_by', true );
+                $email_subscriber = get_post_meta( $post_id );
+                var_dump($email_subscriber);
                 echo ! empty( $search_by ) ? esc_html( count( $search_by ) ) : 0;
                 break;
             case 'no_of_search' :

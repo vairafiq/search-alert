@@ -95,30 +95,47 @@ class Send_Alert {
           ]);
           $alerts = $alerts->posts;
           $all_subscribers = [];
+          $all_email_subscribers = [];
           foreach( $alerts as $alert ) {
             $subscribers = get_post_meta( $alert, '_search_by', true );
+            $email_subscribers = get_post_meta( $alert, '_email_subscriber', true );
             if( ! empty( $subscribers ) ) {
                 foreach( $subscribers as $subscriber ) {
                     array_push( $all_subscribers, $subscriber );
                 }
             }
-
-          }
-
-          if( ! $all_subscribers ) {
-            return;
-          }
-    
-          foreach( array_unique( $all_subscribers ) as $subscriber ) {
-            $post_link = get_the_permalink( $post );
-            $post_link = sprintf( '<a href="%s" style="color: #1b83fb;">%s</a>', $post_link, $post_link );
-            $email =  get_the_author_meta( 'user_email', $subscriber );
-            $subject = 'New post available';
-            $body = 'Hi there, The post you were searching is just found! Let\'s check this out ' . $post_link ;
-            $content = self::email_html( $subject, $body );
-    
-              wp_mail( $email, $subject, $content,  $this->get_email_headers() );
+            if( ! empty( $email_subscribers ) ) {
+                foreach( $email_subscribers as $subscriber ) {
+                    array_push( $all_email_subscribers, $subscriber );
+                }
             }
+
+          }
+
+        if( ! empty( $all_subscribers ) ) {
+            foreach( array_unique( $all_subscribers ) as $subscriber ) {
+                $email =  get_the_author_meta( 'user_email', $subscriber );
+                $this->email( $email, $post );
+                }
+          }
+
+        if( ! empty( $all_email_subscribers ) ) {
+            foreach( array_unique( $all_email_subscribers ) as $subscriber ) {
+                    $this->email( $subscriber, $post );
+                }
+          }
+    
+          
+    }
+
+    public function email( $to, $post ) {
+        $post_link = get_the_permalink( $post );
+        $post_link = sprintf( '<a href="%s" style="color: #1b83fb;">%s</a>', $post_link, $post_link );
+        $subject = 'New post available';
+        $body = 'Hi there, The post you were searching is just found! Let\'s check this out ' . $post_link ;
+        $content = self::email_html( $subject, $body );
+
+        wp_mail( $to, $subject, $content,  $this->get_email_headers() );
     }
     
     /**

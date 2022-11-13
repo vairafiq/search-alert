@@ -16,11 +16,13 @@ import './../../sass/core-public.scss';
 	  }(window.location.search.substr(1).split('&'));
 
 
+	// result pages
 	$('body').on('click', '.searchalert_add', function(e){
 		e.preventDefault();
 		requet( '.searchalert_add' );
 	});
 
+	// inline form
 	$('body').on('click', '.searchalert_add_form', function(e){
 		e.preventDefault();
 		var isUpdate = $('.search_alert_update').val();
@@ -52,6 +54,7 @@ import './../../sass/core-public.scss';
 		requet( '.searchalert_add_form', '', data );
 	});
 
+	// delete form dashboard
 	$('body').on('click', '.searchalert_delete', function(e){
 		e.preventDefault();
 		var data	 = {
@@ -61,6 +64,7 @@ import './../../sass/core-public.scss';
 		requet( '.searchalert_delete', 'delete', data );
 	});
 
+	// edit from dashboard
 	$('body').on('click', '.searchalert_edit', function(e){
 		e.preventDefault();
 
@@ -70,27 +74,47 @@ import './../../sass/core-public.scss';
 
 	});
 
-	
+	// full form
+	$('body').on('submit', '#searchalert-form', function(e){
+		e.preventDefault();
+		var data	 = {
+			query: $( '.searchalert_keyword' ).val(),
+			email: $( '.searchalert_email' ).val(),
+			form: true,
+			reload: false,
+		}
+		requet( '.searchalert_form_submit', '', data );
+		$( '.searchalert_keyword' ).val('');
+		$( '.searchalert_email' ).val('')
+	});
+
+
 
 
 	function requet( selector, task = 'add', data = [] ) {
 		var elmText  	= ( task !== 'delete' ) ? searchAlert.deleteText : searchAlert.addText ;
+
 		if( data.form ) {
 			elmText = searchAlert.addText;
 			$( selector ).text( 'Adding..' );
 		}
+
 		var directorist = qs.q ? qs.q : '';
 		var geodirectory = qs.s ? qs.s : '';
+
 		var query 		= directorist ? directorist : geodirectory;
 		var query 		= query ? query : data.query ? data.query : '';
-		var category 	= qs.in_cat ? qs.in_cat : data.category ? data.category : '';
+
+		var email 		= data.email ? data.email : '';
+
 		var form_data 	= new FormData();
+
 		form_data.append('action', 'update_search_notice');
 		form_data.append('search_alert_nonce', searchAlert.nonce);
 		form_data.append('task', task);
 		form_data.append('query', query);
+		form_data.append('email', email);
 
-		console.log( query );
 		$.ajax({
 			method: 'POST',
 			processData: false,
@@ -105,6 +129,9 @@ import './../../sass/core-public.scss';
 						$( selector ).text( elmText );
 						$('.search_alert_input').val('');
 					}, 800 );
+					if( ! data.reload ) {
+						return;
+					}
 					window.location.reload();
 					return;
 				}
@@ -125,6 +152,4 @@ import './../../sass/core-public.scss';
 		});
 	}
 	
-	
-
 })(jQuery);
