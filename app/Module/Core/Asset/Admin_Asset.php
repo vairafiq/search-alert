@@ -78,10 +78,15 @@ class Admin_Asset extends Enqueuer {
             'base_path' => SEARCH_ALERT_JS_PATH,
             'group'     => 'admin',
             'data'      => [
-                'searchAlert_CoreScriptData' => [
-                    'apiEndpoint' => rest_url( 'search_alert_base/v1' ),
-                    'apiNonce'    => wp_create_nonce( 'wp_rest' ),
-                    'wp_pages'    => [],
+                'searchAlert' => [
+                    'apiEndpoint'   => rest_url( 'search_alert_base/v1' ),
+                    'nonce'         => wp_create_nonce( Helper\get_nonce_key() ),
+                    'currentPageID' => get_the_ID(),
+                    'isFrontPage'   => is_front_page(),
+                    'isHome'        => is_home(),
+                    'ajaxurl'       => admin_url( 'admin-ajax.php' ),
+                    'deleteText'    => __( 'Delete Search Alert', 'search-alert'),
+                    'addText'       => __( 'Set Search Alert', 'search-alert'),
                 ],
             ],
         ];

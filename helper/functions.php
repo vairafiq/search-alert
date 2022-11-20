@@ -824,20 +824,31 @@ function update_search( $args = [], $task = 'add' ) {
     }
 
     $search = get_search( [ 's' => $args['post_title'] ] );
-    $email  = ! empty( $args['_email_subscriber'][0] ) ? $args['_email_subscriber'][0] : '';
+    $email  = count( $args['meta_input']['_email_subscriber'] ) > 1  ? $args['meta_input']['_email_subscriber'] : $args['meta_input']['_email_subscriber'][0];
+    $user   = ! empty( $args['meta_input']['_search_by'][0] ) ? $args['meta_input']['_search_by'][0] : '';
 
-    
+    // wp_send_json([
+    //     'email' => $email,
+    //     'user' => $user,
+    //     'args' => $args,
+    //     'task' => $task,
+    // ]);
+
     if( $search ) {
         $number_of_search   = get_post_meta( $search[0], '_number_of_search', true );
         $search_by          = get_post_meta( $search[0], '_search_by', true );
         $email_subscribers  = get_post_meta( $search[0], '_email_subscriber', true );
-        
+
+        $number_of_search   = $number_of_search ? $number_of_search : 0;
+        $search_by          = $search_by ? $search_by : [];
+        $email_subscribers  = $email_subscribers ? $email_subscribers : [];
+    
         if( $task == 'delete' ) {
             $number_of_search -= 1;
 
             if( ! empty( $search_by ) ) {
                 foreach( $search_by as $key => $user_id ) {
-                    if( $user_id == get_current_user_id() ) {
+                    if( $user_id == $user ) {
                         unset( $search_by[$key] );
                     }
                 }
@@ -853,18 +864,34 @@ function update_search( $args = [], $task = 'add' ) {
             
         }else{
             $number_of_search += 1;
-            if( ! in_array( get_current_user_id(), $search_by ) ) {
-                array_push( $search_by, get_current_user_id() );
+            if( ! empty( $user ) && ! in_array( $user, $search_by ) ) {
+                array_push( $search_by, $user );
             }
 
-            if( ! in_array( $email, $email_subscribers ) ) {
+            if( ! empty( $email ) && ! in_array( $email, $email_subscribers ) ) {
                 array_push( $email_subscribers, $email );
             }
         }
-        
+        // wp_send_json([
+        //     'email' => $email,
+        //     'count' => count( $args['meta_input']['_email_subscriber'] ),
+        //     'task' => $task,
+        //     'args' => $args,
+        //     'search' => $search,
+        //     'search_by' => $search_by,
+        //     'user' => $user,
+        //     'meta' => get_post_meta( $search[0] ),
+        //     'email_subscribers' => $email_subscribers,
+        // ]);
         update_post_meta( $search[0], '_number_of_search', $number_of_search );
-        update_post_meta( $search[0], '_search_by', $search_by );
-        update_post_meta( $search[0], '_email_subscriber', $search_by );
+        
+        if( $user ) {
+            update_post_meta( $search[0], '_search_by', $search_by );
+        }
+        
+        if( $email ) {
+            update_post_meta( $search[0], '_email_subscriber', $email_subscribers );
+        }
 
         // wp_send_json([
         //     'search' => $number_of_search,

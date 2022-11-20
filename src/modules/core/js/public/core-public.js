@@ -19,7 +19,10 @@ import './../../sass/core-public.scss';
 	// result pages
 	$('body').on('click', '.searchalert_add', function(e){
 		e.preventDefault();
-		requet( '.searchalert_add' );
+		var data	 = {
+			user: searchAlert.current_user_id,
+		}
+		requet( '.searchalert_add', '', data );
 	});
 
 	// inline form
@@ -29,7 +32,9 @@ import './../../sass/core-public.scss';
 		var data	 = {
 			query: $('.search_alert_input').val(),
 			delete: false,
+			user: searchAlert.current_user_id,
 			form: true,
+			reload: true,
 		}
 
 		if( ! data.query ) {
@@ -106,6 +111,7 @@ import './../../sass/core-public.scss';
 		var query 		= query ? query : data.query ? data.query : '';
 
 		var email 		= data.email ? data.email : '';
+		var user 		= data.user ? data.user : '';
 
 		var form_data 	= new FormData();
 
@@ -114,6 +120,7 @@ import './../../sass/core-public.scss';
 		form_data.append('task', task);
 		form_data.append('query', query);
 		form_data.append('email', email);
+		form_data.append('user', user);
 
 		$.ajax({
 			method: 'POST',

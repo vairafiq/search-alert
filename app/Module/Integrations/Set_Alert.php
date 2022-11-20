@@ -30,6 +30,7 @@ class Set_Alert {
   
         $search = ! empty( $_POST['query'] ) ? search_alert_clean( wp_unslash( $_POST['query'] ) ) : '';
         $email  = ! empty( $_POST['email'] ) ? search_alert_clean( wp_unslash( $_POST['email'] ) ) : '';
+        $user   = ! empty( $_POST['user'] ) ? search_alert_clean( wp_unslash( $_POST['user'] ) ) : '';
         $task   = ! empty( $_POST['task'] ) ? search_alert_clean( wp_unslash( $_POST['task'] ) ) : '';
         
         if( ! $search ) {
@@ -39,12 +40,18 @@ class Set_Alert {
         $args = [
           'post_title' => 'New search for ' . $search,
           'meta_input' => [
-            '_search_by'        => [ get_current_user_id() ],
+            '_search_by'        => [ $user ],
             '_email_subscriber' => [ $email ],
             '_number_of_search' => 1,
             '_keyword' => $search,
           ],
         ];
+        if( empty( $email ) ) {
+          unset( $args['meta_input']['_email_subscriber'] );
+        }
+        if( empty( $user ) ) {
+          unset( $args['meta_input']['_search_by'] );
+        }
   
       $user_search = Helper\update_search( $args, $task );
       

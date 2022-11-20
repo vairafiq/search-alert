@@ -90,6 +90,8 @@ class Public_Asset extends Enqueuer {
                     'apiEndpoint'   => rest_url( 'search_alert_base/v1' ),
                     'nonce'         => wp_create_nonce( Helper\get_nonce_key() ),
                     'currentPageID' => get_the_ID(),
+                    'currentPageID' => get_the_ID(),
+                    'current_user_id' => ! is_admin() ? get_current_user_id() : '',
                     'isFrontPage'   => is_front_page(),
                     'isHome'        => is_home(),
                     'ajaxurl'       => admin_url( 'admin-ajax.php' ),

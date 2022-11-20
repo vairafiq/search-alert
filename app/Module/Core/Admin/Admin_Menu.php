@@ -12,9 +12,18 @@ class Admin_Menu {
 
         add_filter( 'manage_esl_search_alerts_posts_columns', array( $this, 'new_columns' ) );
         add_action( 'manage_esl_search_alerts_posts_custom_column', array( $this, 'columns_content' ), 10, 2 );
+        
+        add_action( 'manage_posts_extra_tablenav', array( $this, 'add_extra_button' ) );
 
         add_filter( 'post_row_actions', array( $this, 'post_row_actions' ), 10, 2 );
 
+    }
+
+    public function add_extra_button() {
+        global $post_type_object;
+        if ($post_type_object->name === 'esl_search_alerts') {
+            Helper\get_template( 'import' );
+        }
     }
 
     public function post_row_actions( $actions, $post ) {
@@ -45,16 +54,56 @@ class Admin_Menu {
     }
 
     public function columns_content( $column, $post_id ) {
+
+        $keyword = get_post_meta( $post_id, '_keyword', true );
         echo '</select>';
         switch ( $column ) {
             case 'keyword' :
-                echo esc_html( get_post_meta( $post_id, '_keyword', true ) );
+                echo esc_html( $keyword );
                 break;
             case 'search_by' :
                 $search_by = get_post_meta( $post_id, '_search_by', true );
-                $email_subscriber = get_post_meta( $post_id );
-                var_dump($email_subscriber);
-                echo ! empty( $search_by ) ? esc_html( count( $search_by ) ) : 0;
+                $email_subscriber = get_post_meta( $post_id, '_email_subscriber', true );
+                // e_var_dump([
+                //     'search' => $search_by,
+                //     'sub' => $email_subscriber,
+                // ]);
+                ?>
+                <div>
+                <div class="tagcloud" style="margin: 0 0 0 0 !important">
+                    <ul class="tagchecklist" role="list">
+                        <?php 
+                        if( ! empty( $email_subscriber) ) {
+                        foreach( $email_subscriber as $key => $subscriber ) { ?>
+                            <li class="helpgent_remove_subscriber" data-email="<?php esc_html_e( $subscriber ); ?>" data-keyword="<?php esc_html_e( $keyword ); ?>">
+                                <button type="button" id="subscribers-<?php esc_attr_e( $key ); ?>" style="margin: 0 0 0 -23px" class="ntdelbutton helpgent_unsubscribe">
+                                    <span class="remove-tag-icon" aria-hidden="true"></span>
+                                    <span class="screen-reader-text">Remove term: <?php esc_html_e( $subscriber ); ?></span>
+                                </button><?php esc_html_e( $subscriber ); ?>
+                            </li> 
+                        <?php } }?>
+
+                        <?php 
+                        if( ! empty( $search_by ) ) {
+                        foreach( $search_by as $key => $subscriber ) {
+                            $user = get_user_by( 'id', $subscriber );
+                            $email = ! is_wp_error( $user ) ? $user->user_email : '';
+                            ?>
+                            <li class="helpgent_remove_subscriber" data-user="<?php esc_html_e( $subscriber ); ?>" data-keyword="<?php esc_html_e( $keyword ); ?>">
+                                <button type="button" id="subscribers-<?php esc_attr_e( $key ); ?>" style="margin: 0 0 0 -23px" class="ntdelbutton helpgent_unsubscribe">
+                                    <span class="remove-tag-icon" aria-hidden="true"></span>
+                                    <span class="screen-reader-text">Remove term: <?php esc_html_e( $email ); ?></span>
+                                </button><?php esc_html_e( $email ); ?>
+                            </li> 
+                        <?php } }?>
+                    </ul>
+                </div>
+                <?php 
+                Helper\get_template( 'add-subscriber', [ 'keyword' => $keyword ] );
+                ?>
+                </div>
+                <?php
+
                 break;
             case 'no_of_search' :
                 $total = get_post_meta( $post_id, '_number_of_search', true );

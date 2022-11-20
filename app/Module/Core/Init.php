@@ -30,6 +30,7 @@ class Init {
             Admin\Init::class,
             Rest_API\Init::class,
             Shortcode::class,
+            Import::class,
         ];
     }
 

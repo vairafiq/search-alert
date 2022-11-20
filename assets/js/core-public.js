@@ -77,7 +77,10 @@ __webpack_require__.r(__webpack_exports__);
   // result pages
   $('body').on('click', '.searchalert_add', function (e) {
     e.preventDefault();
-    requet('.searchalert_add');
+    var data = {
+      user: searchAlert.current_user_id
+    };
+    requet('.searchalert_add', '', data);
   });
 
   // inline form
@@ -87,7 +90,9 @@ __webpack_require__.r(__webpack_exports__);
     var data = {
       query: $('.search_alert_input').val(),
       delete: false,
-      form: true
+      user: searchAlert.current_user_id,
+      form: true,
+      reload: true
     };
     if (!data.query) {
       return;
@@ -151,12 +156,14 @@ __webpack_require__.r(__webpack_exports__);
     var query = directorist ? directorist : geodirectory;
     var query = query ? query : data.query ? data.query : '';
     var email = data.email ? data.email : '';
+    var user = data.user ? data.user : '';
     var form_data = new FormData();
     form_data.append('action', 'update_search_notice');
     form_data.append('search_alert_nonce', searchAlert.nonce);
     form_data.append('task', task);
     form_data.append('query', query);
     form_data.append('email', email);
+    form_data.append('user', user);
     $.ajax({
       method: 'POST',
       processData: false,

@@ -71,6 +71,11 @@ class Send_Alert {
         if( ! $post ) {
             return;
         }
+
+        if( 'at_biz_dir' !== get_post_type( $post ) ) {
+            return;
+        }
+
         $post_id = $post->ID;
 
         if( is_admin() && ( ( 'publish' === $new_status ) && ( 'publish' !== $old_status ) ) ) {
@@ -112,6 +117,11 @@ class Send_Alert {
 
           }
 
+        //   e_var_dump([
+        //     'all_user' => $all_subscribers,
+        //     'all_sub' => $all_email_subscribers,
+        //   ]);
+        //   die;
         if( ! empty( $all_subscribers ) ) {
             foreach( array_unique( $all_subscribers ) as $subscriber ) {
                 $email =  get_the_author_meta( 'user_email', $subscriber );
