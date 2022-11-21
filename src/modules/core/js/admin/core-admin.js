@@ -26,6 +26,10 @@ import 'CoreCSS/core-admin.scss';
 			delete: true,
 
 		}
+
+		$( this ).find( '.helpgent_remove_icon' ).removeClass( 'remove-tag-icon' ).text('...');
+
+		// helpgent_remove_icon
 		
 		requet( parentElement, 'delete', data );
 	});
@@ -37,6 +41,9 @@ import 'CoreCSS/core-admin.scss';
 		// var file = $('.searchalert_import_file').val();
 		var file = $('.searchalert_import_file')[0].files[0];
 
+		if( ! file ) {
+			return;
+		}
 		// console.log( file );
 		form_data.append('action', 'import_subscribers');
 		form_data.append('search_alert_nonce', searchAlert.nonce);
@@ -52,7 +59,7 @@ import 'CoreCSS/core-admin.scss';
 			data: form_data,
 			success: function success(response) {
 
-				window.location.reload();
+				// window.location.reload();
 				
 			},
 			error: function error( response ) {

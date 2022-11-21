@@ -84,6 +84,10 @@ __webpack_require__.r(__webpack_exports__);
       form: false,
       delete: true
     };
+    $(this).find('.helpgent_remove_icon').removeClass('remove-tag-icon').text('...');
+
+    // helpgent_remove_icon
+
     requet(parentElement, 'delete', data);
   });
 
@@ -93,7 +97,9 @@ __webpack_require__.r(__webpack_exports__);
     var form_data = new FormData();
     // var file = $('.searchalert_import_file').val();
     var file = $('.searchalert_import_file')[0].files[0];
-
+    if (!file) {
+      return;
+    }
     // console.log( file );
     form_data.append('action', 'import_subscribers');
     form_data.append('search_alert_nonce', searchAlert.nonce);
@@ -106,7 +112,8 @@ __webpack_require__.r(__webpack_exports__);
       url: searchAlert.ajaxurl,
       data: form_data,
       success: function success(response) {
-        window.location.reload();
+
+        // window.location.reload();
       },
       error: function error(response) {
         console.log(response);

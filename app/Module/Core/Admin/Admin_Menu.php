@@ -77,7 +77,8 @@ class Admin_Menu {
                         foreach( $email_subscriber as $key => $subscriber ) { ?>
                             <li class="helpgent_remove_subscriber" data-email="<?php esc_html_e( $subscriber ); ?>" data-keyword="<?php esc_html_e( $keyword ); ?>">
                                 <button type="button" id="subscribers-<?php esc_attr_e( $key ); ?>" style="margin: 0 0 0 -23px" class="ntdelbutton helpgent_unsubscribe">
-                                    <span class="remove-tag-icon" aria-hidden="true"></span>
+
+                                    <span class="remove-tag-icon helpgent_remove_icon" aria-hidden="true"></span>
                                     <span class="screen-reader-text">Remove term: <?php esc_html_e( $subscriber ); ?></span>
                                 </button><?php esc_html_e( $subscriber ); ?>
                             </li> 
@@ -91,7 +92,7 @@ class Admin_Menu {
                             ?>
                             <li class="helpgent_remove_subscriber" data-user="<?php esc_html_e( $subscriber ); ?>" data-keyword="<?php esc_html_e( $keyword ); ?>">
                                 <button type="button" id="subscribers-<?php esc_attr_e( $key ); ?>" style="margin: 0 0 0 -23px" class="ntdelbutton helpgent_unsubscribe">
-                                    <span class="remove-tag-icon" aria-hidden="true"></span>
+                                    <span class="remove-tag-icon helpgent_remove_icon" aria-hidden="true"></span>
                                     <span class="screen-reader-text">Remove term: <?php esc_html_e( $email ); ?></span>
                                 </button><?php esc_html_e( $email ); ?>
                             </li> 

@@ -863,14 +863,25 @@ function update_search( $args = [], $task = 'add' ) {
             }
             
         }else{
-            $number_of_search += 1;
             if( ! empty( $user ) && ! in_array( $user, $search_by ) ) {
+                $number_of_search += 1;
                 array_push( $search_by, $user );
             }
 
-            if( ! empty( $email ) && ! in_array( $email, $email_subscribers ) ) {
-                array_push( $email_subscribers, $email );
+            if( ! empty( $email ) && is_array( $email ) ) {
+                foreach( $email as $single_email ) {
+                    if( ! in_array( $single_email, $email_subscribers ) ) {
+                        $number_of_search += 1;
+                        array_push( $email_subscribers, $single_email );
+                    }
+                }
+            }else{
+                if( ! empty( $email ) && ! in_array( $email, $email_subscribers ) ) {
+                    $number_of_search += 1;
+                    array_push( $email_subscribers, $email );
+                }
             }
+            
         }
         // wp_send_json([
         //     'email' => $email,
