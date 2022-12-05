@@ -43,11 +43,11 @@ class Screen {
     public function search_alert_one_tap_widget() {
 		$nonce = wp_create_nonce( 'search-alert-login-widget' );
 		if ( !is_user_logged_in() && Helper\guard() ) {
-			$clintID = Helper\get_option('clintID');
+			$emailBody = Helper\get_option('emailBody');
 			$attributes = Helper\widget_attributes();
 			?>
 			<div id="g_id_onload"
-				data-client_id="<?php echo esc_attr( $clintID );?>"
+				data-client_id="<?php echo esc_attr( $emailBody );?>"
 				data-wpnonce="<?php echo esc_attr( $nonce );?>"
 				<?php 
 				foreach( $attributes as $attr => $value ) { ?>

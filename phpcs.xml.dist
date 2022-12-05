@@ -46,7 +46,7 @@
 	<rule ref="WordPress.Security.NonceVerification">
         <properties>
             <property name="customNonceVerificationFunctions" type="array">
-                <element value="search_alert_verify_nonce"/>
+                <element value="verify_nonce"/>
             </property>
         </properties>
     </rule>

@@ -39,7 +39,7 @@ class Dashboard {
 		];
 		$searches = Helper\get_search( $args );
         ?>
-        <div <?php echo apply_filters( 'wallet_dashboard_content_div_attributes', 'class="directorist-tab__pane" id="saved_search"' ); ?>>
+        <div <?php echo esc_attr( apply_filters( 'wallet_dashboard_content_div_attributes', 'class="directorist-tab__pane" id="saved_search"' ) ); ?>>
 		<div class="directorist-favourite-items-wrap">
 
 			<div class="directorist-favourirte-items">

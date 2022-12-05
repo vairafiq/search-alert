@@ -13,14 +13,14 @@ import api from '../../helpers/api';
 const SettingBox = () => {
 
     const [optionState, setOptionState] = useState({
-		clintID: [],
-		nativeLogin: true,
+		emailBody: [],
+		enable_search_alert: true,
 		excludedPages:[],
-		excludedSingle:[],
+		included_single_post:[],
 		subscriber: 'subscriber',
 		loader: false,
-        autoSignIn: true,
-        redirectUrl: '',
+        email_footer: true,
+        emailSubject: '',
         context: 'signin',
         cancelOnTapOutside: false,
         parentDomain: '',
@@ -67,7 +67,7 @@ const SettingBox = () => {
     return (
         <SetingBoxWrap>
             <div className="search-alert-settings-top">
-                <h2 className="search-alert-settings-top__title">searchAlert</h2>
+                <h2 className="search-alert-settings-top__title">Search Alert</h2>
                 <div className="search-alert-settings-top__links">
                     <a href="https://exlac.com/documentation/" target="_blank">
                         <div className="search-alert-settings-top__link-icon"><ReactSVG src={File} /></div>
@@ -77,7 +77,7 @@ const SettingBox = () => {
                         <div className="search-alert-settings-top__link-icon"><ReactSVG src={QuestonCircle} /></div>
                         <span className="search-alert-settings-top__link-text">Support </span>
                     </a>
-                    <a href="https://exlac.com/product/search-alert/" className='onetop-proLink'>
+                    <a href="https://exlac.com/product/search-alert/" target="_blank" className='onetop-proLink'>
                         <div className="search-alert-settings-top__link-icon"><ReactSVG src={Link} /></div>
                         <span className="search-alert-settings-top__link-text">Go Pro </span>
                     </a>

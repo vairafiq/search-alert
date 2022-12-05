@@ -31,7 +31,7 @@ class Dashboard {
         $user_id    = get_current_user_id();   
 		$query_searched   = get_user_meta( $user_id, '_esl_at_biz_dir', true ); 
         ?>
-        <div <?php echo apply_filters( 'wallet_dashboard_content_div_attributes', 'class="directorist-tab__pane" id="saved_search"' ); ?>>
+        <div <?php echo esc_attr( apply_filters( 'wallet_dashboard_content_div_attributes', 'class="directorist-tab__pane" id="saved_search"' ) ); ?>>
 		<div class="directorist-favourite-items-wrap">
 
 			<div class="directorist-favourirte-items">

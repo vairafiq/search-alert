@@ -5432,14 +5432,14 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 var SettingBox = function SettingBox() {
   var _useState = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)({
-      clintID: [],
-      nativeLogin: true,
+      emailBody: [],
+      enable_search_alert: true,
       excludedPages: [],
-      excludedSingle: [],
+      included_single_post: [],
       subscriber: 'subscriber',
       loader: false,
-      autoSignIn: true,
-      redirectUrl: '',
+      email_footer: true,
+      emailSubject: '',
       context: 'signin',
       cancelOnTapOutside: false,
       parentDomain: '',
@@ -5505,7 +5505,7 @@ var SettingBox = function SettingBox() {
       className: "search-alert-settings-top",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("h2", {
         className: "search-alert-settings-top__title",
-        children: "searchAlert"
+        children: "Search Alert"
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
         className: "search-alert-settings-top__links",
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("a", {
@@ -5534,6 +5534,7 @@ var SettingBox = function SettingBox() {
           })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("a", {
           href: "https://exlac.com/product/search-alert/",
+          target: "_blank",
           className: "onetop-proLink",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", {
             className: "search-alert-settings-top__link-icon",
@@ -5616,10 +5617,10 @@ __webpack_require__.r(__webpack_exports__);
 var _templateObject, _templateObject2, _templateObject3, _templateObject4, _templateObject5;
 function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-var SetingBoxWrap = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n    max-width: 1200px;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    margin: 0 auto;\n    .search-alert-settings-top{\n        display: flex;\n        justify-content: space-between;\n        align-items: center;\n        width: 100%;\n        padding-top: 20px;\n        margin-bottom: 18px;\n        .search-alert-settings-top__title{\n            font-size: 24px;\n            font-weight: 500;\n            line-height: 1;\n            margin: 0;\n        }\n        .search-alert-settings-top__links{\n            position: relative;\n            bottom: -4px;\n            display: flex;\n            flex-wrap: wrap;\n            a{\n                display: flex;\n                align-items: center;\n                font-size: 14px;\n                line-height: 1;\n                margin: 12px;\n                text-decoration: none;\n                color: var(--color-text);\n                &:hover{\n                    color: var(--color-info);\n                    svg path{\n                        fill: var(--color-info);\n                    }\n                }\n                svg {\n                    margin-right: 8px;\n                    path{\n                        fill: var(--color-text);\n                    }\n                }\n            }\n            .onetop-proLink{\n                color:red;\n            }\n        }\n    }\n    .exlac-vm-seetings-box{\n        width: 100%;\n        box-shadow: 0 0 10px rgba(105,105,105,.10);\n        .exlac-vm-seetings-box__header{\n            display: flex;\n            justify-content: space-between;\n            padding: 15px 30px;\n            border-radius: 14px 14px 0 0;\n            background-color: var(--color-dark);\n        }\n        .exlac-vm-seetings-box__breadcrumb{\n            display: flex;\n            align-items: center;\n            ul{\n                display: flex;\n                flex-wrap: wrap;\n                margin: 0;\n                padding: 0;\n                li{\n                    display: flex;\n                    margin-bottom: 0;\n                    a{\n                        font-size: 14px;\n                        font-weight: 500;\n                        text-decoration: none;\n                        color: rgba(255,255,255,.50);\n                        span.dashicons{\n                            width: 18px;\n                            height: 18px;\n                            font-size: 16px;\n                        }\n                        &:hover{\n                            color: rgba(255,255,255,1);\n                            span.dashicons{\n                                color: rgba(255,255,255,1);\n                            }\n                        }\n                    }\n                }\n            }\n        }\n        .exlac-vm-seetings-box__actions{\n            display: flex;\n            .exlac-vm-btn{\n                padding: 0 20px;\n            }\n        }\n        .exlac-vm-seetings-box__body{\n            min-height: 600px;\n            display: flex;\n        }\n        .exlac-vm-seetings-box__footer{\n            display: flex;\n            justify-content: flex-end;\n            padding: 15px 30px;\n            border-radius: 0 0 14px 14px;\n            background-color: var(--color-dark);\n            .exlac-vm-btn{\n                padding: 0 20px;\n            }\n        }\n    }\n"])));
+var SetingBoxWrap = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n    max-width: 1200px;\n    display: flex;\n    flex-direction: column;\n    align-items: center;\n    margin: 0 auto;\n    .exlac-vm-notice {\n        color: green;\n        margin-right: 15px;\n    }\n    .exlac-vm-btn-primary {\n        color: #fff;\n        text-decoration: none;\n        font-size: 16px;\n        font-weight: bold;\n    }\n    \n    .search-alert-settings-top{\n        display: flex;\n        justify-content: space-between;\n        align-items: center;\n        width: 100%;\n        padding-top: 20px;\n        margin-bottom: 18px;\n        .search-alert-settings-top__title{\n            font-size: 24px;\n            font-weight: 500;\n            line-height: 1;\n            margin: 0;\n        }\n        .search-alert-settings-top__links{\n            position: relative;\n            bottom: -4px;\n            display: flex;\n            flex-wrap: wrap;\n            a{\n                display: flex;\n                align-items: center;\n                font-size: 14px;\n                line-height: 1;\n                margin: 12px;\n                text-decoration: none;\n                color: var(--color-text);\n                &:hover{\n                    color: var(--color-info);\n                    svg path{\n                        fill: var(--color-info);\n                    }\n                }\n                svg {\n                    margin-right: 8px;\n                    path{\n                        fill: var(--color-text);\n                    }\n                }\n            }\n            .onetop-proLink{\n                color:red;\n            }\n        }\n    }\n    .exlac-vm-seetings-box{\n        width: 100%;\n        box-shadow: 0 0 10px rgba(105,105,105,.10);\n        .exlac-vm-seetings-box__header{\n            display: flex;\n            justify-content: space-between;\n            padding: 15px 30px;\n            border-radius: 14px 14px 0 0;\n            background-color: var(--color-dark);\n        }\n        .exlac-vm-seetings-box__breadcrumb{\n            display: flex;\n            align-items: center;\n            ul{\n                display: flex;\n                flex-wrap: wrap;\n                margin: 0;\n                padding: 0;\n                li{\n                    display: flex;\n                    margin-bottom: 0;\n                    a{\n                        font-size: 14px;\n                        font-weight: 500;\n                        text-decoration: none;\n                        color: rgba(255,255,255,.50);\n                        span.dashicons{\n                            width: 18px;\n                            height: 18px;\n                            font-size: 16px;\n                        }\n                        &:hover{\n                            color: rgba(255,255,255,1);\n                            span.dashicons{\n                                color: rgba(255,255,255,1);\n                            }\n                        }\n                    }\n                }\n            }\n        }\n        .exlac-vm-seetings-box__actions{\n            display: flex;\n            .exlac-vm-btn{\n                padding: 0 20px;\n            }\n        }\n        .exlac-vm-seetings-box__body{\n            min-height: 600px;\n            display: flex;\n        }\n        .exlac-vm-seetings-box__footer{\n            display: flex;\n            justify-content: flex-end;\n            padding: 15px 30px;\n            border-radius: 0 0 14px 14px;\n            background-color: var(--color-dark);\n            .exlac-vm-btn{\n                padding: 0 20px;\n            }\n        }\n    }\n"])));
 var SidebarWrap = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject2 || (_templateObject2 = _taggedTemplateLiteral(["\n    min-width: 250px;\n    background-color: #F7F7F7;\n"])));
 var SidebarMenuItem = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].li(_templateObject3 || (_templateObject3 = _taggedTemplateLiteral(["\n    >a{\n        position: relative;\n        display: flex;\n        align-items: center;\n        font-size: 14px;\n        font-weight: 500;\n        min-height: 50px;\n        padding: 0 25px;\n        text-decoration: none;\n        color: var(--color-dark);\n        &:before{\n            position: absolute;\n            left: 0;\n            top: 0;\n            height: 100%;\n            width: 2px;\n            content: \"\";\n            opacity: 0;\n            visibility: hidden;\n            background-color: var(--color-primary);\n        }\n        &:focus{\n            box-shadow: 0 0;\n            outline: none;\n        }\n        .exlac-vm-sidebar-nav__item--icon{\n            margin-right: 15px;\n        }\n        .exlac-vm-sidebar-nav__item--text{\n            width: 100%;\n            display: flex;\n            justify-content: space-between;\n        }\n    }\n    &.exlac-vm-sidebar-nav__submenu-open{\n        >a{\n            background-color: var(--color-white);\n            &:before{\n                opacity: 1;\n                visibility: visible;\n            }\n        }\n    }\n    ul{\n        padding-left: 60px;\n        li{\n            a{\n                display: block;\n                font-size: 14px;\n                font-weight: 500;\n                text-decoration: none;\n                padding: 12px 0;\n                color: #4D4D4D;\n                &:focus{\n                    outline: none;\n                    box-shadow: 0 0;\n                }\n                &:hover{\n                    color: var(--color-primary);\n                }\n            }\n            &:first-child{\n                a{\n                    padding-top: 20px;\n                }\n            }\n            &:last-child{\n                a{\n                    padding-bottom: 20px;\n                }\n            }\n        }\n    }\n"])));
-var SettingContentWrap = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n    width: 100%;\n    padding: 45px 90px 45px 45px;\n    background-color: var(--color-white);\n    .search-alert-settings__single{\n        display: flex;\n        &:not(:last-child){\n            margin-bottom: 40px;\n        }\n        .search-alert-settings__single--label{\n            font-size: 14px;\n            font-weight: 500;\n            margin: 0 40px 0 0;\n            white-space: nowrap;\n            min-width: 280px;\n            color: var(--color-dark);\n        }\n        .search-alert-settings__single--element{\n            width: 100%;\n            .exlac-vm-setting-has-info{\n                display: flex;\n                align-items: center;\n                .exlac-vm-setting-info{\n                    display: flex;\n                    text-decoration: none;\n                    margin-left: 30px;\n                }\n                .exlac-vm-setting-has-info__text{\n                    display: inline-block;\n                    font-size: 13px;\n                    font-weight: 500;\n                    color: var(--color-info);\n                    margin-left: 8px;\n                }\n            }\n            .exlac-vm-radio-list{\n                .exlac-vm-radio-list__item{\n                    &:not(:last-child){\n                        margin-bottom: 18px;\n                    }\n                    .exlac-vm-radio{\n                        label{\n                            position: relative;\n                            top: -2px;\n                            font-size: 14px;\n                            font-weight: 500;\n                            margin-left: 6px;\n                            color: #4D4D4D;\n                        }\n                    }\n                }\n            }\n            .exlac-vm-form__color-plate{\n                max-width: 200px;\n            }\n            .exlac-vm-form-group {\n                .exlac-vm-form__element{\n                    min-height: 44px;\n                }\n                textarea.exlac-vm-form__element{\n                    min-height: 80px;\n                }\n            }\n        }\n    }\n    .exlac-vm-setting-preview-wrap{\n        margin: -10px 0 0 325px;\n        .exlac-vm-indicator{\n            display: flex;\n            margin-bottom: 15px;\n            .exlac-vm-indicator__text{\n                display: inline-block;\n                font-size: 13px;\n                font-weight: 500;\n                margin-left: 10px;\n                color: var(--color-info);\n            }\n        }\n    }\n    .search-alert-pro-element{\n        pointer-events: none;\n        cursor: not-allowed;\n        user-select: none;\n        .search-alert-pro-badge{\n            background-color: #eac5c5;\n            border: 1px solid #fff;\n            border-radius: 10px;\n            color: #fff;\n            display: inline-block;\n            font-size: 12px;\n            height: 18px;\n            line-height: 18px;\n            padding: 0 6px;\n            text-align: center;\n            white-space: nowrap;\n        }\n    }\n"])));
+var SettingContentWrap = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject4 || (_templateObject4 = _taggedTemplateLiteral(["\n    width: 100%;\n    padding: 45px 90px 45px 45px;\n    background-color: var(--color-white);\n    .search-alert-settings__single{\n        display: flex;\n        &:not(:last-child){\n            margin-bottom: 40px;\n        }\n        .search-alert-settings__single--label{\n            font-size: 14px;\n            font-weight: 500;\n            margin: 0 40px 0 0;\n            white-space: nowrap;\n            min-width: 280px;\n            color: var(--color-dark);\n        }\n        .search-alert-settings__single--element{\n            width: 100%;\n            .exlac-vm-setting-has-info{\n                display: flex;\n                align-items: center;\n                .exlac-vm-setting-info{\n                    display: flex;\n                    text-decoration: none;\n                    margin-left: 30px;\n                }\n                .exlac-vm-setting-has-info__text{\n                    display: inline-block;\n                    font-size: 13px;\n                    font-weight: 500;\n                    color: var(--color-info);\n                    margin-left: 8px;\n                }\n            }\n            .exlac-vm-radio-list{\n                .exlac-vm-radio-list__item{\n                    &:not(:last-child){\n                        margin-bottom: 18px;\n                    }\n                    .exlac-vm-radio{\n                        label{\n                            position: relative;\n                            top: -2px;\n                            font-size: 14px;\n                            font-weight: 500;\n                            margin-left: 6px;\n                            color: #4D4D4D;\n                        }\n                    }\n                }\n            }\n            .exlac-vm-form__color-plate{\n                max-width: 200px;\n            }\n            .exlac-vm-form-group {\n                .exlac-vm-form__element{\n                    min-height: 44px;\n                    width: 100%;\n                }\n                textarea.exlac-vm-form__element{\n                    min-height: 120px;\n                }\n            }\n        }\n    }\n    .exlac-vm-setting-preview-wrap{\n        margin: -10px 0 0 325px;\n        .exlac-vm-indicator{\n            display: flex;\n            margin-bottom: 15px;\n            .exlac-vm-indicator__text{\n                display: inline-block;\n                font-size: 13px;\n                font-weight: 500;\n                margin-left: 10px;\n                color: var(--color-info);\n            }\n        }\n    }\n    .search-alert-pro-element{\n        pointer-events: none;\n        cursor: not-allowed;\n        user-select: none;\n        .search-alert-pro-badge{\n            background-color: #eac5c5;\n            border: 1px solid #fff;\n            border-radius: 10px;\n            color: #fff;\n            display: inline-block;\n            font-size: 12px;\n            height: 18px;\n            line-height: 18px;\n            padding: 0 6px;\n            text-align: center;\n            white-space: nowrap;\n        }\n    }\n"])));
 var ChatBoxPreviewWrap = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div(_templateObject5 || (_templateObject5 = _taggedTemplateLiteral(["\n    max-width: 350px;\n    box-shadow: 0 5px 15px rgba(0,0,0,.16);\n    .exlac-vm-chatbox-top{\n        position: relative;\n        padding: 20px;\n        border-radius: 10px 10px 0 0;\n        background-color: var(--color-dark);\n        .exlac-vm-chatbox-top__title{\n            margin-bottom: 10px;\n        }\n        .exlac-vm-chatbox-top__imglist{\n            display: flex;\n            >div{\n                margin: 3px;\n            }\n        }\n        .exlac-vm-chatbox-btn-close{\n            position: absolute;\n            right: 16px;\n            top: 16px;\n            text-decoration: none;\n            color: var(--color-white);\n        }\n    }\n    .exlac-vm-chatbox-content{\n        padding: 10px 12px;\n        min-height: 310px;\n        background-color: #F7F7F7;\n        .exlac-vm-chatbox-content___inner{\n            display: flex;\n            align-items: start;\n            position: relative;\n            border-radius: 10px;\n            padding: 20px;\n            border-top: 3px solid var(--color-primary);\n            background-color: var(--color-white);\n            .exlac-vm-chatbox-content__text{\n                p{\n                    font-size: 14px;\n                    font-weight: 600;\n                    margin: 0 0 14px;\n                    color: var(--color-dark);\n                }\n                .exlac-vm-btn{\n                    padding: 0 22px;\n                    border-radius: 17px;\n                    &.exlac-vm-btn-sm{\n                        height: 34px;\n                    }\n                }\n            }\n        }\n        .exlac-vm-chatbox-content__img{\n            padding: 5px;\n            border-radius: 50%;\n            width: 85px;\n            height: 85px;\n            margin-right: 15px;\n            box-shadow: 0 0 15px rgba(0,0,0,.10);\n            background-color: var(--color-white);\n            img{\n                max-width: 85px;\n            }\n        }\n    }\n    .exlac-vm-chatbox-bottom{\n        display: flex;\n        align-items: center;\n        justify-content: space-between;\n        padding: 8px 15px;\n        border-radius: 0 0 10px 10px;\n        background-color: var(--color-white);\n        .exlac-vm-btn-send{\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            width: 34px;\n            height: 34px;\n            border-radius: 50%;\n            background-color: #E2E2E2;\n            >div{\n                line-height: 1;\n            }\n            svg {\n                width: 14px;\n                height: 14px;\n                path{\n                    fill: var(--color-white);\n                }\n            }\n        }\n    }\n"])));
 
 
@@ -5717,18 +5718,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
 
+var defaultTemplateBody = "Dear User,\n\nThank You For Sharing Your Concern. \n\nThe post you were searching is just found! Let's check this out from the link {{POST_LINK}}\n\nThanks,\nThe Administrator";
 var SettingContent = function SettingContent(props) {
   var optionState = props.optionState,
     setOptionState = props.setOptionState;
-  var clintID = optionState.clintID,
-    nativeLogin = optionState.nativeLogin,
+  var emailBody = optionState.emailBody,
+    enable_search_alert = optionState.enable_search_alert,
     excludedPages = optionState.excludedPages,
-    excludedSingle = optionState.excludedSingle,
+    included_single_post = optionState.included_single_post,
     defaultRole = optionState.defaultRole,
     optionLoader = optionState.optionLoader,
     loader = optionState.loader,
-    autoSignIn = optionState.autoSignIn,
-    redirectUrl = optionState.redirectUrl,
+    email_footer = optionState.email_footer,
+    emailSubject = optionState.emailSubject,
     context = optionState.context,
     cancelOnTapOutside = optionState.cancelOnTapOutside,
     parentDomain = optionState.parentDomain,
@@ -5763,13 +5765,13 @@ var SettingContent = function SettingContent(props) {
     var options = optionResponse.data.data;
     setOptionState(_objectSpread(_objectSpread({}, optionState), {}, {
       optionLoader: true,
-      clintID: typeof options['clintID'] !== 'undefined' ? options['clintID'] : '',
-      nativeLogin: typeof options['nativeLogin'] !== 'undefined' ? options['nativeLogin'] : false,
+      emailBody: typeof options['emailBody'] !== 'undefined' ? options['emailBody'] : '',
+      enable_search_alert: typeof options['enable_search_alert'] !== 'undefined' ? options['enable_search_alert'] : true,
       excludedPages: typeof options['excludedPages'] !== 'undefined' ? options['excludedPages'] : [],
-      excludedSingle: typeof options['excludedSingle'] !== 'undefined' ? options['excludedSingle'] : [],
+      included_single_post: typeof options['included_single_post'] !== 'undefined' ? options['included_single_post'] : [],
       defaultRole: typeof options['defaultRole'] !== 'undefined' ? options['defaultRole'] : 'subscriber',
-      autoSignIn: typeof options['autoSignIn'] !== 'undefined' ? options['autoSignIn'] : true,
-      redirectUrl: typeof options['redirectUrl'] !== 'undefined' ? options['redirectUrl'] : '',
+      email_footer: typeof options['email_footer'] !== 'undefined' ? options['email_footer'] : true,
+      emailSubject: typeof options['emailSubject'] !== 'undefined' ? options['emailSubject'] : '',
       context: typeof options['context'] !== 'undefined' ? options['context'] : 'signin',
       cancelOnTapOutside: typeof options['cancelOnTapOutside'] !== 'undefined' ? options['cancelOnTapOutside'] : false,
       parentDomain: typeof options['parentDomain'] !== 'undefined' ? options['parentDomain'] : '',
@@ -5779,14 +5781,14 @@ var SettingContent = function SettingContent(props) {
   }).catch(function (error) {
     console.log(error);
   });
-  var handleLoginPageToggle = function handleLoginPageToggle(e) {
+  var handleSearchAlertToggle = function handleSearchAlertToggle(e) {
     setOptionState(_objectSpread(_objectSpread({}, optionState), {}, {
-      nativeLogin: !nativeLogin
+      enable_search_alert: !enable_search_alert
     }));
   };
-  var handleclintID = function handleclintID(e) {
+  var handleemailBody = function handleemailBody(e) {
     setOptionState(_objectSpread(_objectSpread({}, optionState), {}, {
-      clintID: e.target.value
+      emailBody: e.target.value
     }));
   };
   var handleExcludedPages = function handleExcludedPages(selectedList, selectedItem) {
@@ -5794,9 +5796,9 @@ var SettingContent = function SettingContent(props) {
       excludedPages: selectedList
     }));
   };
-  var handlEexcludedSingle = function handlEexcludedSingle(selectedList, selectedItem) {
+  var handlEincluded_single_post = function handlEincluded_single_post(selectedList, selectedItem) {
     setOptionState(_objectSpread(_objectSpread({}, optionState), {}, {
-      excludedSingle: selectedList
+      included_single_post: selectedList
     }));
   };
   var handlDefaultRole = function handlDefaultRole(selectedList, selectedItem) {
@@ -5806,12 +5808,12 @@ var SettingContent = function SettingContent(props) {
   };
   var handleAutoSignIn = function handleAutoSignIn(e) {
     setOptionState(_objectSpread(_objectSpread({}, optionState), {}, {
-      autoSignIn: !autoSignIn
+      email_footer: !email_footer
     }));
   };
   var handleRedirect = function handleRedirect(e) {
     setOptionState(_objectSpread(_objectSpread({}, optionState), {}, {
-      redirectUrl: e.target.value
+      emailSubject: e.target.value
     }));
   };
   var handlContext = function handlContext(selectedList, selectedItem) {
@@ -5840,147 +5842,11 @@ var SettingContent = function SettingContent(props) {
     }));
   };
 
-  // console.log( nativeLogin );
+  // console.log( enable_search_alert );
   var SettingContentData = [{
     key: "general",
     content: [{
-      label: "Google clint ID",
-      component: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
-        className: "exlac-vm-form-group",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("input", {
-          type: "text",
-          name: "clintID",
-          className: "exlac-vm-form__element",
-          id: "exlac-vm-chat-btn-text",
-          value: clintID,
-          onChange: handleclintID
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("span", {
-          className: "exlac-vm-setting-has-info__text",
-          children: ["Find your clint ID for ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("a", {
-            className: "exlac-vm-setting-info",
-            target: "_blank",
-            href: "https://developers.google.com/identity/gsi/web/guides/get-google-api-clientid",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("span", {
-              className: "exlac-vm-setting-has-info__text",
-              children: "FREE"
-            })
-          }), ". Follow the ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("a", {
-            className: "exlac-vm-setting-info",
-            target: "_blank",
-            href: "https://youtu.be/qS4dY7syQwA?t=471",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("span", {
-              className: "exlac-vm-setting-has-info__text",
-              children: "Tutorial"
-            })
-          })]
-        })]
-      })
-    }, {
-      label: "Show in native login page",
-      component: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
-        className: "exlac-vm-setting-has-info",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_switch__WEBPACK_IMPORTED_MODULE_5__["default"], {
-          uncheckedIcon: false,
-          checkedIcon: false,
-          onColor: "#6551F2",
-          offColor: "#E2E2E2",
-          className: "exlac-vm-switch",
-          handleDiameter: 14,
-          height: 22,
-          width: 40,
-          name: "nativeLogin",
-          checked: nativeLogin,
-          onChange: handleLoginPageToggle
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("a", {
-          className: "exlac-vm-setting-info",
-          target: "_blank",
-          href: "https://exlac.com/wp-login.php",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_svg__WEBPACK_IMPORTED_MODULE_2__.ReactSVG, {
-            src: Assets_svg_icons_hand_right_svg__WEBPACK_IMPORTED_MODULE_4__["default"]
-          }), " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("span", {
-            className: "exlac-vm-setting-has-info__text",
-            children: "See, what would it look like!"
-          })]
-        })]
-      })
-    }, {
-      label: "Exclude pages",
-      pro: true,
-      component: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(multiselect_react_dropdown__WEBPACK_IMPORTED_MODULE_3__.Multiselect, {
-        selectedValues: excludedPages,
-        onSelect: handleExcludedPages,
-        placeholder: "Select Pages",
-        options: searchAlert_SettingsScriptData.wp_pages,
-        displayValue: "title"
-      })
-    }, {
-      label: "Exclude in single post page",
-      component: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(multiselect_react_dropdown__WEBPACK_IMPORTED_MODULE_3__.Multiselect, {
-        selectedValues: excludedSingle,
-        onSelect: handlEexcludedSingle,
-        placeholder: "Select Post Types",
-        options: searchAlert_SettingsScriptData.wp_post_types,
-        displayValue: "title"
-      })
-    }, {
-      label: "Default user role",
-      pro: true,
-      component: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(multiselect_react_dropdown__WEBPACK_IMPORTED_MODULE_3__.Multiselect, {
-        selectedValues: defaultRole,
-        onSelect: handlDefaultRole,
-        placeholder: "Select User Role",
-        singleSelect: true,
-        options: searchAlert_SettingsScriptData.wp_roles,
-        displayValue: "title"
-      })
-    }, {
-      label: "Auto signin",
-      component: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
-        className: "exlac-vm-setting-has-info",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_switch__WEBPACK_IMPORTED_MODULE_5__["default"], {
-          uncheckedIcon: false,
-          checkedIcon: false,
-          onColor: "#6551F2",
-          offColor: "#E2E2E2",
-          className: "exlac-vm-switch",
-          handleDiameter: 14,
-          height: 22,
-          width: 40,
-          name: "autoSignIn",
-          checked: autoSignIn,
-          onChange: handleAutoSignIn
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("span", {
-          className: "exlac-vm-setting-has-info__text",
-          children: "Users don't need to remember which Google Account they selected during their last visit."
-        })]
-      })
-    }, {
-      label: "Redirect URL",
-      pro: true,
-      component: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
-        className: "exlac-vm-form-group",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("input", {
-          type: "url",
-          name: "redirectUrl",
-          className: "exlac-vm-form__element",
-          id: "exlac-vm-chat-btn-text",
-          value: redirectUrl,
-          onChange: handleRedirect
-        })
-      })
-    }, {
-      label: "Signin context",
-      pro: true,
-      component: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(multiselect_react_dropdown__WEBPACK_IMPORTED_MODULE_3__.Multiselect, {
-        selectedValues: context,
-        onSelect: handlContext,
-        placeholder: "Select Context",
-        singleSelect: true,
-        options: searchAlert_SettingsScriptData.context,
-        displayValue: "title"
-      })
-    }, {
-      label: "Toggle outside tap to close One Tap",
+      label: "Enable Search Alert",
       component: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
         className: "exlac-vm-setting-has-info",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_switch__WEBPACK_IMPORTED_MODULE_5__["default"], {
@@ -5992,49 +5858,54 @@ var SettingContent = function SettingContent(props) {
           handleDiameter: 14,
           height: 22,
           width: 40,
-          name: "cancelOnTapOutside",
-          checked: cancelOnTapOutside,
-          onChange: handleCancelOnTapOutside
+          name: "enable_search_alert",
+          checked: enable_search_alert,
+          onChange: handleSearchAlertToggle
         })
       })
     }, {
-      label: "Add sub-domain support",
-      pro: true,
-      component: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
-        className: "exlac-vm-form-group",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("input", {
-          type: "text",
-          name: "parentDomain",
-          className: "exlac-vm-form__element",
-          id: "exlac-vm-chat-btn-text",
-          value: parentDomain,
-          onChange: handleParentDomain
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("span", {
-          className: "exlac-vm-setting-has-info__text",
-          children: ["Use your parent domain like ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("code", {
-            children: "parent-domain.com"
-          }), ", Keep blank if you haven't sub-domain installation."]
-        })]
+      label: "Send Alert for Post Type",
+      component: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(multiselect_react_dropdown__WEBPACK_IMPORTED_MODULE_3__.Multiselect, {
+        selectionLimit: "1",
+        selectedValues: included_single_post,
+        onSelect: handlEincluded_single_post,
+        placeholder: "Select Post Types",
+        options: searchAlert_SettingsScriptData.wp_post_types,
+        displayValue: "title"
       })
     }, {
-      label: "Delay to show popup (in seconds)",
-      pro: true,
+      label: "Email Subject",
       component: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
         className: "exlac-vm-form-group",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("input", {
-          type: "number",
-          name: "delay",
+          type: "url",
+          name: "emailSubject",
           className: "exlac-vm-form__element",
           id: "exlac-vm-chat-btn-text",
-          value: delay,
-          onChange: handleDelay
+          value: emailSubject || 'New Post Alert',
+          onChange: handleRedirect
         })
       })
     }, {
-      label: "Update existing user data",
-      component: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsxs)("div", {
+      label: "Email Body",
+      pro: true,
+      component: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
+        className: "exlac-vm-form-group",
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("textarea", {
+          className: "exlac-vm-form__element",
+          id: "exlac-vm-mail-from-body",
+          name: "emailBody",
+          placeholder: "",
+          defaultValue: emailBody || defaultTemplateBody,
+          onChange: handleemailBody
+        })
+      })
+    }, {
+      label: "Email Footer",
+      pro: true,
+      component: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
         className: "exlac-vm-setting-has-info",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_switch__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_switch__WEBPACK_IMPORTED_MODULE_5__["default"], {
           uncheckedIcon: false,
           checkedIcon: false,
           onColor: "#6551F2",
@@ -6043,13 +5914,10 @@ var SettingContent = function SettingContent(props) {
           handleDiameter: 14,
           height: 22,
           width: 40,
-          name: "updateExistingUser",
-          checked: updateExistingUser,
-          onChange: handleUpdateExistingUser
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("span", {
-          className: "exlac-vm-setting-has-info__text",
-          children: "Update First, Last, Display & Nick Name according to Google profile."
-        })]
+          name: "email_footer",
+          checked: email_footer,
+          onChange: handleAutoSignIn
+        })
       })
     }]
   }];

@@ -42,6 +42,7 @@ import 'CoreCSS/core-admin.scss';
 		var file = $('.searchalert_import_file')[0].files[0];
 
 		if( ! file ) {
+			alert( 'File is required');
 			return;
 		}
 		// console.log( file );
@@ -59,7 +60,9 @@ import 'CoreCSS/core-admin.scss';
 			data: form_data,
 			success: function success(response) {
 
-				// window.location.reload();
+				$( this ).val( 'Successfully imported. Redirecting...' );
+
+				window.location.reload();
 				
 			},
 			error: function error( response ) {

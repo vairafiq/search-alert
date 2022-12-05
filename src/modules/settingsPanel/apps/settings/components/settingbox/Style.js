@@ -6,6 +6,17 @@ const SetingBoxWrap = Styled.div`
     flex-direction: column;
     align-items: center;
     margin: 0 auto;
+    .exlac-vm-notice {
+        color: green;
+        margin-right: 15px;
+    }
+    .exlac-vm-btn-primary {
+        color: #fff;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: bold;
+    }
+    
     .search-alert-settings-top{
         display: flex;
         justify-content: space-between;
@@ -253,9 +264,10 @@ const SettingContentWrap = Styled.div`
             .exlac-vm-form-group {
                 .exlac-vm-form__element{
                     min-height: 44px;
+                    width: 100%;
                 }
                 textarea.exlac-vm-form__element{
-                    min-height: 80px;
+                    min-height: 120px;
                 }
             }
         }

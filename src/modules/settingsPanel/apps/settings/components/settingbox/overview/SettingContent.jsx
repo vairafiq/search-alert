@@ -7,11 +7,19 @@ import Switch from "react-switch";
 import { SettingContentWrap } from '../Style';
 import api from '../../settingbox/../../helpers/api';
 
+const defaultTemplateBody = `Dear User,
+
+Thank You For Sharing Your Concern. 
+
+The post you were searching is just found! Let\'s check this out from the link {{POST_LINK}}
+
+Thanks,
+The Administrator`;
 
 const SettingContent = props => {
 
     const { optionState, setOptionState } = props;
-    const { clintID, nativeLogin, excludedPages, excludedSingle, defaultRole, optionLoader, loader, autoSignIn, redirectUrl, context, cancelOnTapOutside, parentDomain, delay, updateExistingUser } = optionState;
+    const { emailBody, enable_search_alert, excludedPages, included_single_post, defaultRole, optionLoader, loader, email_footer, emailSubject, context, cancelOnTapOutside, parentDomain, delay, updateExistingUser } = optionState;
     const dispatch = useDispatch();
 
     const fetchOptions = async ()=>{
@@ -25,13 +33,13 @@ const SettingContent = props => {
             setOptionState({
                 ...optionState,
                 optionLoader: true,
-                clintID: typeof(options['clintID']) !== 'undefined' ? options['clintID'] : '',
-                nativeLogin: typeof(options['nativeLogin']) !== 'undefined' ? options['nativeLogin'] : false,
+                emailBody: typeof(options['emailBody']) !== 'undefined' ? options['emailBody'] : '',
+                enable_search_alert: typeof(options['enable_search_alert']) !== 'undefined' ? options['enable_search_alert'] : true,
                 excludedPages: typeof(options['excludedPages']) !== 'undefined' ? options['excludedPages'] : [],
-                excludedSingle: typeof(options['excludedSingle']) !== 'undefined' ? options['excludedSingle'] : [],
+                included_single_post: typeof(options['included_single_post']) !== 'undefined' ? options['included_single_post'] : [],
                 defaultRole: typeof(options['defaultRole']) !== 'undefined' ? options['defaultRole'] : 'subscriber',
-                autoSignIn: typeof(options['autoSignIn']) !== 'undefined' ? options['autoSignIn'] : true,
-                redirectUrl: typeof(options['redirectUrl']) !== 'undefined' ? options['redirectUrl'] : '',
+                email_footer: typeof(options['email_footer']) !== 'undefined' ? options['email_footer'] : true,
+                emailSubject: typeof(options['emailSubject']) !== 'undefined' ? options['emailSubject'] : '',
                 context: typeof(options['context']) !== 'undefined' ? options['context'] : 'signin',
                 cancelOnTapOutside: typeof(options['cancelOnTapOutside']) !== 'undefined' ? options['cancelOnTapOutside'] : false,
                 parentDomain: typeof(options['parentDomain']) !== 'undefined' ? options['parentDomain'] : '',
@@ -45,17 +53,17 @@ const SettingContent = props => {
         })
 
 
-    const handleLoginPageToggle = (e) => { 
+    const handleSearchAlertToggle = (e) => { 
         setOptionState({
             ...optionState,
-            nativeLogin: !nativeLogin,
+            enable_search_alert: !enable_search_alert,
         });
     }
 
-    const handleclintID = (e) => { 
+    const handleemailBody = (e) => { 
         setOptionState({
             ...optionState,
-            clintID: e.target.value
+            emailBody: e.target.value
         });
 
     }
@@ -67,10 +75,10 @@ const SettingContent = props => {
 
     }
 
-    const handlEexcludedSingle = ( selectedList, selectedItem ) => { 
+    const handlEincluded_single_post = ( selectedList, selectedItem ) => { 
         setOptionState({
             ...optionState,
-            excludedSingle: selectedList
+            included_single_post: selectedList
         });
 
     }
@@ -84,13 +92,13 @@ const SettingContent = props => {
     const handleAutoSignIn = (e) => { 
         setOptionState({
             ...optionState,
-            autoSignIn: !autoSignIn,
+            email_footer: !email_footer,
         });
     }
     const handleRedirect = (e) => { 
         setOptionState({
             ...optionState,
-            redirectUrl: e.target.value
+            emailSubject: e.target.value
         });
     }
     const handlContext = ( selectedList, selectedItem ) => { 
@@ -125,84 +133,48 @@ const SettingContent = props => {
         });
     }
 
-    // console.log( nativeLogin );
+    // console.log( enable_search_alert );
     const SettingContentData = [
         {
             key: "general",
             content: [
                 {
-                    label: "Google clint ID",
+                    label: "Enable Search Alert",
+                    component: <div className="exlac-vm-setting-has-info">
+                        <Switch uncheckedIcon={false} checkedIcon={false} onColor="#6551F2" offColor="#E2E2E2" className="exlac-vm-switch" handleDiameter={14} height={22} width={40} name="enable_search_alert" checked={enable_search_alert} onChange={handleSearchAlertToggle} />
+                    </div>
+                },
+                {
+                    label: "Send Alert for Post Type",
+                    component: <Multiselect selectionLimit='1' selectedValues={included_single_post} onSelect={handlEincluded_single_post} placeholder="Select Post Types" options={searchAlert_SettingsScriptData.wp_post_types} displayValue="title" />
+                },
+                {
+                    label: "Email Subject",
                     component: <div className="exlac-vm-form-group">
-                        <input type="text" name="clintID" className="exlac-vm-form__element" id="exlac-vm-chat-btn-text" value={clintID} onChange={handleclintID} />
-                        <span className="exlac-vm-setting-has-info__text">Find your clint ID for <a className="exlac-vm-setting-info" target="_blank" href="https://developers.google.com/identity/gsi/web/guides/get-google-api-clientid"><span className="exlac-vm-setting-has-info__text">FREE</span></a>. Follow the <a className="exlac-vm-setting-info" target="_blank" href="https://youtu.be/qS4dY7syQwA?t=471"><span className="exlac-vm-setting-has-info__text">Tutorial</span></a></span>
+                        <input type="url" name="emailSubject" className="exlac-vm-form__element" id="exlac-vm-chat-btn-text" value={emailSubject || 'New Post Alert'} onChange={handleRedirect} />
                     </div>
                 },
                 {
-                    label: "Show in native login page",
-                    component: <div className="exlac-vm-setting-has-info">
-                        <Switch uncheckedIcon={false} checkedIcon={false} onColor="#6551F2" offColor="#E2E2E2" className="exlac-vm-switch" handleDiameter={14} height={22} width={40} name="nativeLogin" checked={nativeLogin} onChange={handleLoginPageToggle} />
-                        <a className="exlac-vm-setting-info" target="_blank" href="https://exlac.com/wp-login.php"><ReactSVG src={handRight} /> <span className="exlac-vm-setting-has-info__text">See, what would it look like!</span></a>
-                    </div>
-                },
-                {
-                    label: "Exclude pages",
-                    pro: true,
-                    component: <Multiselect selectedValues={excludedPages} onSelect={handleExcludedPages} placeholder="Select Pages" options={searchAlert_SettingsScriptData.wp_pages} displayValue="title" />
-                },
-                {
-                    label: "Exclude in single post page",
-                    component: <Multiselect selectedValues={excludedSingle} onSelect={handlEexcludedSingle} placeholder="Select Post Types" options={searchAlert_SettingsScriptData.wp_post_types} displayValue="title" />
-                },
-                {
-                    label: "Default user role",
-                    pro: true,
-                    component: <Multiselect selectedValues={defaultRole} onSelect={handlDefaultRole} placeholder="Select User Role" singleSelect={true} options={searchAlert_SettingsScriptData.wp_roles} displayValue="title" />
-                },
-                {
-                    label: "Auto signin",
-                    component: <div className="exlac-vm-setting-has-info">
-                        <Switch uncheckedIcon={false} checkedIcon={false} onColor="#6551F2" offColor="#E2E2E2" className="exlac-vm-switch" handleDiameter={14} height={22} width={40} name="autoSignIn" checked={autoSignIn} onChange={handleAutoSignIn} />
-                        <span className="exlac-vm-setting-has-info__text">Users don't need to remember which Google Account they selected during their last visit.</span>
-                    </div>
-                },
-                {
-                    label: "Redirect URL",
+                    label: "Email Body",
                     pro: true,
                     component: <div className="exlac-vm-form-group">
-                        <input type="url" name="redirectUrl" className="exlac-vm-form__element" id="exlac-vm-chat-btn-text" value={redirectUrl} onChange={handleRedirect} />
+                        <textarea
+                            className='exlac-vm-form__element'
+                            id='exlac-vm-mail-from-body'
+                            name='emailBody'
+                            placeholder=''
+                            defaultValue={
+                                emailBody || defaultTemplateBody
+                            }
+                            onChange={handleemailBody}
+                        />
                     </div>
                 },
                 {
-                    label: "Signin context",
+                    label: "Email Footer",
                     pro: true,
-                    component: <Multiselect selectedValues={context} onSelect={handlContext} placeholder="Select Context" singleSelect options={searchAlert_SettingsScriptData.context} displayValue="title" />
-                },
-                {
-                    label: "Toggle outside tap to close One Tap",
                     component: <div className="exlac-vm-setting-has-info">
-                        <Switch uncheckedIcon={false} checkedIcon={false} onColor="#6551F2" offColor="#E2E2E2" className="exlac-vm-switch" handleDiameter={14} height={22} width={40} name="cancelOnTapOutside" checked={cancelOnTapOutside} onChange={handleCancelOnTapOutside} />
-                    </div>
-                },
-                {
-                    label: "Add sub-domain support",
-                    pro: true,
-                    component: <div className="exlac-vm-form-group">
-                        <input type="text" name="parentDomain" className="exlac-vm-form__element" id="exlac-vm-chat-btn-text" value={parentDomain} onChange={handleParentDomain} />
-                        <span className="exlac-vm-setting-has-info__text">Use your parent domain like <code>parent-domain.com</code>, Keep blank if you haven't sub-domain installation.</span>
-                    </div>
-                },
-                {
-                    label: "Delay to show popup (in seconds)",
-                    pro: true,
-                    component: <div className="exlac-vm-form-group">
-                        <input type="number" name="delay" className="exlac-vm-form__element" id="exlac-vm-chat-btn-text" value={delay} onChange={handleDelay} />
-                    </div>
-                },
-                {
-                    label: "Update existing user data",
-                    component: <div className="exlac-vm-setting-has-info">
-                        <Switch uncheckedIcon={false} checkedIcon={false} onColor="#6551F2" offColor="#E2E2E2" className="exlac-vm-switch" handleDiameter={14} height={22} width={40} name="updateExistingUser" checked={updateExistingUser} onChange={handleUpdateExistingUser} />
-                        <span className="exlac-vm-setting-has-info__text">Update First, Last, Display & Nick Name according to Google profile.</span>
+                        <Switch uncheckedIcon={false} checkedIcon={false} onColor="#6551F2" offColor="#E2E2E2" className="exlac-vm-switch" handleDiameter={14} height={22} width={40} name="email_footer" checked={email_footer} onChange={handleAutoSignIn} />
                     </div>
                 },
                 

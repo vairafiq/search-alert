@@ -98,6 +98,7 @@ __webpack_require__.r(__webpack_exports__);
     // var file = $('.searchalert_import_file').val();
     var file = $('.searchalert_import_file')[0].files[0];
     if (!file) {
+      alert('File is required');
       return;
     }
     // console.log( file );
@@ -112,8 +113,8 @@ __webpack_require__.r(__webpack_exports__);
       url: searchAlert.ajaxurl,
       data: form_data,
       success: function success(response) {
-
-        // window.location.reload();
+        $(this).val('Successfully imported. Redirecting...');
+        window.location.reload();
       },
       error: function error(response) {
         console.log(response);

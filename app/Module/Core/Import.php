@@ -24,7 +24,7 @@ class Import {
           wp_send_json_error( esc_html__( 'Failde to saved', 'search-alert' ) );
         }
 
-        $file = ! empty( $_FILES['csv_file']['tmp_name'] ) ? $_FILES['csv_file']['tmp_name'] : ''; 
+        $file = ! empty( $_FILES['csv_file']['tmp_name'] ) ? $_FILES['csv_file']['tmp_name'] : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.ValidatedSanitizedInput.MissingUnslash
 
         if( ! $file ) {
           wp_send_json_error( esc_html__( 'File is required', 'search-alert' ) );
@@ -46,10 +46,17 @@ class Import {
 
         // $args = [];
         foreach( $csv_data as $data ) {
-          $keyword = ! empty( $data['keyword'] ) ? $data['keyword'] : '';
-          // $action  = ! empty( $data['action'] ) ? $data['action'] : '';
+          
           $action  = 'add';
+          $keyword = ! empty( $data['keyword'] ) ? $data['keyword'] : '';
           $email   = ! empty( $data['email'] ) ? explode( ',', $data['email'] ) : '';
+          
+          if( ! $keyword ) {
+            continue;
+          }       
+          if( ! $email ) {
+            continue;
+          }
 
           $args = [
             'post_title' => 'New search for ' . $keyword,

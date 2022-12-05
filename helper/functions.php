@@ -721,7 +721,7 @@ function widget_attributes(){
 	$current_url = home_url( add_query_arg( array(), $wp->request ) );
 	$login_uri   = home_url().'/?search-alert-signin';
     $attr = [
-        'auto_select'   => get_option( 'autoSignIn', true ) ? true : false,
+        'auto_select'   => get_option( 'email_footer', true ) ? true : false,
         'redirect_uri'  => $current_url,
         'cancel_on_tap_outside' => get_option( 'cancelOnTapOutside', false ) ? true : false,
         'login_uri' => $login_uri,
@@ -738,7 +738,7 @@ function widget_attributes(){
  */
 function guard( $page = '' )
 {
-    $excluded_single = get_option( 'excludedSingle' );
+    $excluded_single = get_option( 'included_single_post' );
 
     if( $excluded_single ){
         foreach( $excluded_single as $single_post ) {
@@ -920,4 +920,27 @@ function update_search( $args = [], $task = 'add' ) {
         'post_title' => '',
     ];
     return wp_insert_post( array_merge( $default, $args ) );
+}
+
+
+/*
+ * Popup guard, check where to show the popup.
+ *
+ * @param string|page ID to check.
+ * @return bolian
+ */
+function post_type_allow( $type = '' )
+{
+    $include_post_types = get_option( 'included_single_post' );
+
+    if( $include_post_types ){
+        foreach( $include_post_types as $single_type ) {
+            if( $type == $single_type['id'] ){
+                return true;
+            }
+        }
+    }
+
+    return false;
+    
 }
