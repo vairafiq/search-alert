@@ -15,5 +15,3 @@ node_modules/
 __*/
 
 /.cache/*
-
-vite.user-config.js

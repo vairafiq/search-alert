@@ -1,4 +1,4 @@
-=== Search Alert ===
+=== Search Alert - Send Email When a New Post is Published  ===
 Contributors: exlac
 Donate link: https://exlac.com/
 Tags: search, alert, new post, newslater, find search
@@ -14,37 +14,25 @@ Let allow users to save their search get notified on availablity.
 
 ** 🚀[Pro Version](https://exlac.com/search-alert/) | 👩🏼‍💻[Support](https://exlac.com/contact-us/)**
 
-Get 77% more conversion using Google One Tap Sign In! Yes, research shows people feel more comfortable using their social login rather than a login form. oneTap allows users to login by pushing One Tap Login popup at the top-right corner of your website. Which minimizes user steps to get in.
-
-[youtube https://www.youtube.com/watch?v=hpx8Mdu9bwQ]
-
-== Why Google One Tap ==
-
-Let's check out the industry players, they all are using Google One Tap Sign In.
-
-👉 **[Tripadvisor](https://www.tripadvisor.com/)**
-👉 **[Yelp](https://www.yelp.com/)**
-👉 **[Booking.com](https://www.booking.com/)**
-👉 **[trivago](https://www.trivago.com/)**
-👉 **[Medium](https://www.medium.com/)**
-
-This embedded UX allows an end user to sign-in directly when a Google iframe is embedded into your web pages. The Automatic sign-in option enables frictionless user sign-in.
+User can set a keyword and the system will notify by email when a new post is published in your site with the same keyword. Simply copy the [searchalert] shortcode and place it anywhere in your site to allow visitors to set alert.
 
 == Features ==
 
-🔥 Instant login popup
-🔥 Login button in login pages
-🔥 Shortcode to show login button
-🔥 Exclude in a single post(any custom post type)
-🔥 Exclude in pages*
-🔥 Default user role*
-🔥 Auto signin
-🔥 Redirect URL*
-🔥 Signin context*
-🔥 Toggle outside tap to close One Tap
-🔥 Add sub-domain support*
-🔥 Delay showing popup*
+🔥 Simply collects user preference
+🔥 Send Professional email
+🔥 Shortcode to show form
+🔥 Work for any post types
+🔥 Import users and keywords from csv
+🔥 Remove or modify keyword
+🔥 [Directorist](https://wordpress.org/plugins/directorist/) integration
+🔥 [geoDirectory](https://wordpress.org/plugins/geodirectory/) integration
+🔥 Mobile SMS alert*
+🔥 Work for unlimited post types*
+🔥 Customize email template*
+🔥 White Labeling*
 
 >*Requires Additional Purchase
 
 == Changelog ==
+
+1.0.0 (Dec 06, 2022)
