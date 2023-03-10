@@ -4,6 +4,7 @@ namespace searchAlert\Module\Integrations\Directorist;
 use AazzTech\DirTheme\Helper as DirThemeHelper;
 use \WP_Error;
 use searchAlert\Base\Helper;
+use \Directorist\Helper as Base_Helper;
 
 class Dashboard {
 
@@ -14,6 +15,7 @@ class Dashboard {
     function __construct() {
 		add_action( 'directorist_after_dashboard_navigation', [ $this, 'nav_link' ] );
         add_action( 'directorist_after_dashboard_contents', [ $this, 'nav_content' ] );
+
     }
 
     public function nav_link() { ?>
@@ -28,7 +30,12 @@ class Dashboard {
     <?php }
 
     public function nav_content() {
-        
+
+		$categories = get_terms([
+			'taxonomy' => ATBDP_CATEGORY,
+			'hide_empty' => false
+		]);
+
         $user_id    = get_current_user_id();   
 		$query_searched   = get_user_meta( $user_id, '_esl_at_biz_dir', true ); 
 		$args = [
@@ -39,57 +46,52 @@ class Dashboard {
 		];
 		$searches = Helper\get_search( $args );
         ?>
-        <div <?php echo esc_attr( apply_filters( 'wallet_dashboard_content_div_attributes', 'class="directorist-tab__pane" id="saved_search"' ) ); ?>>
-		<div class="directorist-favourite-items-wrap">
+        <div class="directorist-tab__pane" id="saved_search">
+			
+			<div class="<?php Base_Helper::directorist_row(); ?>">
 
-			<div class="directorist-favourirte-items">
+				<div class="<?php Base_Helper::directorist_column('lg-8'); ?>">
+					<?php if ( $searches ): ?>
+						<hr>
+						<div class="directorist-dashboard-items-list">
+							<?php foreach ( $searches as $item ): 
+								$keyword = get_post_meta( $item, '_keyword', true );
+								?>
 
-				<?php Helper\load_template( 'add-search' )?>
+								<div class="directorist-dashboard-items-list__single" id="search-alert-item-to-remove-<?php echo esc_attr( $item); ?>">
 
-				<?php if ( $searches ): ?>
-					<hr>
-					<div class="directorist-dashboard-items-list">
-						<?php foreach ( $searches as $item ): 
-							$keyword = get_post_meta( $item, '_keyword', true );
-							?>
+									<div class="directorist-dashboard-items-list__single--info">
 
-							<div class="directorist-dashboard-items-list__single" id="search-alert-item-to-remove-<?php echo esc_attr( $item); ?>">
+										<div class="directorist-listing-content">
+											<h4 class="directorist-listing-title"><?php echo esc_html( $keyword );?></h4>
+										</div>
 
-								<div class="directorist-dashboard-items-list__single--info">
+									</div>
 
-									<div class="directorist-listing-content">
-										<h4 class="directorist-listing-title"><?php echo esc_html( $keyword );?></h4>
+									<div class="directorist-dashboard-items-list__single--action">
+										<a href="#" class="searchalert_edit" data-searchalert_edit_from_list="1" data-search-query="<?php echo esc_attr( $keyword ); ?>">
+											<span class="directorist-favourite-remove-text"><?php esc_html_e( 'Edit', 'search-alert' ); ?></span>
+										</a>
+										|
+										<a href="#" class="searchalert_delete" data-searchalert_delete_from_list="1" data-search-query="<?php echo esc_attr( $keyword ); ?>">
+											<span class="directorist-favourite-remove-text"><?php esc_html_e( 'Remove', 'search-alert' ); ?></span>
+										</a>
+										
 									</div>
 
 								</div>
 
-								<div class="directorist-dashboard-items-list__single--action">
-									<a href="#" class="searchalert_edit" data-searchalert_edit_from_list="1" data-search-query="<?php echo esc_attr( $keyword ); ?>">
-										<span class="directorist-favourite-remove-text"><?php esc_html_e( 'Edit', 'search-alert' ); ?></span>
-									</a>
-									|
-									<a href="#" class="searchalert_delete" data-searchalert_delete_from_list="1" data-search-query="<?php echo esc_attr( $keyword ); ?>">
-										<span class="directorist-favourite-remove-text"><?php esc_html_e( 'Remove', 'search-alert' ); ?></span>
-									</a>
-									
-								</div>
+							<?php endforeach; ?>
 
-							</div>
-
-						<?php endforeach; ?>
-
-					</div>
-
-				<?php else: ?>
-
-					<div class="directorist-notfound"><?php esc_html_e( 'Nothing found!', 'search-alert' ); ?></div>
-
-				<?php endif; ?>
-
+						</div>
+					<?php else: ?>
+						<div class="directorist-notfound"><?php esc_html_e( 'Nothing found!', 'search-alert' ); ?></div>
+					<?php endif; ?>
+				</div>
+				<?php Helper\load_template( 'add-search', [ 'categories' => $categories ] )?>
 			</div>
-
 			</div>
-        </div>
+		</div>
         <?php
 
     }

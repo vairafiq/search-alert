@@ -17,7 +17,7 @@ if ( ! defined( 'SEARCH_ALERT_REST_BASE_PREFIX' ) ) {
 }
 
 if ( ! defined( 'SEARCH_ALERT_IN_DEVELOPMENT' ) ) {
-    define( 'SEARCH_ALERT_IN_DEVELOPMENT', false );
+    define( 'SEARCH_ALERT_IN_DEVELOPMENT', SCRIPT_DEBUG );
 }
 
 if ( ! defined( 'SEARCH_ALERT_SCRIPT_VERSION' ) ) {

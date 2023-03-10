@@ -173,6 +173,34 @@ class Admin_Menu {
             ),
         );
         register_post_type( 'esl_search_alerts', $args );
+
+
+        $labels = array(
+            'name'              => _x( 'Keywords', 'Keyword general name', 'directorist' ),
+            'singular_name'     => _x( 'Keyword', 'Keyword singular name', 'directorist' ),
+            'search_items'      => __( 'Search keyword', 'directorist' ),
+            'all_items'         => __( 'All Keywords', 'directorist' ),
+            'parent_item'       => __( 'Parent keyword', 'directorist' ),
+            'parent_item_colon' => __( 'Parent keyword:', 'directorist' ),
+            'edit_item'         => __( 'Edit keyword', 'directorist' ),
+            'update_item'       => __( 'Update keyword', 'directorist' ),
+            'add_new_item'      => __( 'Add New keyword', 'directorist' ),
+            'new_item_name'     => __( 'New keyword Name', 'directorist' ),
+            'menu_name'         => __( 'Keywords', 'directorist' ),
+        );
+
+        $args        = array(
+            'hierarchical'      => false,
+            'labels'            => $labels,
+            'show_ui'           => true,
+            'show_admin_column' => true,
+            'query_var'         => true,
+            'public'            => true,
+            'show_in_nav_menus' => true,
+        );
+
+        register_taxonomy( 'esl_keyword', 'esl_search_alerts', $args );
+
     }
     public function admin_menu() { 
         add_submenu_page( 'edit.php?post_type=esl_search_alerts', __( 'Settings', 'search-alert' ), __( 'Settings', 'search-alert' ), 'manage_options', 'esl-settings', [$this, 'search_alert_config'] );

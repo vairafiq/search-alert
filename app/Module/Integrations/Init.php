@@ -24,12 +24,18 @@ class Init {
      * @return array
      */
     protected function get_controllers() {
-        return [
-            Directorist\Init::class,
-            GeoDirectory\Init::class,
-            Send_Alert::class,
-            Set_Alert::class,
-        ];
+
+        $features = [ Send_Alert::class,  Set_Alert::class ];
+
+        if( class_exists( "Directorist_Base" ) ) {
+            array_push( $features,Directorist\Init::class );
+        }
+
+        if( class_exists( "GeoDirectory" ) ) {
+            array_push( $features,GeoDirectory\Init::class );
+        }
+        return $features;
+
     }
 
 }

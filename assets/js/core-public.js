@@ -159,7 +159,7 @@ __webpack_require__.r(__webpack_exports__);
     var user = data.user ? data.user : '';
     var form_data = new FormData();
     form_data.append('action', 'update_search_notice');
-    form_data.append('search_alert_nonce', searchAlert.nonce);
+    form_data.append('search_alert_nonce', searchAlertf.nonce);
     form_data.append('task', task);
     form_data.append('query', query);
     form_data.append('email', email);
@@ -198,6 +198,23 @@ __webpack_require__.r(__webpack_exports__);
       }
     });
   }
+
+  //fresh start
+  $('body').on('submit', '#directorist_save_search', function (e) {
+    e.preventDefault();
+    var form_data = $(this).serialize();
+    $.post(searchAlert.ajaxurl, form_data, function (response) {
+      if (!response.success) {
+        $('#directorist-save-search-notice').html('<span class="directorist-alert directorist-alert-danger">' + response.data + '</span>');
+      } else {
+        $('#directorist-save-search-notice').html('<span class="directorist-alert directorist-alert-success">' + response.data + '</span>');
+        setTimeout(function () {
+          $('#directorist-save-search-notice').html('');
+          // $( '.directorist_campaign_' + campaign_id ).empty().append( '<span class="directorist_badge dashboard-badge directorist_status_published">Sent</span>');
+        }, 1500);
+      }
+    }, 'json');
+  });
 })(jQuery);
 }();
 /******/ })()

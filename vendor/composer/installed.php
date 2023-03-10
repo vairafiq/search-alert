@@ -3,7 +3,7 @@
         'name' => 'exlac/search-alert',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '57f8074b201662703c33367ee1f5dfd76fc8c9ff',
+        'reference' => '0bd965be085a75da3540c168207db75be5fa2f09',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -22,7 +22,7 @@
         'exlac/search-alert' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '57f8074b201662703c33367ee1f5dfd76fc8c9ff',
+            'reference' => '0bd965be085a75da3540c168207db75be5fa2f09',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
