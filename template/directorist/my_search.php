@@ -79,7 +79,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 											<?php esc_html_e( 'Waiting', 'directorist' ); ?>
 										</span>
 										<br>
-										<small><a style="color: red;" target="_blank" class="sharing_force_send" href="<?php echo esc_url( site_url( '/contact' ) ); ?>"><?php esc_html_e( 'Contact Admin', 'directorist' ); ?></a></small>
+										<small><a style="color: red;" target="_blank" class="" href="<?php echo esc_url( site_url( '/contact' ) ); ?>"><?php esc_html_e( 'Contact Admin', 'directorist' ); ?></a></small>
 										
 									<?php }else{
 										echo '<span class="directorist_badge dashboard-badge directorist_status_published">' . __( 'Sent', 'directorist' ) . '</span>';
