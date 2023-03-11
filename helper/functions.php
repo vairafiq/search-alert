@@ -824,7 +824,7 @@ function get_user_search( $args = [] ) {
         'posts_per_page' => -1,
         'post_status' => 'publish',
         'fields' => 'ids',
-        'post_user' => get_current_user_id()
+        'author' => get_current_user_id()
     ];
     return get_posts( array_merge( $default, $args ) );
 }

@@ -87,6 +87,7 @@ class Set_Alert {
           'post_title' => 'Search Alert for ' . $keyword,
           'tax_input'    => [ "esl_keyword" => $keyword ],
           'meta_input' => $data,
+          'post_author' => get_current_user_id(),
         ];
 
         if( $data['search_id'] ) {
