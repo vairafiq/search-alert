@@ -817,6 +817,18 @@ function get_search( $args = [] ) {
     return get_posts( array_merge( $default, $args ) );
 }
 
+function get_user_search( $args = [] ) {
+
+    $default = [
+        'post_type' => 'esl_search_alerts',
+        'posts_per_page' => -1,
+        'post_status' => 'publish',
+        'fields' => 'ids',
+        'post_user' => get_current_user_id()
+    ];
+    return get_posts( array_merge( $default, $args ) );
+}
+
 function update_search( $args = [], $task = 'add' ) {
 
     if( ! $args ) {

@@ -36,59 +36,16 @@ class Dashboard {
 			'hide_empty' => false
 		]);
 
-        $user_id    = get_current_user_id();   
-		$query_searched   = get_user_meta( $user_id, '_esl_at_biz_dir', true ); 
-		$args = [
-			'meta_key' => '_search_by',
-			'meta_value' => $user_id,
-			'meta_compare' => 'LIKE',
-			'posts_per_page' => '-1',
-		];
-		$searches = Helper\get_search( $args );
+		$searches = Helper\get_user_search();
         ?>
         <div class="directorist-tab__pane" id="saved_search">
 			
 			<div class="<?php Base_Helper::directorist_row(); ?>">
 
 				<div class="<?php Base_Helper::directorist_column('lg-8'); ?>">
-					<?php if ( $searches ): ?>
-						<hr>
-						<div class="directorist-dashboard-items-list">
-							<?php foreach ( $searches as $item ): 
-								$keyword = get_post_meta( $item, '_keyword', true );
-								?>
-
-								<div class="directorist-dashboard-items-list__single" id="search-alert-item-to-remove-<?php echo esc_attr( $item); ?>">
-
-									<div class="directorist-dashboard-items-list__single--info">
-
-										<div class="directorist-listing-content">
-											<h4 class="directorist-listing-title"><?php echo esc_html( $keyword );?></h4>
-										</div>
-
-									</div>
-
-									<div class="directorist-dashboard-items-list__single--action">
-										<a href="#" class="searchalert_edit" data-searchalert_edit_from_list="1" data-search-query="<?php echo esc_attr( $keyword ); ?>">
-											<span class="directorist-favourite-remove-text"><?php esc_html_e( 'Edit', 'search-alert' ); ?></span>
-										</a>
-										|
-										<a href="#" class="searchalert_delete" data-searchalert_delete_from_list="1" data-search-query="<?php echo esc_attr( $keyword ); ?>">
-											<span class="directorist-favourite-remove-text"><?php esc_html_e( 'Remove', 'search-alert' ); ?></span>
-										</a>
-										
-									</div>
-
-								</div>
-
-							<?php endforeach; ?>
-
-						</div>
-					<?php else: ?>
-						<div class="directorist-notfound"><?php esc_html_e( 'Nothing found!', 'search-alert' ); ?></div>
-					<?php endif; ?>
+					<?php Helper\load_template( 'directorist/my_search', [ 'searches' => $searches ] ); ?>
 				</div>
-				<?php Helper\load_template( 'add-search', [ 'categories' => $categories ] )?>
+				<?php Helper\load_template( 'add-search', [ 'categories' => $categories ] ); ?>
 			</div>
 			</div>
 		</div>

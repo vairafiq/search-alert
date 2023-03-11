@@ -215,6 +215,17 @@ __webpack_require__.r(__webpack_exports__);
       }
     }, 'json');
   });
+
+  // edit search
+  $('.directorist_sl_update').on('click', function (e) {
+    e.preventDefault();
+    var keyword = $(this).data('keyword');
+    var id = $(this).data('id');
+    var category = $(this).data('category');
+    $('#sl_category').val(category).select2();
+    $('#keyword').val(keyword);
+    $('#search_id').val(id);
+  });
 })(jQuery);
 }();
 /******/ })()

@@ -47,6 +47,7 @@
 						</div>
 
 						<input type="hidden" name="action" value="directorist_save_search">
+						<input type="hidden" name="search_id" id="search_id" value="">
 						<input type="hidden" name="nonce" value="<?php echo wp_create_nonce( HL\get_nonce_key() ); ?>">
 
 						<button type="submit" class="directorist-btn directorist-btn-lg directorist-btn-dark directorist-btn-profile-save"><?php esc_html_e( 'Add New', 'directorist' ); ?></button>

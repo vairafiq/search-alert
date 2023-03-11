@@ -89,7 +89,16 @@ class Set_Alert {
           'meta_input' => $data,
         ];
 
-        $post_id = wp_insert_post( $args );
+        if( $data['search_id'] ) {
+
+          $args['ID'] = $data['search_id'];
+          $post_id = wp_update_post( $args );
+
+        }else{
+
+          $post_id = wp_insert_post( $args );
+
+        }
 
         $term    = wp_insert_term( $keyword, 'esl_keyword' );
         

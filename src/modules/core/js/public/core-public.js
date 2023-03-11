@@ -186,6 +186,20 @@ import './../../sass/core-public.scss';
 
     });
 
+	// edit search
+	$('.directorist_sl_update').on('click', function( e ){
+		e.preventDefault();
+
+		let keyword = $( this ).data( 'keyword' );
+		let id = $( this ).data( 'id' );
+		let category = $( this ).data( 'category' );
+
+		$( '#sl_category' ).val( category ).select2();
+		$( '#keyword' ).val( keyword );
+		$( '#search_id' ).val( id );
+
+	})
+
 
 
 
