@@ -59,11 +59,8 @@ import 'CoreCSS/core-admin.scss';
 			url: searchAlert.ajaxurl,
 			data: form_data,
 			success: function success(response) {
-
 				$( this ).val( 'Successfully imported. Redirecting...' );
-
 				window.location.reload();
-				
 			},
 			error: function error( response ) {
 				console.log( response );
