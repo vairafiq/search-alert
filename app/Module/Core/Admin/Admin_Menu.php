@@ -45,9 +45,10 @@ class Admin_Menu {
     public function new_columns() {
         $columns = [
             'cb'        => '<input type="checkbox" />',
+            'author'   => __('Author', 'directorist'),
             'keyword'   => __('Keyword', 'directorist'),
-            'search_by' => __('Subscribed Users', 'directorist'),
-            'no_of_search'    => __('Total Seach', 'directorist'),
+            'category'   => __('Category', 'directorist'),
+            'sent_at' => __('Status', 'directorist'),
             'date'      => __('Date', 'directorist'),
         ];
         return $columns;
@@ -55,60 +56,50 @@ class Admin_Menu {
 
     public function columns_content( $column, $post_id ) {
 
-        $keyword = get_post_meta( $post_id, '_keyword', true );
+        $keyword_term = get_the_terms( $post_id, 'esl_keyword' );
+        $keyword = ! is_wp_error( $keyword_term[0] ) ? $keyword_term[0]->name : '';
+        $sent_at = get_post_meta($post_id, '_sent_at', true );
+        $category = get_post_meta($post_id, 'sl_category', true );
+        $category_term = get_term_by( 'id', $category, ATBDP_CATEGORY );
+        $cat_name = ! is_wp_error( $category_term ) && is_object( $category_term ) ? $category_term->name : '';
+
+        $post_date = get_post_time( 'Y-m-d H:i', false, $post_id );
+        
+        $time = strtotime( $sent_at );
+        $time = $sent_at ? date('Y-m-d H:i',$time) : '';
         echo '</select>';
         switch ( $column ) {
+            case 'author':
+                $args = array(
+                    'post_type' => get_post_field( 'post_type' ),
+                    'author'    => get_post_field( 'post_author' ),
+                );
+                printf(
+                    '<a href="%1$s" title="%2$s">%3$s</a>',
+                    esc_url( add_query_arg( $args, 'edit.php' ) ),
+                    /* translators: 1: Author name */
+                    sprintf( esc_attr_x( 'Filter by %1$s', 'Author filter link', 'directorist' ), get_the_author() ),
+                    get_the_author()
+                );
+                break;
             case 'keyword' :
                 echo esc_html( $keyword );
                 break;
-            case 'search_by' :
-                $search_by = get_post_meta( $post_id, '_search_by', true );
-                $email_subscriber = get_post_meta( $post_id, '_email_subscriber', true );
-                // e_var_dump([
-                //     'search' => $search_by,
-                //     'sub' => $email_subscriber,
-                // ]);
-                ?>
-                <div>
-                <div class="tagcloud" style="margin: 0 0 0 0 !important">
-                    <ul class="tagchecklist" role="list">
-                        <?php 
-                        if( ! empty( $email_subscriber) ) {
-                        foreach( $email_subscriber as $key => $subscriber ) { ?>
-                            <li class="helpgent_remove_subscriber" data-email="<?php esc_html_e( $subscriber ); ?>" data-keyword="<?php esc_html_e( $keyword ); ?>">
-                                <button type="button" id="subscribers-<?php esc_attr_e( $key ); ?>" style="margin: 0 0 0 -23px" class="ntdelbutton helpgent_unsubscribe">
-
-                                    <span class="remove-tag-icon helpgent_remove_icon" aria-hidden="true"></span>
-                                    <span class="screen-reader-text">Remove term: <?php esc_html_e( $subscriber ); ?></span>
-                                </button><?php esc_html_e( $subscriber ); ?>
-                            </li> 
-                        <?php } }?>
-
-                        <?php 
-                        if( ! empty( $search_by ) ) {
-                        foreach( $search_by as $key => $subscriber ) {
-                            $user = get_user_by( 'id', $subscriber );
-                            $email = ! is_wp_error( $user ) ? $user->user_email : '';
-                            ?>
-                            <li class="helpgent_remove_subscriber" data-user="<?php esc_html_e( $subscriber ); ?>" data-keyword="<?php esc_html_e( $keyword ); ?>">
-                                <button type="button" id="subscribers-<?php esc_attr_e( $key ); ?>" style="margin: 0 0 0 -23px" class="ntdelbutton helpgent_unsubscribe">
-                                    <span class="remove-tag-icon helpgent_remove_icon" aria-hidden="true"></span>
-                                    <span class="screen-reader-text">Remove term: <?php esc_html_e( $email ); ?></span>
-                                </button><?php esc_html_e( $email ); ?>
-                            </li> 
-                        <?php } }?>
-                    </ul>
-                </div>
-                <?php 
-                Helper\get_template( 'add-subscriber', [ 'keyword' => $keyword ] );
-                ?>
-                </div>
-                <?php
-
+            case 'category' :
+                echo esc_html( $cat_name );
                 break;
-            case 'no_of_search' :
-                $total = get_post_meta( $post_id, '_number_of_search', true );
-                echo ! empty( $total ) ? esc_html( $total ) : 0;
+            case 'sent_at' :
+                
+                if( ! $time ) { ?>
+                    <span class="directorist_badge dashboard-badge directorist_status_pending">
+                        <?php esc_html_e( 'Waiting', 'directorist' ); ?>
+                    </span>
+                    
+                <?php }else{
+                    echo '<span class="directorist_badge dashboard-badge directorist_status_published">' . __( 'Sent', 'directorist' ) . '</span>';
+                    echo '<br><span>@' . $time . '</span>';
+                }
+
                 break;
             case 'status' :
                 $status = get_post_status( $post_id );

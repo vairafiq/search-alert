@@ -956,3 +956,126 @@ function post_type_allow( $type = '' )
     return false;
     
 }
+
+function process_post( $data ) {
+
+    $keyword = ! empty( $data['keyword'] ) ? search_alert_clean( wp_unslash( $data['keyword'] ) ) : '';
+    $email   = ! empty( $data['email'] ) ? search_alert_clean( wp_unslash( $data['email'] ) ) : '';
+    
+    if( ! $keyword ) {
+        wp_send_json_error( esc_html__( 'Keyword is missing', 'search-alert' ), 400 );
+    }
+
+    unset( $data['action'] );
+    unset( $data['nonce'] );
+
+
+    $args = [
+      'post_type' => 'esl_search_alerts',
+      'post_status' => 'publish',
+      'post_title' => 'Search Alert for ' . $keyword,
+      'tax_input'    => [ "esl_keyword" => $keyword ],
+      'meta_input' => $data,
+      'post_author' => get_current_user_id(),
+    ];
+
+    // update existing
+    if( $data['search_id'] ) {
+    $args['ID'] = $data['search_id'];
+    $post_id = wp_update_post( $args );
+    }else{
+    // insert new
+    $post_id = wp_insert_post( $args );
+    }
+
+    $term    = wp_insert_term( $keyword, 'esl_keyword' );
+    if( is_wp_error( $term ) ) {
+        if ( $term->get_error_code() === 'term_exists' ) {
+            // When term exists, error data should contain existing term id.
+            $term_id = $term->get_error_data();
+        }
+    }else{
+      $term_id = $term['term_id'];
+    }
+
+    wp_set_object_terms( $post_id, $term_id, 'esl_keyword' );
+
+    return $post_id;
+
+}
+
+function import_subscribers( $data ) {
+
+    $keyword    = ! empty( $data['keyword'] ) ? search_alert_clean( wp_unslash( $data['keyword'] ) ) : '';
+    $emails      = ! empty( $data['email'] ) ? wp_unslash( $data['email'] ) : [];
+    
+    if( ! $keyword ) {
+        wp_send_json_error( esc_html__( 'Keyword is missing', 'search-alert' ), 400 );
+    }
+
+    foreach( $emails as $email ) {
+        
+        $user_id = email_exists( $email );
+        
+        if( ! $user_id ) {
+            $user_id = create_user( $email );
+        }
+
+        $args = [
+            'post_type' => 'esl_search_alerts',
+            'post_status' => 'publish',
+            'post_title' => 'Search Alert for ' . $keyword,
+            'tax_input'    => [ "esl_keyword" => $keyword ],
+            'meta_input' => $data,
+            'post_author' => $user_id,
+          ];
+      
+          // update existing
+          if( $data['search_id'] ) {
+          $args['ID'] = $data['search_id'];
+          $post_id = wp_update_post( $args );
+          }else{
+          // insert new
+          $post_id = wp_insert_post( $args );
+          }
+      
+          $term    = wp_insert_term( $keyword, 'esl_keyword' );
+          if( is_wp_error( $term ) ) {
+              if ( $term->get_error_code() === 'term_exists' ) {
+                  // When term exists, error data should contain existing term id.
+                  $term_id = $term->get_error_data();
+              }
+          }else{
+            $term_id = $term['term_id'];
+          }
+      
+          wp_set_object_terms( $post_id, $term_id, 'esl_keyword' );
+
+    }
+
+    return $post_id;
+}
+
+function create_user( $email ) {
+    $string = $email;
+    $explode = explode("@", $string);
+    array_pop($explode);
+    $userName = join('@', $explode);
+    //check if username already exist
+    if (username_exists($userName)) {
+        $random = substr(str_shuffle('0123456789abcdefghijklmnopqrstuvwxyz'), 1, 5);
+        $userName = $userName . $random;
+    }
+ 
+    $password = wp_generate_password(12, false);
+    $userdata = array(
+        'user_login' => $userName,
+        'user_email' => $email,
+        'user_pass' => $password,
+    );
+    $user_id = wp_insert_user($userdata); // return inserted user id or a WP_Error
+    if( is_wp_error( $user_id ) ) {
+        wp_send_json_error( __( 'Error inserting user ', 'search-alert') );
+    }
+    return $user_id;
+}

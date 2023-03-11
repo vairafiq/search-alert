@@ -32,7 +32,7 @@ class Set_Alert {
         }
 
         //lets insert keyword as a term and create a post for the user with this keyword
-        $post_id = $this->process_post( $_POST );
+        $post_id = Helper\process_post( $_POST );
 
         if( is_wp_error( $post_id ) ) {
           wp_send_json_error( esc_html__( 'Failed to saved', 'search-alert' ), 400 );
@@ -67,56 +67,6 @@ class Set_Alert {
       // wp_send_json_success( $user_search, 200 );
   
     }	
-
-    public function process_post( $data ) {
-
-        $keyword       = ! empty( $data['keyword'] ) ? search_alert_clean( wp_unslash( $data['keyword'] ) ) : '';
-        $sl_category   = ! empty( $data['sl_category'] ) ? search_alert_clean( wp_unslash( $data['sl_category'] ) ) : '';
-        
-        if( ! $keyword ) {
-            wp_send_json_error( esc_html__( 'Keyword is missing', 'search-alert' ), 400 );
-        }
-
-        unset( $data['action'] );
-        unset( $data['nonce'] );
-
-
-        $args = [
-          'post_type' => 'esl_search_alerts',
-          'post_status' => 'publish',
-          'post_title' => 'Search Alert for ' . $keyword,
-          'tax_input'    => [ "esl_keyword" => $keyword ],
-          'meta_input' => $data,
-          'post_author' => get_current_user_id(),
-        ];
-
-        if( $data['search_id'] ) {
-
-          $args['ID'] = $data['search_id'];
-          $post_id = wp_update_post( $args );
-
-        }else{
-
-          $post_id = wp_insert_post( $args );
-
-        }
-
-        $term    = wp_insert_term( $keyword, 'esl_keyword' );
-        
-        if( is_wp_error( $term ) ) {
-          if ( $term->get_error_code() === 'term_exists' ) {
-						// When term exists, error data should contain existing term id.
-						$term_id = $term->get_error_data();
-					}
-        }else{
-          $term_id = $term['term_id'];
-        }
-
-        wp_set_object_terms( $post_id, $term_id, 'esl_keyword' );
-
-        return $post_id;
-    
-    }
 
     public function update_search_notice() {
 
