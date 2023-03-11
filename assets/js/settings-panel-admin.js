@@ -5532,19 +5532,6 @@ var SettingBox = function SettingBox() {
             className: "search-alert-settings-top__link-text",
             children: "Support "
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("a", {
-          href: "https://exlac.com/product/search-alert/",
-          target: "_blank",
-          className: "onetop-proLink",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("div", {
-            className: "search-alert-settings-top__link-icon",
-            children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(react_svg__WEBPACK_IMPORTED_MODULE_2__.ReactSVG, {
-              src: Assets_svg_icons_link_svg__WEBPACK_IMPORTED_MODULE_6__["default"]
-            })
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)("span", {
-            className: "search-alert-settings-top__link-text",
-            children: "Go Pro "
-          })]
         })]
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)("div", {
@@ -5888,7 +5875,7 @@ var SettingContent = function SettingContent(props) {
       })
     }, {
       label: "Email Body",
-      pro: true,
+      pro: false,
       component: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
         className: "exlac-vm-form-group",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("textarea", {
@@ -5902,7 +5889,7 @@ var SettingContent = function SettingContent(props) {
       })
     }, {
       label: "Email Footer",
-      pro: true,
+      pro: false,
       component: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
         className: "exlac-vm-setting-has-info",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_switch__WEBPACK_IMPORTED_MODULE_5__["default"], {

@@ -156,7 +156,7 @@ const SettingContent = props => {
                 },
                 {
                     label: "Email Body",
-                    pro: true,
+                    pro: false,
                     component: <div className="exlac-vm-form-group">
                         <textarea
                             className='exlac-vm-form__element'
@@ -172,7 +172,7 @@ const SettingContent = props => {
                 },
                 {
                     label: "Email Footer",
-                    pro: true,
+                    pro: false,
                     component: <div className="exlac-vm-setting-has-info">
                         <Switch uncheckedIcon={false} checkedIcon={false} onColor="#6551F2" offColor="#E2E2E2" className="exlac-vm-switch" handleDiameter={14} height={22} width={40} name="email_footer" checked={email_footer} onChange={handleAutoSignIn} />
                     </div>

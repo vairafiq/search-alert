@@ -10,6 +10,10 @@
  use \Directorist\Helper;
  use searchAlert\Base\Helper as HL;
 
+ $categories = get_terms([
+	'taxonomy' => ATBDP_CATEGORY,
+	'hide_empty' => false
+]);
 
 ?>
 
