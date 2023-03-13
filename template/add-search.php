@@ -39,7 +39,7 @@
 
 						<div class="directorist-form-group">
 							<label for="sl_category"><?php esc_html_e( 'Category', 'directorist' ); ?></label>
-							<select style="width: 100%;" class="directorist-form-element directorist-select" name="sl_category" id="sl_category">
+							<select style="width: 100%; height: 46px" class="directorist-form-element directorist-select" name="sl_category" id="sl_category">
 								<option value=""><?php esc_html_e( 'Select Category', 'directorist' ) ?></option>
 								<?php 
 								foreach( $categories as $key => $data ) : 

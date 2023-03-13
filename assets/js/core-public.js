@@ -203,6 +203,7 @@ __webpack_require__.r(__webpack_exports__);
   $('body').on('submit', '#directorist_save_search', function (e) {
     e.preventDefault();
     var form_data = $(this).serialize();
+    $('#directorist-save-search-notice').html('<span class="directorist-alert directorist-alert-info">Please wait...</span>');
     $.post(searchAlert.ajaxurl, form_data, function (response) {
       if (!response.success) {
         $('#directorist-save-search-notice').html('<span class="directorist-alert directorist-alert-danger">' + response.data + '</span>');

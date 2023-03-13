@@ -17,7 +17,58 @@ class Admin_Menu {
 
         add_filter( 'post_row_actions', array( $this, 'post_row_actions' ), 10, 2 );
 
+        add_action('restrict_manage_posts', array($this, 'alert_filter'));
+        add_filter('parse_query', array($this, 'filer_by_keyword'));
+
     }
+
+    public function filer_by_keyword( $query )
+    {
+        global $pagenow;
+        $type = 'post';
+        if (isset($_GET['post_type'])) {
+            $type = ! empty( $_GET['post_type'] ) ? directorist_clean( wp_unslash( $_GET['post_type'] ) ) : '';
+        }
+        if ('esl_search_alerts' == $type && is_admin() && $pagenow == 'edit.php' && isset($_GET['alert_keyword']) && ! empty( $_GET['alert_keyword'] ) ) {
+            $value = ! empty( $_GET['alert_keyword'] ) ? directorist_clean( wp_unslash( $_GET['alert_keyword'] ) ) : '';
+            $tax_query = array(
+                'relation' => 'AND',
+                array(
+                    'taxonomy' => 'esl_keyword',
+                    'terms'    => $value,
+                ),
+            );
+            $query->set( 'tax_query', $tax_query );
+        }
+    }
+
+    public function alert_filter(  ) {
+        $type = 'post';
+        if (isset($_GET['post_type'])) {
+            $type = ! empty( $_GET['post_type'] ) ? directorist_clean( wp_unslash( $_GET['post_type'] ) ) : '';
+        }
+        
+        //only add filter to post type you want
+        if ( 'esl_search_alerts' == $type  ) {
+            $keywords = get_terms([
+                'taxonomy'   => 'esl_keyword',
+                'hide_empty' => false,
+              ]);
+              $current_v = ! empty( $_GET['alert_keyword'] ) ? directorist_clean( wp_unslash( $_GET['alert_keyword'] ) ) : '';
+    
+            ?>
+            <select name="alert_keyword">
+                <option value=""><?php esc_html_e('Filter by Keyword ', 'directorist'); ?></option>
+                <?php
+                  foreach ($keywords as $keyword) { 
+                    ?>
+                    <option value="<?php echo esc_attr( $keyword->term_id ); ?>" <?php echo $keyword->term_id == $current_v ? ' selected="selected"' : ''; ?>><?php echo esc_attr( $keyword->name ); ?></option>
+                    <?php } ?>
+            </select>
+        <?php
+        }
+    }
+
 
     public function add_extra_button() {
         global $post_type_object;
@@ -46,6 +97,7 @@ class Admin_Menu {
         $columns = [
             'cb'        => '<input type="checkbox" />',
             'author'   => __('Author', 'directorist'),
+            'email'   => __('Email', 'directorist'),
             'keyword'   => __('Keyword', 'directorist'),
             'category'   => __('Category', 'directorist'),
             'sent_at' => __('Status', 'directorist'),
@@ -81,6 +133,12 @@ class Admin_Menu {
                     sprintf( esc_attr_x( 'Filter by %1$s', 'Author filter link', 'directorist' ), get_the_author() ),
                     get_the_author()
                 );
+                break;
+            case 'email' :
+                $author_id = get_post_field( 'post_author', $post_id );
+                $user = get_user_by( 'id', $author_id );
+                $user_email = ! is_wp_error( $user ) ? $user->user_email : '';
+                echo esc_html( $user_email );
                 break;
             case 'keyword' :
                 echo esc_html( $keyword );
@@ -157,7 +215,7 @@ class Admin_Menu {
             'has_archive'         => false,
             'exclude_from_search' => false,
             'publicly_queryable'  => true,
-            'map_meta_cap'        => true, // set this true, otherwise, even admin will not be able to edit this post. WordPress will map cap from edit_post to edit_at_biz_dir etc,
+            'map_meta_cap'        => true, // set this true, otherwise, even admin will not be able to edit this post. WordPress will map cap from edit_post to edit_esl_search_alerts etc,
             'menu_position'       => 5,
             'capabilities' => array(
                 'create_posts'   => 'do_not_allow',

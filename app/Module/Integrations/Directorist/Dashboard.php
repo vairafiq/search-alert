@@ -31,11 +31,6 @@ class Dashboard {
 
     public function nav_content() {
 
-		$categories = get_terms([
-			'taxonomy' => ATBDP_CATEGORY,
-			'hide_empty' => false
-		]);
-
 		$searches = Helper\get_user_search();
         ?>
         <div class="directorist-tab__pane" id="saved_search">
@@ -45,7 +40,7 @@ class Dashboard {
 				<div class="<?php Base_Helper::directorist_column('lg-8'); ?>">
 					<?php Helper\load_template( 'directorist/my_search', [ 'searches' => $searches ] ); ?>
 				</div>
-				<?php Helper\load_template( 'add-search', [ 'categories' => $categories ] ); ?>
+				<?php Helper\load_template( 'add-search' ); ?>
 			</div>
 			</div>
 		</div>

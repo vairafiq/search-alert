@@ -166,6 +166,7 @@ import './../../sass/core-public.scss';
             
         e.preventDefault();
         var form_data = $( this ).serialize();
+		$('#directorist-save-search-notice').html('<span class="directorist-alert directorist-alert-info">Please wait...</span>');
 
         $.post(
             searchAlert.ajaxurl,
