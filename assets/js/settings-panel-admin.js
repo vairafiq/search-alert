@@ -5875,7 +5875,7 @@ var SettingContent = function SettingContent(props) {
       })
     }, {
       label: "Email Body",
-      pro: false,
+      pro: true,
       component: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
         className: "exlac-vm-form-group",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("textarea", {
@@ -5889,7 +5889,7 @@ var SettingContent = function SettingContent(props) {
       })
     }, {
       label: "Email Footer",
-      pro: false,
+      pro: true,
       component: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
         className: "exlac-vm-setting-has-info",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_switch__WEBPACK_IMPORTED_MODULE_5__["default"], {

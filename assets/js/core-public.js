@@ -73,76 +73,6 @@ __webpack_require__.r(__webpack_exports__);
     }
     return b;
   }(window.location.search.substr(1).split('&'));
-
-  // result pages
-  $('body').on('click', '.searchalert_add', function (e) {
-    e.preventDefault();
-    var data = {
-      user: searchAlert.current_user_id
-    };
-    requet('.searchalert_add', '', data);
-  });
-
-  // inline form
-  $('body').on('click', '.searchalert_add_form', function (e) {
-    e.preventDefault();
-    var isUpdate = $('.search_alert_update').val();
-    var data = {
-      query: $('.search_alert_input').val(),
-      delete: false,
-      user: searchAlert.current_user_id,
-      form: true,
-      reload: true
-    };
-    if (!data.query) {
-      return;
-    }
-    if (isUpdate) {
-      var updateData = {
-        query: isUpdate,
-        delete: true,
-        form: false
-      };
-      requet('.searchalert_add_form', 'delete', updateData);
-    }
-
-    // console.log( data );
-    // console.log( updateData );
-    // return;
-    requet('.searchalert_add_form', '', data);
-  });
-
-  // delete form dashboard
-  $('body').on('click', '.searchalert_delete', function (e) {
-    e.preventDefault();
-    var data = {
-      query: $(this).data("search-query"),
-      delete: $(this).data("searchalert_delete_from_list")
-    };
-    requet('.searchalert_delete', 'delete', data);
-  });
-
-  // edit from dashboard
-  $('body').on('click', '.searchalert_edit', function (e) {
-    e.preventDefault();
-    $('.search_alert_input').val($(this).data("search-query"));
-    $('.search_alert_update').val($(this).data("search-query"));
-    $('.searchalert_add_form').text('Update');
-  });
-
-  // full form
-  $('body').on('submit', '#searchalert-form', function (e) {
-    e.preventDefault();
-    var data = {
-      query: $('.searchalert_keyword').val(),
-      email: $('.searchalert_email').val(),
-      form: true,
-      reload: false
-    };
-    requet('.searchalert_form_submit', '', data);
-    $('.searchalert_keyword').val('');
-    $('.searchalert_email').val('');
-  });
   function requet(selector) {
     var task = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'add';
     var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : [];
@@ -200,6 +130,25 @@ __webpack_require__.r(__webpack_exports__);
   }
 
   //fresh start
+
+  // result pages
+  $('body').on('click', '.searchalert_add', function (e) {
+    e.preventDefault();
+    var nonce = $(this).data('nonce');
+    var data = {
+      action: 'directorist_save_search',
+      keyword: qs.q ? qs.q : '',
+      sl_category: qs.in_cat ? qs.in_cat : '',
+      nonce: nonce
+    };
+    $.post(searchAlert.ajaxurl, data, function (response) {
+      if (response.success) {
+        $('.searchalert_add').html('Success! Alert saved for ').prop('disabled', true).css('cursor', 'not-allowed');
+      } else {
+        $('.searchalert_add').html('Error! Try again? ');
+      }
+    });
+  });
   $('body').on('submit', '#directorist_save_search', function (e) {
     e.preventDefault();
     var form_data = $(this).serialize();
