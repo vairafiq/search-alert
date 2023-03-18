@@ -62,7 +62,7 @@ class Dashboard {
 						<?php endforeach; ?>
 
 						<?php foreach ( $query_searched['category'] as $item ): 
-							$term = get_term_by( is_numeric( $item ) ? 'id' : 'slug', $item, ATBDP_CATEGORY );
+							$term = get_term_by( is_numeric( $item ) ? 'id' : 'slug', $item, 'at_biz_dir-category' );
 							$category_name = ! is_wp_error( $term ) ? $term->name : '';
 							?>
 

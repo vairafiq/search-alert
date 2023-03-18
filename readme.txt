@@ -4,7 +4,7 @@ Donate link: https://exlac.com/
 Tags: search, alert, new post, newslater, find search
 Requires at least: 5.0 
 Tested up to: 6.0
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -37,7 +37,11 @@ Users can set a keyword and the system will notify them by email when a new post
 
 == Changelog ==
 
-1.1.0 (Dec 06, 2022)
+1.1.1 (Mar 18, 2022)
+
+* Add - Able to set category-specific search for Directorist
+
+1.1.0 (Mar 17, 2022)
 
 * Add - Able to set category-specific search for Directorist
 * Fix - Setting keyword for alert

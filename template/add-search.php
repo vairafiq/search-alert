@@ -7,18 +7,17 @@
  * @since serchAlert 1.0.0
  */
 
- use \Directorist\Helper;
  use searchAlert\Base\Helper as HL;
 
  $categories = get_terms([
-	'taxonomy' => ATBDP_CATEGORY,
+	'taxonomy' => 'at_biz_dir-category',
 	'hide_empty' => false
 ]);
 
 ?>
 
 
-<div class="<?php Helper::directorist_column('lg-4'); ?>">
+<div class="<?php HL\searchalert_column('lg-4'); ?>">
 	<form action="#" id="directorist_save_search" method="post">
 		<div class="directorist-user-profile-edit">
 
@@ -37,6 +36,7 @@
 							<input class="directorist-form-element" id="keyword" type="text" name="keyword" placeholder="<?php esc_html_e( 'Best Company', 'directorist' ); ?>">
 						</div>
 
+						<?php if( class_exists( 'Directorist_Base' ) ) :?>
 						<div class="directorist-form-group">
 							<label for="sl_category"><?php esc_html_e( 'Category', 'directorist' ); ?></label>
 							<select style="width: 100%; height: 46px" class="directorist-form-element directorist-select" name="sl_category" id="sl_category">
@@ -49,6 +49,7 @@
 								?>
 							</select>
 						</div>
+						<?php endif; ?>
 
 						<input type="hidden" name="action" value="directorist_save_search">
 						<input type="hidden" name="search_id" id="search_id" value="">

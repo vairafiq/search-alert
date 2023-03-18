@@ -1079,3 +1079,18 @@ function create_user( $email ) {
     }
     return $user_id;
 }
+
+function searchalert_column( $column ) {
+    if ( is_array( $column ) ) {
+        $result = '';
+        foreach ( $column as $value ) {
+            $result .= ' directorist-col-'. $value;
+        }
+    }
+    else {
+        $result = 'directorist-col-'. $column;
+    }
+
+    $result = apply_filters( 'directorist_column', $result , $column );
+    echo esc_attr( $result );
+}

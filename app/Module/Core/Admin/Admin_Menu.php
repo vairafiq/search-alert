@@ -27,10 +27,10 @@ class Admin_Menu {
         global $pagenow;
         $type = 'post';
         if (isset($_GET['post_type'])) {
-            $type = ! empty( $_GET['post_type'] ) ? directorist_clean( wp_unslash( $_GET['post_type'] ) ) : '';
+            $type = ! empty( $_GET['post_type'] ) ? sanitize_text_field( wp_unslash( $_GET['post_type'] ) ) : '';
         }
         if ('esl_search_alerts' == $type && is_admin() && $pagenow == 'edit.php' && isset($_GET['alert_keyword']) && ! empty( $_GET['alert_keyword'] ) ) {
-            $value = ! empty( $_GET['alert_keyword'] ) ? directorist_clean( wp_unslash( $_GET['alert_keyword'] ) ) : '';
+            $value = ! empty( $_GET['alert_keyword'] ) ? sanitize_text_field( wp_unslash( $_GET['alert_keyword'] ) ) : '';
             $tax_query = array(
                 'relation' => 'AND',
                 array(
@@ -45,7 +45,7 @@ class Admin_Menu {
     public function alert_filter(  ) {
         $type = 'post';
         if (isset($_GET['post_type'])) {
-            $type = ! empty( $_GET['post_type'] ) ? directorist_clean( wp_unslash( $_GET['post_type'] ) ) : '';
+            $type = ! empty( $_GET['post_type'] ) ? sanitize_text_field( wp_unslash( $_GET['post_type'] ) ) : '';
         }
         
         //only add filter to post type you want
@@ -54,7 +54,7 @@ class Admin_Menu {
                 'taxonomy'   => 'esl_keyword',
                 'hide_empty' => false,
               ]);
-              $current_v = ! empty( $_GET['alert_keyword'] ) ? directorist_clean( wp_unslash( $_GET['alert_keyword'] ) ) : '';
+              $current_v = ! empty( $_GET['alert_keyword'] ) ? sanitize_text_field( wp_unslash( $_GET['alert_keyword'] ) ) : '';
     
             ?>
             <select name="alert_keyword">
@@ -99,7 +99,7 @@ class Admin_Menu {
             'author'   => __('Author', 'directorist'),
             'email'   => __('Email', 'directorist'),
             'keyword'   => __('Keyword', 'directorist'),
-            'category'   => __('Category', 'directorist'),
+            'category'   => __('Category (only works with Directorist)', 'directorist'),
             'sent_at' => __('Status', 'directorist'),
             'date'      => __('Date', 'directorist'),
         ];
@@ -112,7 +112,7 @@ class Admin_Menu {
         $keyword = ! is_wp_error( $keyword_term[0] ) ? $keyword_term[0]->name : '';
         $sent_at = get_post_meta($post_id, '_sent_at', true );
         $category = get_post_meta($post_id, 'sl_category', true );
-        $category_term = get_term_by( 'id', $category, ATBDP_CATEGORY );
+        $category_term = get_term_by( 'id', $category, 'at_biz_dir-category' );
         $cat_name = ! is_wp_error( $category_term ) && is_object( $category_term ) ? $category_term->name : '';
 
         $post_date = get_post_time( 'Y-m-d H:i', false, $post_id );

@@ -22,7 +22,7 @@ class Send_Alert
     public function testing()
     {
 
-        // var_dump( has_term( $category, ATBDP_CATEGORY, $post_id ) );
+        // var_dump( has_term( $category, 'at_biz_dir-category', $post_id ) );
         // die;
 
 
@@ -141,7 +141,7 @@ class Send_Alert
 
             $category = get_post_meta( $alert, 'sl_category', true );
 
-            if( $category && ! has_term( $category, ATBDP_CATEGORY, $post_id ) ) {
+            if( $category && ! has_term( $category, 'at_biz_dir-category', $post_id ) ) {
                 continue;
             }
 

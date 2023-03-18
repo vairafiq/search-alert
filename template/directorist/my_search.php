@@ -39,7 +39,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 						$keyword = ! is_wp_error( $keyword_term[0] ) ? $keyword_term[0]->name : '';
 						$sent_at = get_post_meta($search, '_sent_at', true );
 						$category = get_post_meta($search, 'sl_category', true );
-						$category_term = get_term_by( 'id', $category, ATBDP_CATEGORY );
+						$category_term = get_term_by( 'id', $category, 'at_biz_dir-category' );
 						$cat_name = ! is_wp_error( $category_term ) && is_object( $category_term ) ? $category_term->name : '';
 
 						$post_date = get_post_time( 'Y-m-d H:i', false, $search );
