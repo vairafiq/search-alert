@@ -30,7 +30,7 @@ class Public_Asset extends Enqueuer {
      * Load Public CSS Scripts
      *
      * @Example
-      $scripts['exlac-customer-support-app-core-public-style'] = [
+      $scripts['search-alert-core-public-style'] = [
           'file_name' => 'public',
           'base_path' => SEARCH_ALERT_CSS_PATH,
           'deps'      => [],
@@ -43,7 +43,7 @@ class Public_Asset extends Enqueuer {
     public function add_css_scripts() {
         $scripts = [];
 
-        // $scripts['exlac-customer-support-app-public-main-style'] = [
+        // $scripts['search-alert-public-main-style'] = [
         //     'file_name' => 'public-main',
         //     'base_path' => SEARCH_ALERT_CSS_PATH,
         //     'deps'      => [],
@@ -51,7 +51,7 @@ class Public_Asset extends Enqueuer {
         //     'group'     => 'public',
         // ];
 
-        $scripts['exlac-customer-support-app-core-public-style'] = [
+        $scripts['search-alert-core-public-style'] = [
             'file_name' => 'core-public',
             'base_path' => SEARCH_ALERT_CSS_PATH,
             'deps'      => [],
@@ -67,7 +67,7 @@ class Public_Asset extends Enqueuer {
      * Load Public JS Scripts
      *
      * @Example
-      $scripts['exlac-customer-support-app-core-public-script'] = [
+      $scripts['search-alert-core-public-script'] = [
           'file_name' => 'public',
           'src_path'  => SEARCH_ALERT_ASSET_SRC_PATH . 'modules/core/js/public/',
           'base_path' => SEARCH_ALERT_JS_PATH,
@@ -80,7 +80,7 @@ class Public_Asset extends Enqueuer {
     public function add_js_scripts() {
         $scripts = [];
         
-        $scripts['exlac-customer-support-app-core-public-script'] = [
+        $scripts['search-alert-core-public-script'] = [
             'file_name' => 'core-public',
             'src_path'  => SEARCH_ALERT_ASSET_SRC_PATH . 'modules/core/js/public/',
             'base_path' => SEARCH_ALERT_JS_PATH,

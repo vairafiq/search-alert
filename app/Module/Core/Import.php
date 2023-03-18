@@ -4,6 +4,7 @@ namespace searchAlert\Module\Core;
 
 use searchAlert\Base\Helper;
 use function searchAlert\Base\Helper\search_alert_clean;
+use searchAlert\Module\Integrations\Set_Alert;
 
 class Import {
 
@@ -47,8 +48,8 @@ class Import {
         // $args = [];
         foreach( $csv_data as $data ) {
           
-          $action  = 'add';
           $keyword = ! empty( $data['keyword'] ) ? $data['keyword'] : '';
+          $category = ! empty( $data['category'] ) ? $data['category'] : '';
           $email   = ! empty( $data['email'] ) ? explode( ',', $data['email'] ) : '';
           
           if( ! $keyword ) {
@@ -59,21 +60,21 @@ class Import {
           }
 
           $args = [
-            'post_title' => 'New search for ' . $keyword,
-            'meta_input' => [
-              '_email_subscriber' => $email,
-              '_number_of_search' => 1,
-              '_keyword' => $keyword,
-            ],
+            'sl_category' => $category,
+            'keyword' => $keyword,
+            'email' => $email,
           ];
 
-          $user_search = Helper\update_search( $args, $action );
-          if( is_wp_error( $user_search ) ) {
+          $post_id = Helper\import_subscribers( $args );
+          // wp_send_json( $post_id );
+
+          if( is_wp_error( $post_id ) ) {
             continue;
           }
 
-        }       
-      wp_send_json_success( $user_search, 200 );
+        }   
+
+        wp_send_json_success( __( 'Successfully Imported'), 200 );
   
       }	
  

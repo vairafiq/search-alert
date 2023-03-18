@@ -5,250 +5,258 @@ namespace searchAlert\Module\Integrations;
 use searchAlert\Base\Helper;
 use WP_Query;
 
-class Send_Alert {
+class Send_Alert
+{
 
-     /**
+    /**
      * Constuctor
      *
      */
-    function __construct() {
-		add_action( 'transition_post_status', array( $this, 'new_post_alert_lookup' ), 10, 3 );
-		// add_action( 'init', array( $this, 'testing' ) );
-		
+    function __construct()
+    {
+        add_action('transition_post_status', array($this, 'new_post_alert_lookup'), 10, 3);
+        // add_action( 'init', array( $this, 'testing' ) );
+
     }
 
-    public function testing() {
+    public function testing()
+    {
 
-        $keywords = explode( ' ', 'hjbhjbh weaving');
+        // var_dump( has_term( $category, ATBDP_CATEGORY, $post_id ) );
+        // die;
+
+
+        $keywords = explode(' ', 'this is rafiq');
         // $keywords = explode( ' ', 'bmw for sell!!');
+
 
         $args = [
             'post_type' => 'esl_search_alerts',
             'post_status' => 'publish',
-            'post_per_page' => -1,
             'fields' => 'ids',
-          ];
-          $meta_queries = [];
-          if( ! empty( $keywords ) ) {
-            foreach( $keywords as $keyword ) {
-                $meta_queries[$keyword] = [
-                    'key'   => '_keyword',
-                    'value' => $keyword,
-                    'compare' => '=',
-                ];
-            }
-          }
-          $args['meta_query'] = array_merge( ['relation' => 'OR'], $meta_queries );
+            'meta_key' => '_sent_at',
+            'meta_compare' => 'NOT EXISTS',
+            'orderby' => 'ASC',
+            'posts_per_page'=> -1
+        ];
 
-         
-          $alerts = new WP_Query( $args );
-          $alerts = $alerts->posts;
-          $all_subscribers = [];
-          $all_email_subscribers = [];
-          foreach( $alerts as $alert ) {
-            $subscribers = get_post_meta( $alert, '_search_by', true );
-            $email_subscribers = get_post_meta( $alert, '_email_subscriber', true );
-            if( ! empty( $subscribers ) ) {
-                foreach( $subscribers as $subscriber ) {
-                    array_push( $all_subscribers, $subscriber );
-                }
-            }
-            if( ! empty( $email_subscribers ) ) {
-                foreach( $email_subscribers as $subscriber ) {
-                    array_push( $all_email_subscribers, $subscriber );
-                }
-            }
+        if (!empty($keywords)) {
+            $args['tax_query'] = [
+               [
+                'taxonomy' => 'esl_keyword',
+                'field'    => 'name',
+                'terms'    => $keywords,
+                'include_children' => false,
+               ]
+            ];
+        }
 
-          }
+        $alerts = new WP_Query($args);
+        $alerts = $alerts->posts;
+        $all_email_subscribers = [];
 
-        //   var_dump([
-        //     'alerts' => $alerts,
-        //     'options' => Helper\get_options(),
-        //     'subscribers' => array_unique( $all_subscribers ),
-        //     'email_subscribers' => array_unique( $email_subscribers ),
-        //     'keywords' => $keywords,
-        //     // 'post' => $alert,
-        //   ]);
-        //   die;
+        foreach ($alerts as $alert) {
+            $author_id = get_post_field( 'post_author', $alert );
+            $user = get_user_by( 'id', $author_id );
+            $user_email = ! is_wp_error( $user ) ? $user->user_email : '';
+            array_push($all_email_subscribers, $user_email);
+        }
+
+          e_var_dump([
+            'alerts' => $alerts,
+            // 'options' => Helper\get_options(),
+            // 'email_subscribers' => $all_email_subscribers,
+            'keywords' => $keywords,
+            // 'post' => $alert,
+          ]);
+          die;
     }
 
-    public function my_custom_search_template( $template ) {
-      global $wp_query;
-      if ( !$wp_query->is_search ) {
-        return $template;
-      }
+    public function my_custom_search_template($template)
+    {
+        global $wp_query;
+        if (!$wp_query->is_search) {
+            return $template;
+        }
 
-      Helper\get_template( 'search' );
+        Helper\get_template('search');
     }
 
-    public function new_post_alert_lookup( $new_status, $old_status, $post ) {
+    public function new_post_alert_lookup($new_status, $old_status, $post)
+    {
 
-        if( ! $post ) {
+        if (!$post) {
             return;
         }
 
-        if( ! Helper\get_option('enable_search_alert', true) ) {
+        if (!Helper\get_option('enable_search_alert', true)) {
             return;
         }
 
-        if( ! Helper\post_type_allow( get_post_type( $post ) ) ) {
+        if (!Helper\post_type_allow(get_post_type($post))) {
             return;
         }
 
         $post_id = $post->ID;
 
-        if( is_admin() && ( ( 'publish' === $new_status ) && ( 'publish' !== $old_status ) ) ) {
-            $this->send_notice( $post, $post_id );
+        if (is_admin() && (('publish' === $new_status) && ('publish' !== $old_status))) {
+            $this->send_notice($post, $post_id);
             return;
-
         }
-        if( ! is_admin() && ( ( 'publish' === $new_status ) && ( 'private' === $old_status ) ) ) {
-            $this->send_notice( $post, $post_id );
+        if (!is_admin() && (('publish' === $new_status) && ('private' === $old_status))) {
+            $this->send_notice($post, $post_id);
         }
     }
 
-    public function send_notice( $post, $post_id ) {
+    public function send_notice($post, $post_id)
+    {
 
-        $keywords = explode( ' ', get_the_title( $post_id ) );
+        $keywords = explode(' ', get_the_title($post_id));
+        
         $args = [
             'post_type' => 'esl_search_alerts',
             'post_status' => 'publish',
-            'post_per_page' => -1,
             'fields' => 'ids',
-          ];
-          $meta_queries = [];
-          if( ! empty( $keywords ) ) {
-            foreach( $keywords as $keyword ) {
-                $meta_queries[$keyword] = [
-                    'key'   => '_keyword',
-                    'value' => $keyword,
-                    'compare' => '=',
-                ];
-            }
-          }
-          $args['meta_query'] = array_merge( ['relation' => 'OR'], $meta_queries );
+            'meta_key' => '_sent_at',
+            'meta_compare' => 'NOT EXISTS',
+            'orderby' => 'ASC',
+            'posts_per_page'=> -1
+        ];
 
-          $alerts = new WP_Query( $args );
-          $alerts = $alerts->posts;
+        if (!empty($keywords)) {
+            $args['tax_query'] = [
+               [
+                'taxonomy' => 'esl_keyword',
+                'field'    => 'name',
+                'terms'    => $keywords,
+                'include_children' => false,
+               ]
+            ];
+        }
 
-          foreach( $alerts as $alert ) {
-            $subscribers = get_post_meta( $alert, '_search_by', true );
-            $email_subscribers = get_post_meta( $alert, '_email_subscriber', true );
-            if( ! empty( $subscribers ) ) {
-                foreach( array_unique( $subscribers ) as $subscriber ) {
-                    $email =  get_the_author_meta( 'user_email', $subscriber );
-                    $this->email( $email, $post );
-                }
-            }
-            if( ! empty( $email_subscribers ) ) {
-                foreach( array_unique( $email_subscribers ) as $email_subscriber ) {
-                    $this->email( $email_subscriber, $post );
-                }
+        $alerts = new WP_Query($args);
+        $alerts = $alerts->posts;
+
+        foreach ($alerts as $alert) {
+
+            $category = get_post_meta( $alert, 'sl_category', true );
+
+            if( $category && ! has_term( $category, ATBDP_CATEGORY, $post_id ) ) {
+                continue;
             }
 
-          }
-    
-          
+            $author_id = get_post_field( 'post_author', $alert );
+            $user = get_user_by( 'id', $author_id );
+            $user_email = ! is_wp_error( $user ) ? $user->user_email : '';
+            $this->email($user_email, $post);
+
+            update_post_meta( $alert, '_sent_at', date( 'Y-m-d H:i' ) );
+            
+        }
     }
 
-    public function email( $to, $post ) {
-        $post_link = get_the_permalink( $post );
-        $post_link = sprintf( '<a href="%s" style="color: #1b83fb;">%s</a>', $post_link, $post_link );
-        $subject = Helper\get_option( 'emailSubject', 'New Post Available');
-        $body = Helper\get_option( 'emailBody', 'Hi there, The post you were searching is just found! Let\'s check this out {{POST_LINK}}');
+    public function email($to, $post)
+    {
+        $post_link = get_the_permalink($post);
+        $post_link = sprintf('<a href="%s" style="color: #1b83fb;">%s</a>', $post_link, $post_link);
+        $subject = Helper\get_option('emailSubject', 'New Post Available');
+        $body = Helper\get_option('emailBody', 'Hi there, The post you were searching is just found! Let\'s check this out {{POST_LINK}}');
 
-        $subject = self::replace_in_content( $subject );
-		$body = self::replace_in_content( $body, $post, [] );
+        $subject = self::replace_in_content($subject);
+        $body = self::replace_in_content($body, $post, []);
 
-        $content = self::email_html( $subject, $body );
+        $content = self::email_html($subject, $body);
 
-        wp_mail( $to, $subject, $content,  $this->get_email_headers() );
+        wp_mail($to, $subject, $content,  $this->get_email_headers());
     }
 
 
-    public static function replace_in_content( $content, $post = '', $args = [] ) {
-		$site_name      = get_option('blogname');
-		$site_url       = site_url();
-		$date_format    = get_option('date_format');
-		$time_format    = get_option('time_format');
-		$current_time   = current_time('timestamp');
-		$post_link      = get_the_permalink( $post );
+    public static function replace_in_content($content, $post = '', $args = [])
+    {
+        $site_name      = get_option('blogname');
+        $site_url       = site_url();
+        $date_format    = get_option('date_format');
+        $time_format    = get_option('time_format');
+        $current_time   = current_time('timestamp');
+        $post_link      = get_the_permalink($post);
 
-		$find_replace = array(
-			
-			'{{SITE_NAME}}'         => $site_name,
-			'{{SITE_LINK}}'         => sprintf('<a href="%s" style="color: #1b83fb;">%s</a>', $site_url, $site_name),
-			'{{SITE_URL}}'          => sprintf('<a href="%s" style="color: #1b83fb;">%s</a>', $site_url, $site_url),
-			'{{TODAY}}'             => date_i18n( $date_format, $current_time ),
-			'{{NOW}}'               => date_i18n( $date_format . ' ' . $time_format, $current_time ),
-			'{{POST_LINK}}'         => sprintf( '<a href="%s" style="color: #1b83fb;">%s</a>', $post_link, $post_link ),
-		);
+        $find_replace = array(
 
-		$c = nl2br( strtr( $content, $find_replace ) );
-		// we do not want to use br for line break in the order details markup. so we removed that from bulk replacement.
+            '{{SITE_NAME}}'         => $site_name,
+            '{{SITE_LINK}}'         => sprintf('<a href="%s" style="color: #1b83fb;">%s</a>', $site_url, $site_name),
+            '{{SITE_URL}}'          => sprintf('<a href="%s" style="color: #1b83fb;">%s</a>', $site_url, $site_url),
+            '{{TODAY}}'             => date_i18n($date_format, $current_time),
+            '{{NOW}}'               => date_i18n($date_format . ' ' . $time_format, $current_time),
+            '{{POST_LINK}}'         => sprintf('<a href="%s" style="color: #1b83fb;">%s</a>', $post_link, $post_link),
+        );
 
-		return $c;
-	}
-    
+        $c = nl2br(strtr($content, $find_replace));
+        // we do not want to use br for line break in the order details markup. so we removed that from bulk replacement.
+
+        return $c;
+    }
+
     /**
-		 * Get the email header eg. From: and Reply-to:
-		 *
-		 * @since 3.1.0
-		 * @param array $data [optional] The array of name and the reply to email
-		 * @return string It returns the header of the email that contains From: $name and Reply to: $email
-		 */
-		public function get_email_headers( $data = array() ) {
-			$headers  = 'MIME-Version: 1.0' . "\r\n";
-      $headers .= 'Content-Type: text/html; charset=ISO-8859-1' . "\r\n";
-      $headers .= 'From: abc@gmail.com' . "\r\n";
-      return $headers;
-		}
+     * Get the email header eg. From: and Reply-to:
+     *
+     * @since 3.1.0
+     * @param array $data [optional] The array of name and the reply to email
+     * @return string It returns the header of the email that contains From: $name and Reply to: $email
+     */
+    public function get_email_headers($data = array())
+    {
+        $headers  = 'MIME-Version: 1.0' . "\r\n";
+        $headers .= 'Content-Type: text/html; charset=ISO-8859-1' . "\r\n";
+        $headers .= 'From: abc@gmail.com' . "\r\n";
+        return $headers;
+    }
 
-     /**
+    /**
      * Get Mail HTML
      *
      * @param string $subject
      * @param string $message
      * @return string Email row html
      */
-    public static function email_html($subject, $message){
-      $header = '';
-      $footer = '';
-    //   $email_header_color = Helper\get_option('emailHeaderColor', '#6551f2');
-    //   $allow_email_header = Helper\get_option('enableEmailHeader', true );
-    //   $allow_email_footer = Helper\get_option('enableEmailFooter', true );
-    //   $author = "<a target='_blank' href='https://exlac.com/'>Exlac</a>";
-      $email_header_color = '#6551f2';
-      $allow_email_header = true;
-      $allow_email_footer = Helper\get_option( 'email_footer', true );
-      $author = "<a target='_blank' href='". get_bloginfo( 'url' ) ."'>". get_bloginfo( 'name' ) ."</a>";
+    public static function email_html($subject, $message)
+    {
+        $header = '';
+        $footer = '';
+        //   $email_header_color = Helper\get_option('emailHeaderColor', '#6551f2');
+        //   $allow_email_header = Helper\get_option('enableEmailHeader', true );
+        //   $allow_email_footer = Helper\get_option('enableEmailFooter', true );
+        //   $author = "<a target='_blank' href='https://exlac.com/'>Exlac</a>";
+        $email_header_color = '#6551f2';
+        $allow_email_header = true;
+        $allow_email_footer = Helper\get_option('email_footer', true);
+        $author = "<a target='_blank' href='" . get_bloginfo('url') . "'>" . get_bloginfo('name') . "</a>";
 
-      if ( $allow_email_footer ){
-          $footer = '<table border="0" cellpadding="10" cellspacing="0" width="600" id="template_footer">
+        if ($allow_email_footer) {
+            $footer = '<table border="0" cellpadding="10" cellspacing="0" width="600" id="template_footer">
           <tr>
               <td valign="top">
                   <table border="0" cellpadding="10" cellspacing="0" width="100%">
                       <tr>
                           <td colspan="2" valign="middle" id="credit" style="display: flex; justify-content: center; align-items: center">
-                              ' . sprintf( wp_kses_post( wpautop( wptexturize( apply_filters( 'search_alert_email_footer_text', '<span style=\'font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; font-size: 14px; font-weight: 500;\'>Built with <i style="margin: 0 4px; position: relative; top: 2px;"> ❤️ </i> by %s</span>' ) ) ) ), $author ) . '
+                              ' . sprintf(wp_kses_post(wpautop(wptexturize(apply_filters('search_alert_email_footer_text', '<span style=\'font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; font-size: 14px; font-weight: 500;\'>Built with <i style="margin: 0 4px; position: relative; top: 2px;"> ❤️ </i> by %s</span>')))), $author) . '
                           </td>
                       </tr>
                   </table>
               </td>
           </tr>
       </table>';
-      }
-      if ( $allow_email_header ){
-          $header = '<table border="0" cellpadding="0" cellspacing="0" width="600" id="template_header" style=\'background-color: '.$email_header_color.'; color: #ffffff; border-bottom: 0; font-weight: bold; line-height: 100%; vertical-align: middle; font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; border-radius: 20px 20px 0 0;\'>
+        }
+        if ($allow_email_header) {
+            $header = '<table border="0" cellpadding="0" cellspacing="0" width="600" id="template_header" style=\'background-color: ' . $email_header_color . '; color: #ffffff; border-bottom: 0; font-weight: bold; line-height: 100%; vertical-align: middle; font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; border-radius: 20px 20px 0 0;\'>
                           <tr>
                               <td id="header_wrapper" style="padding: 20px 30px; display: block;">
-                                  <h1 style=\'font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; font-size: 20px; font-weight: 500; line-height: 150%; margin: 0; text-align: left; text-shadow: 0 1px 0 #ab79a1; color: #ffffff;\'>'.$subject.'</h1>
+                                  <h1 style=\'font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; font-size: 20px; font-weight: 500; line-height: 150%; margin: 0; text-align: left; text-shadow: 0 1px 0 #ab79a1; color: #ffffff;\'>' . $subject . '</h1>
                               </td>
                           </tr>
                       </table>';
-  }
+        }
 
-      return '<!DOCTYPE html>
+        return '<!DOCTYPE html>
   <html lang="en-US">
       <head>
           <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -265,7 +273,7 @@ class Send_Alert {
                               <tr>
                                   <td align="center" valign="top">
                                       <!-- Header -->
-                                      '.$header.'
+                                      ' . $header . '
                                       <!-- End Header -->
                                   </td>
                               </tr>
@@ -280,7 +288,7 @@ class Send_Alert {
                                                       <tr>
                                                           <td valign="top" style="padding: 50px 30px;">
                                                               <div id="body_content_inner" style=\'color: #636363; font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; font-size: 16px; line-height: 150%; text-align: left;\'>
-                                                                  '.$message.'
+                                                                  ' . $message . '
                                                               </div>
                                                           </td>
                                                       </tr>
@@ -299,7 +307,7 @@ class Send_Alert {
                   <tr>
                       <td align="center" valign="top">
                           <!-- Footer -->
-                          '. $footer .'
+                          ' . $footer . '
                           <!-- End Footer -->
                       </td>
                   </tr>
@@ -307,7 +315,5 @@ class Send_Alert {
           </div>
       </body>
   </html>';
-  }
- 
+    }
 }
-

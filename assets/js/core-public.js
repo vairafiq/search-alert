@@ -159,7 +159,7 @@ __webpack_require__.r(__webpack_exports__);
     var user = data.user ? data.user : '';
     var form_data = new FormData();
     form_data.append('action', 'update_search_notice');
-    form_data.append('search_alert_nonce', searchAlert.nonce);
+    form_data.append('search_alert_nonce', searchAlertf.nonce);
     form_data.append('task', task);
     form_data.append('query', query);
     form_data.append('email', email);
@@ -198,6 +198,52 @@ __webpack_require__.r(__webpack_exports__);
       }
     });
   }
+
+  //fresh start
+  $('body').on('submit', '#directorist_save_search', function (e) {
+    e.preventDefault();
+    var form_data = $(this).serialize();
+    $('#directorist-save-search-notice').html('<span class="directorist-alert directorist-alert-info">Please wait...</span>');
+    $.post(searchAlert.ajaxurl, form_data, function (response) {
+      if (!response.success) {
+        $('#directorist-save-search-notice').html('<span class="directorist-alert directorist-alert-danger">' + response.data + '</span>');
+      } else {
+        $('#directorist-save-search-notice').html('<span class="directorist-alert directorist-alert-success">' + response.data + '</span>');
+        setTimeout(function () {
+          $('#directorist-save-search-notice').html('');
+          // $( '.directorist_campaign_' + campaign_id ).empty().append( '<span class="directorist_badge dashboard-badge directorist_status_published">Sent</span>');
+        }, 1500);
+      }
+    }, 'json');
+  });
+
+  // edit search
+  $('body').on('click', '.directorist_sl_update', function (e) {
+    e.preventDefault();
+    var keyword = $(this).data('keyword');
+    var id = $(this).data('id');
+    var category = $(this).data('category');
+    $('#sl_category').val(category).select2();
+    $('#keyword').val(keyword);
+    $('#search_id').val(id);
+  });
+  $('body').on('click', '.directorist_sl_delete', function (e) {
+    e.preventDefault();
+    var id = $(this).data('id');
+    var nonce = $(this).data('nonce');
+    var data = {
+      action: 'sl_delete_item',
+      id: id,
+      directorist_nonce: nonce
+    };
+    $.post(searchAlert.ajaxurl, data, function (response) {
+      if (!response.error) {
+        $('.sl_item_' + id).fadeOut(300);
+      } else {
+        alert(response.error);
+      }
+    });
+  });
 })(jQuery);
 }();
 /******/ })()

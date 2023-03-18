@@ -30,7 +30,7 @@ class Admin_Asset extends Enqueuer {
      * Load Admin CSS Scripts
      *
      * @Example
-      $scripts['exlac-customer-support-app-core-admin-style'] = [
+      $scripts['search-alert-core-admin-style'] = [
           'file_name' => 'admin',
           'base_path' => SEARCH_ALERT_CSS_PATH,
           'deps'      => [],
@@ -43,7 +43,7 @@ class Admin_Asset extends Enqueuer {
     public function add_css_scripts() {
         $scripts = [];
 
-        $scripts['exlac-customer-support-app-core-admin-style'] = [
+        $scripts['search-alert-core-admin-style'] = [
             'file_name' => 'core-admin',
             'base_path' => SEARCH_ALERT_CSS_PATH,
             'deps'      => [],
@@ -59,7 +59,7 @@ class Admin_Asset extends Enqueuer {
      * Load Admin JS Scripts
      *
      * @Example
-      $scripts['exlac-customer-support-app-core-admin-script'] = [
+      $scripts['search-alert-core-admin-script'] = [
           'file_name' => 'admin',
           'src_path'  => SEARCH_ALERT_ASSET_SRC_PATH . 'modules/core/js/admin/',
           'base_path' => SEARCH_ALERT_JS_PATH,
@@ -72,7 +72,7 @@ class Admin_Asset extends Enqueuer {
     public function add_js_scripts() {
         $scripts = [];
 
-        $scripts['exlac-customer-support-app-core-admin-script'] = [
+        $scripts['search-alert-core-admin-script'] = [
             'file_name' => 'core-admin',
             'src_path'  => SEARCH_ALERT_ASSET_SRC_PATH . 'modules/core/js/admin/',
             'base_path' => SEARCH_ALERT_JS_PATH,

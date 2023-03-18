@@ -77,10 +77,10 @@ const SettingBox = () => {
                         <div className="search-alert-settings-top__link-icon"><ReactSVG src={QuestonCircle} /></div>
                         <span className="search-alert-settings-top__link-text">Support </span>
                     </a>
-                    <a href="https://exlac.com/product/search-alert/" target="_blank" className='onetop-proLink'>
+                    {/* <a href="https://exlac.com/product/search-alert/" target="_blank" className='onetop-proLink'>
                         <div className="search-alert-settings-top__link-icon"><ReactSVG src={Link} /></div>
                         <span className="search-alert-settings-top__link-text">Go Pro </span>
-                    </a>
+                    </a> */}
                 </div>
             </div>
             <div className="exlac-vm-seetings-box">

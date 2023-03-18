@@ -17,7 +17,58 @@ class Admin_Menu {
 
         add_filter( 'post_row_actions', array( $this, 'post_row_actions' ), 10, 2 );
 
+        add_action('restrict_manage_posts', array($this, 'alert_filter'));
+        add_filter('parse_query', array($this, 'filer_by_keyword'));
+
     }
+
+    public function filer_by_keyword( $query )
+    {
+        global $pagenow;
+        $type = 'post';
+        if (isset($_GET['post_type'])) {
+            $type = ! empty( $_GET['post_type'] ) ? directorist_clean( wp_unslash( $_GET['post_type'] ) ) : '';
+        }
+        if ('esl_search_alerts' == $type && is_admin() && $pagenow == 'edit.php' && isset($_GET['alert_keyword']) && ! empty( $_GET['alert_keyword'] ) ) {
+            $value = ! empty( $_GET['alert_keyword'] ) ? directorist_clean( wp_unslash( $_GET['alert_keyword'] ) ) : '';
+            $tax_query = array(
+                'relation' => 'AND',
+                array(
+                    'taxonomy' => 'esl_keyword',
+                    'terms'    => $value,
+                ),
+            );
+            $query->set( 'tax_query', $tax_query );
+        }
+    }
+
+    public function alert_filter(  ) {
+        $type = 'post';
+        if (isset($_GET['post_type'])) {
+            $type = ! empty( $_GET['post_type'] ) ? directorist_clean( wp_unslash( $_GET['post_type'] ) ) : '';
+        }
+        
+        //only add filter to post type you want
+        if ( 'esl_search_alerts' == $type  ) {
+            $keywords = get_terms([
+                'taxonomy'   => 'esl_keyword',
+                'hide_empty' => false,
+              ]);
+              $current_v = ! empty( $_GET['alert_keyword'] ) ? directorist_clean( wp_unslash( $_GET['alert_keyword'] ) ) : '';
+    
+            ?>
+            <select name="alert_keyword">
+                <option value=""><?php esc_html_e('Filter by Keyword ', 'directorist'); ?></option>
+                <?php
+                  foreach ($keywords as $keyword) { 
+                    ?>
+                    <option value="<?php echo esc_attr( $keyword->term_id ); ?>" <?php echo $keyword->term_id == $current_v ? ' selected="selected"' : ''; ?>><?php echo esc_attr( $keyword->name ); ?></option>
+                    <?php } ?>
+            </select>
+        <?php
+        }
+    }
+
 
     public function add_extra_button() {
         global $post_type_object;
@@ -45,9 +96,11 @@ class Admin_Menu {
     public function new_columns() {
         $columns = [
             'cb'        => '<input type="checkbox" />',
+            'author'   => __('Author', 'directorist'),
+            'email'   => __('Email', 'directorist'),
             'keyword'   => __('Keyword', 'directorist'),
-            'search_by' => __('Subscribed Users', 'directorist'),
-            'no_of_search'    => __('Total Seach', 'directorist'),
+            'category'   => __('Category', 'directorist'),
+            'sent_at' => __('Status', 'directorist'),
             'date'      => __('Date', 'directorist'),
         ];
         return $columns;
@@ -55,60 +108,56 @@ class Admin_Menu {
 
     public function columns_content( $column, $post_id ) {
 
-        $keyword = get_post_meta( $post_id, '_keyword', true );
+        $keyword_term = get_the_terms( $post_id, 'esl_keyword' );
+        $keyword = ! is_wp_error( $keyword_term[0] ) ? $keyword_term[0]->name : '';
+        $sent_at = get_post_meta($post_id, '_sent_at', true );
+        $category = get_post_meta($post_id, 'sl_category', true );
+        $category_term = get_term_by( 'id', $category, ATBDP_CATEGORY );
+        $cat_name = ! is_wp_error( $category_term ) && is_object( $category_term ) ? $category_term->name : '';
+
+        $post_date = get_post_time( 'Y-m-d H:i', false, $post_id );
+        
+        $time = strtotime( $sent_at );
+        $time = $sent_at ? date('Y-m-d H:i',$time) : '';
         echo '</select>';
         switch ( $column ) {
+            case 'author':
+                $args = array(
+                    'post_type' => get_post_field( 'post_type' ),
+                    'author'    => get_post_field( 'post_author' ),
+                );
+                printf(
+                    '<a href="%1$s" title="%2$s">%3$s</a>',
+                    esc_url( add_query_arg( $args, 'edit.php' ) ),
+                    /* translators: 1: Author name */
+                    sprintf( esc_attr_x( 'Filter by %1$s', 'Author filter link', 'directorist' ), get_the_author() ),
+                    get_the_author()
+                );
+                break;
+            case 'email' :
+                $author_id = get_post_field( 'post_author', $post_id );
+                $user = get_user_by( 'id', $author_id );
+                $user_email = ! is_wp_error( $user ) ? $user->user_email : '';
+                echo esc_html( $user_email );
+                break;
             case 'keyword' :
                 echo esc_html( $keyword );
                 break;
-            case 'search_by' :
-                $search_by = get_post_meta( $post_id, '_search_by', true );
-                $email_subscriber = get_post_meta( $post_id, '_email_subscriber', true );
-                // e_var_dump([
-                //     'search' => $search_by,
-                //     'sub' => $email_subscriber,
-                // ]);
-                ?>
-                <div>
-                <div class="tagcloud" style="margin: 0 0 0 0 !important">
-                    <ul class="tagchecklist" role="list">
-                        <?php 
-                        if( ! empty( $email_subscriber) ) {
-                        foreach( $email_subscriber as $key => $subscriber ) { ?>
-                            <li class="helpgent_remove_subscriber" data-email="<?php esc_html_e( $subscriber ); ?>" data-keyword="<?php esc_html_e( $keyword ); ?>">
-                                <button type="button" id="subscribers-<?php esc_attr_e( $key ); ?>" style="margin: 0 0 0 -23px" class="ntdelbutton helpgent_unsubscribe">
-
-                                    <span class="remove-tag-icon helpgent_remove_icon" aria-hidden="true"></span>
-                                    <span class="screen-reader-text">Remove term: <?php esc_html_e( $subscriber ); ?></span>
-                                </button><?php esc_html_e( $subscriber ); ?>
-                            </li> 
-                        <?php } }?>
-
-                        <?php 
-                        if( ! empty( $search_by ) ) {
-                        foreach( $search_by as $key => $subscriber ) {
-                            $user = get_user_by( 'id', $subscriber );
-                            $email = ! is_wp_error( $user ) ? $user->user_email : '';
-                            ?>
-                            <li class="helpgent_remove_subscriber" data-user="<?php esc_html_e( $subscriber ); ?>" data-keyword="<?php esc_html_e( $keyword ); ?>">
-                                <button type="button" id="subscribers-<?php esc_attr_e( $key ); ?>" style="margin: 0 0 0 -23px" class="ntdelbutton helpgent_unsubscribe">
-                                    <span class="remove-tag-icon helpgent_remove_icon" aria-hidden="true"></span>
-                                    <span class="screen-reader-text">Remove term: <?php esc_html_e( $email ); ?></span>
-                                </button><?php esc_html_e( $email ); ?>
-                            </li> 
-                        <?php } }?>
-                    </ul>
-                </div>
-                <?php 
-                Helper\get_template( 'add-subscriber', [ 'keyword' => $keyword ] );
-                ?>
-                </div>
-                <?php
-
+            case 'category' :
+                echo esc_html( $cat_name );
                 break;
-            case 'no_of_search' :
-                $total = get_post_meta( $post_id, '_number_of_search', true );
-                echo ! empty( $total ) ? esc_html( $total ) : 0;
+            case 'sent_at' :
+                
+                if( ! $time ) { ?>
+                    <span class="directorist_badge dashboard-badge directorist_status_pending">
+                        <?php esc_html_e( 'Waiting', 'directorist' ); ?>
+                    </span>
+                    
+                <?php }else{
+                    echo '<span class="directorist_badge dashboard-badge directorist_status_published">' . __( 'Sent', 'directorist' ) . '</span>';
+                    echo '<br><span>@' . $time . '</span>';
+                }
+
                 break;
             case 'status' :
                 $status = get_post_status( $post_id );
@@ -166,13 +215,41 @@ class Admin_Menu {
             'has_archive'         => false,
             'exclude_from_search' => false,
             'publicly_queryable'  => true,
-            'map_meta_cap'        => true, // set this true, otherwise, even admin will not be able to edit this post. WordPress will map cap from edit_post to edit_at_biz_dir etc,
+            'map_meta_cap'        => true, // set this true, otherwise, even admin will not be able to edit this post. WordPress will map cap from edit_post to edit_esl_search_alerts etc,
             'menu_position'       => 5,
             'capabilities' => array(
                 'create_posts'   => 'do_not_allow',
             ),
         );
         register_post_type( 'esl_search_alerts', $args );
+
+
+        $labels = array(
+            'name'              => _x( 'Keywords', 'Keyword general name', 'directorist' ),
+            'singular_name'     => _x( 'Keyword', 'Keyword singular name', 'directorist' ),
+            'search_items'      => __( 'Search keyword', 'directorist' ),
+            'all_items'         => __( 'All Keywords', 'directorist' ),
+            'parent_item'       => __( 'Parent keyword', 'directorist' ),
+            'parent_item_colon' => __( 'Parent keyword:', 'directorist' ),
+            'edit_item'         => __( 'Edit keyword', 'directorist' ),
+            'update_item'       => __( 'Update keyword', 'directorist' ),
+            'add_new_item'      => __( 'Add New keyword', 'directorist' ),
+            'new_item_name'     => __( 'New keyword Name', 'directorist' ),
+            'menu_name'         => __( 'Keywords', 'directorist' ),
+        );
+
+        $args        = array(
+            'hierarchical'      => false,
+            'labels'            => $labels,
+            'show_ui'           => true,
+            'show_admin_column' => true,
+            'query_var'         => true,
+            'public'            => true,
+            'show_in_nav_menus' => true,
+        );
+
+        register_taxonomy( 'esl_keyword', 'esl_search_alerts', $args );
+
     }
     public function admin_menu() { 
         add_submenu_page( 'edit.php?post_type=esl_search_alerts', __( 'Settings', 'search-alert' ), __( 'Settings', 'search-alert' ), 'manage_options', 'esl-settings', [$this, 'search_alert_config'] );
