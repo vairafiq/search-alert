@@ -188,7 +188,8 @@ import './../../sass/core-public.scss';
     });
 
 	// edit search
-	$('.directorist_sl_update').on('click', function( e ){
+	$('body').on('click', '.directorist_sl_update', function (e) {
+
 		e.preventDefault();
 
 		let keyword = $( this ).data( 'keyword' );
@@ -199,7 +200,33 @@ import './../../sass/core-public.scss';
 		$( '#keyword' ).val( keyword );
 		$( '#search_id' ).val( id );
 
-	})
+	});
+
+
+	$('body').on('click', '.directorist_sl_delete', function (e) {
+		e.preventDefault();
+
+		var id = $( this ).data('id');
+		var nonce = $( this ).data('nonce');
+
+		const data = {
+			action: 'sl_delete_item',
+			id: id,
+			directorist_nonce: nonce,
+		};
+
+		$.post( searchAlert.ajaxurl, data, function (response) {
+
+			if( ! response.error ) {
+			   
+				$( '.sl_item_' + id ).fadeOut(300);
+			}else{
+				alert( response.error );
+			}
+
+		});
+
+	});
 
 
 

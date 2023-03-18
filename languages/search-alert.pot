@@ -6,7 +6,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-03-11 16:18+0000\n"
+"POT-Creation-Date: 2023-03-14 14:57+0000\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -62,65 +62,65 @@ msgstr ""
 msgid "Keyword is missing"
 msgstr ""
 
-#: ../app/Module/Core/Admin/Admin_Menu.php:124
+#: ../app/Module/Core/Admin/Admin_Menu.php:182
 msgctxt "Plural Name of Search Alert"
 msgid "Search Alerts"
 msgstr ""
 
-#: ../app/Module/Core/Admin/Admin_Menu.php:125
+#: ../app/Module/Core/Admin/Admin_Menu.php:183
 msgctxt "Singular Name of Search Alert"
 msgid "Search Alert"
 msgstr ""
 
-#: ../app/Module/Core/Admin/Admin_Menu.php:126, ../app/Module/Core/Admin/Admin_Menu.php:143
+#: ../app/Module/Core/Admin/Admin_Menu.php:184, ../app/Module/Core/Admin/Admin_Menu.php:201
 msgid "Search Alerts"
 msgstr ""
 
-#: ../app/Module/Core/Admin/Admin_Menu.php:127, ../app/Module/Core/Admin/Admin_Menu.php:142
+#: ../app/Module/Core/Admin/Admin_Menu.php:185, ../app/Module/Core/Admin/Admin_Menu.php:200
 msgid "Search Alert"
 msgstr ""
 
-#: ../app/Module/Core/Admin/Admin_Menu.php:128
+#: ../app/Module/Core/Admin/Admin_Menu.php:186
 msgid "Parent Search Alert:"
 msgstr ""
 
-#: ../app/Module/Core/Admin/Admin_Menu.php:129
+#: ../app/Module/Core/Admin/Admin_Menu.php:187
 msgid "All Alerts"
 msgstr ""
 
-#: ../app/Module/Core/Admin/Admin_Menu.php:130, ../app/Module/Core/Admin/Admin_Menu.php:131
+#: ../app/Module/Core/Admin/Admin_Menu.php:188, ../app/Module/Core/Admin/Admin_Menu.php:189
 msgid "Add New alert"
 msgstr ""
 
-#: ../app/Module/Core/Admin/Admin_Menu.php:132
+#: ../app/Module/Core/Admin/Admin_Menu.php:190
 msgid "New alert"
 msgstr ""
 
-#: ../app/Module/Core/Admin/Admin_Menu.php:133
+#: ../app/Module/Core/Admin/Admin_Menu.php:191
 msgid "Edit alert"
 msgstr ""
 
-#: ../app/Module/Core/Admin/Admin_Menu.php:134
+#: ../app/Module/Core/Admin/Admin_Menu.php:192
 msgid "Update alert"
 msgstr ""
 
-#: ../app/Module/Core/Admin/Admin_Menu.php:135
+#: ../app/Module/Core/Admin/Admin_Menu.php:193
 msgid "View alert"
 msgstr ""
 
-#: ../app/Module/Core/Admin/Admin_Menu.php:136
+#: ../app/Module/Core/Admin/Admin_Menu.php:194
 msgid "Search alert"
 msgstr ""
 
-#: ../app/Module/Core/Admin/Admin_Menu.php:137
+#: ../app/Module/Core/Admin/Admin_Menu.php:195
 msgid "No Alerts found"
 msgstr ""
 
-#: ../app/Module/Core/Admin/Admin_Menu.php:138
+#: ../app/Module/Core/Admin/Admin_Menu.php:196
 msgid "Not Alerts found in Trash"
 msgstr ""
 
-#: ../app/Module/Core/Admin/Admin_Menu.php:197, ../app/Module/Core/Admin/Admin_Menu.php:197
+#: ../app/Module/Core/Admin/Admin_Menu.php:255, ../app/Module/Core/Admin/Admin_Menu.php:255
 msgid "Settings"
 msgstr ""
 
@@ -140,7 +140,19 @@ msgstr ""
 msgid "Operation Failed"
 msgstr ""
 
-#: ../app/Module/Integrations/Directorist/Dashboard.php:26, ../app/Module/Integrations/GeoDirectory/Dashboard.php:23
+#: ../app/Module/Integrations/Directorist/Dashboard.php:28
+msgid "Something is wrong! Please refresh and retry."
+msgstr ""
+
+#: ../app/Module/Integrations/Directorist/Dashboard.php:36
+msgid "Post ID is missing"
+msgstr ""
+
+#: ../app/Module/Integrations/Directorist/Dashboard.php:43
+msgid "Successfully deleted!"
+msgstr ""
+
+#: ../app/Module/Integrations/Directorist/Dashboard.php:54, ../app/Module/Integrations/GeoDirectory/Dashboard.php:23
 msgid "Saved Search"
 msgstr ""
 

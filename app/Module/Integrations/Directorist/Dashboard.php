@@ -16,7 +16,35 @@ class Dashboard {
 		add_action( 'directorist_after_dashboard_navigation', [ $this, 'nav_link' ] );
         add_action( 'directorist_after_dashboard_contents', [ $this, 'nav_content' ] );
 
+		add_action( 'wp_ajax_sl_delete_item', [ $this, 'delete_item' ] );
+
     }
+
+
+	public function delete_item() {
+
+		$data = [];
+		if ( ! directorist_verify_nonce() ) {
+			$data['error']   = __( 'Something is wrong! Please refresh and retry.', 'search-alert' );
+
+			wp_send_json( $data, 200 );
+        }
+
+		$id = ! empty( $_POST['id'] ) ? directorist_clean( wp_unslash( $_POST['id'] ) ) : '';
+		
+		if ( ! $id ) {
+			$data['error']   = __( 'Post ID is missing', 'search-alert' );
+
+			wp_send_json( $data, 200 );
+        }
+
+		wp_delete_post( $id, true );
+
+		$data['success']   = __( 'Successfully deleted!', 'search-alert' );
+
+		wp_send_json( $data, 200 );
+	}
+
 
     public function nav_link() { ?>
         <li class="directorist-tab__nav__item">

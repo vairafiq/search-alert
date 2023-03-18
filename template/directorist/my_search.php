@@ -47,7 +47,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 						$time = strtotime( $sent_at );
 						$time = $sent_at ? date('Y-m-d H:i',$time) : '';
 						?>
-						<tr class="dpu_item_<?php echo $search; ?>" data-id="<?php echo $search; ?>">
+						<tr class="sl_item_<?php echo $search; ?>" data-id="<?php echo $search; ?>">
 											
 							<td>
 								<div class="directorist-listing-table-listing-info">
@@ -93,7 +93,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 								<div class="directorist-actions">
 				
 									<a href="" class="directorist_sl_update" data-keyword="<?php echo esc_attr( $keyword ); ?>" data-category="<?php echo ! is_wp_error( $category_term ) ? esc_html( $category_term->term_id ) : ''; ?>" data-id="<?php echo esc_attr( $search ); ?>" class="directorist-link-btn"><?php directorist_icon( 'las la-edit' ); ?></a> |
-									<a href="" class="directorist_pu_delete" data-nonce="<?php echo esc_attr( wp_create_nonce( directorist_get_nonce_key() ) ); ?>" data-id="<?php echo esc_attr( $search ); ?>" class="directorist-link-btn"><?php directorist_icon( 'las la-trash' ); ?></a>
+									<a href="" class="directorist_sl_delete" data-nonce="<?php echo esc_attr( wp_create_nonce( directorist_get_nonce_key() ) ); ?>" data-id="<?php echo esc_attr( $search ); ?>" class="directorist-link-btn"><?php directorist_icon( 'las la-trash' ); ?></a>
 				
 								</div>
 							</td>
