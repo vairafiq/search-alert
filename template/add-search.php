@@ -36,6 +36,15 @@
 							<input class="directorist-form-element" id="keyword" type="text" name="keyword" placeholder="<?php esc_html_e( 'Best Company', 'directorist' ); ?>">
 						</div>
 
+						<?php if( ! is_user_logged_in() ) : ?>
+
+						<div class="directorist-form-group">
+							<label for="email"><?php esc_html_e( 'Email', 'directorist' ); ?></label>
+							<input class="directorist-form-element" id="email" type="text" name="email" placeholder="<?php esc_html_e( 'example@mail.com', 'directorist' ); ?>">
+						</div>
+
+						<?php endif; ?>
+
 						<?php if( class_exists( 'Directorist_Base' ) ) :?>
 						<div class="directorist-form-group">
 							<label for="sl_category"><?php esc_html_e( 'Category', 'directorist' ); ?></label>

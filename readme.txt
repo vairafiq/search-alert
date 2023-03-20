@@ -4,7 +4,7 @@ Donate link: https://exlac.com/
 Tags: search, alert, new post, newslater, find search
 Requires at least: 5.0 
 Tested up to: 6.0
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -36,6 +36,10 @@ Users can set a keyword and the system will notify them by email when a new post
 **Use `keyword, email, category` as CSV column header to import subscriber bulk**
 
 == Changelog ==
+
+1.1.2 (Mar 21, 2022)
+
+* Add - Add email field and create user on keyword submission
 
 1.1.1 (Mar 18, 2022)
 

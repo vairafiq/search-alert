@@ -962,6 +962,12 @@ function process_post( $data ) {
     $keyword = ! empty( $data['keyword'] ) ? search_alert_clean( wp_unslash( $data['keyword'] ) ) : '';
     $email   = ! empty( $data['email'] ) ? search_alert_clean( wp_unslash( $data['email'] ) ) : '';
     
+    $user_id = email_exists( $email );
+        
+    if( ! $user_id ) {
+        $user_id = create_user( $email );
+    }
+
     if( ! $keyword ) {
         wp_send_json_error( esc_html__( 'Keyword is missing', 'search-alert' ), 400 );
     }
@@ -976,7 +982,7 @@ function process_post( $data ) {
       'post_title' => 'Search Alert for ' . $keyword,
       'tax_input'    => [ "esl_keyword" => $keyword ],
       'meta_input' => $data,
-      'post_author' => get_current_user_id(),
+      'post_author' => $user_id ? $user_id : get_current_user_id(),
     ];
 
     // update existing

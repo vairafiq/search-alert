@@ -1,7 +1,7 @@
 <?php
 
 if ( ! defined( 'SEARCH_ALERT_VERSION' ) ) {
-    define( 'SEARCH_ALERT_VERSION', '1.1.1' );
+    define( 'SEARCH_ALERT_VERSION', '1.1.2' );
 }
 
 if ( ! defined( 'SEARCH_ALERT_PREFIX' ) ) {
