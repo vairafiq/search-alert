@@ -89,6 +89,10 @@ class Send_Alert
             return;
         }
 
+        if( 'publish' !== $new_status ) {
+            return;
+        }
+
         if (!Helper\get_option('enable_search_alert', true)) {
             return;
         }
@@ -99,11 +103,24 @@ class Send_Alert
 
         $post_id = $post->ID;
 
-        if (is_admin() && (('publish' === $new_status) && ('publish' !== $old_status))) {
+        $is_admin = ( isset( $_REQUEST['_locale'] ) || is_admin() ) ? true : false;
+
+        // var_dump([
+        //     '1st' => !Helper\get_option('enable_search_alert', true),
+        //     '2nd' => !Helper\post_type_allow(get_post_type($post)),
+        //     'new_status' => $new_status,
+        //     'old_status' => $old_status,
+        //     // 'post' => $post,//auto-draft
+        //     'is_admin' => $is_admin,
+        //     'boll' =>  $is_admin && ('publish' !== $old_status),
+        // ]);
+        // die;
+
+        if ( $is_admin && ('publish' !== $old_status) ) {
             $this->send_notice($post, $post_id);
             return;
         }
-        if (!is_admin() && (('publish' === $new_status) && ('private' === $old_status))) {
+        if ( !$is_admin && ('private' === $old_status) ) {
             $this->send_notice($post, $post_id);
         }
     }

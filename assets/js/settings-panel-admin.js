@@ -5853,7 +5853,7 @@ var SettingContent = function SettingContent(props) {
     }, {
       label: "Send Alert for Post Type",
       component: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(multiselect_react_dropdown__WEBPACK_IMPORTED_MODULE_3__.Multiselect, {
-        selectionLimit: "1",
+        selectionLimit: "10",
         selectedValues: included_single_post,
         onSelect: handlEincluded_single_post,
         placeholder: "Select Post Types",
@@ -5875,7 +5875,7 @@ var SettingContent = function SettingContent(props) {
       })
     }, {
       label: "Email Body",
-      pro: true,
+      pro: false,
       component: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
         className: "exlac-vm-form-group",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("textarea", {
@@ -5889,7 +5889,7 @@ var SettingContent = function SettingContent(props) {
       })
     }, {
       label: "Email Footer",
-      pro: true,
+      pro: false,
       component: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)("div", {
         className: "exlac-vm-setting-has-info",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(react_switch__WEBPACK_IMPORTED_MODULE_5__["default"], {
