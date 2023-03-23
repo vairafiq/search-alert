@@ -134,8 +134,6 @@ class Send_Alert
             'post_type' => 'esl_search_alerts',
             'post_status' => 'publish',
             'fields' => 'ids',
-            'meta_key' => '_sent_at',
-            'meta_compare' => 'NOT EXISTS',
             'orderby' => 'ASC',
             'posts_per_page'=> -1
         ];

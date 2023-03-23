@@ -4,7 +4,7 @@ Donate link: https://exlac.com/
 Tags: search, alert, new post, newslater, find search
 Requires at least: 5.0 
 Tested up to: 6.0
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -12,7 +12,7 @@ Let allow users save their search and get notified of availability.
 
 == Description ==
 
-** 🚀[Pro Version](https://exlac.com/search-alert/) | 👩🏼‍💻[Support](https://exlac.com/contact-us/)**
+**🚀[Pro Version](https://exlac.com/search-alert/) | 👩🏼‍💻[Support](https://exlac.com/contact-us/)**
 
 Users can set a keyword and the system will notify them by email when a new post is published on your site with the same keyword. Simply copy the [searchalert] shortcode and place it anywhere on your site to allow visitors to set an alert.
 
@@ -36,6 +36,11 @@ Users can set a keyword and the system will notify them by email when a new post
 **Use `keyword, email, category` as CSV column header to import subscriber bulk**
 
 == Changelog ==
+
+1.1.3 (Mar 24, 2022)
+
+* Add - Support for multiple events per subscriber
+* Fix - Alert issue when publishing post from block editor
 
 1.1.2 (Mar 21, 2022)
 
