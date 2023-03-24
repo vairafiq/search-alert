@@ -6,7 +6,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-03-18 15:19+0000\n"
+"POT-Creation-Date: 2023-03-24 17:59+0000\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -58,8 +58,50 @@ msgstr ""
 msgid "Successfully saved"
 msgstr ""
 
-#: ../app/Module/Integrations/Set_Alert.php:87, ../helper/functions.php:966, ../helper/functions.php:1013
+#: ../app/Module/Integrations/Set_Alert.php:87, ../helper/functions.php:972, ../helper/functions.php:1019
 msgid "Keyword is missing"
+msgstr ""
+
+#: ../app/Module/Core/Admin/Admin_Menu.php:61
+msgid "Filter by Keyword "
+msgstr ""
+
+#: ../app/Module/Core/Admin/Admin_Menu.php:99
+msgid "Author"
+msgstr ""
+
+#: ../app/Module/Core/Admin/Admin_Menu.php:100, ../template/add-search-form.php:16, ../template/add-search.php:42
+msgid "Email"
+msgstr ""
+
+#: ../app/Module/Core/Admin/Admin_Menu.php:101, ../template/add-search-form.php:15, ../template/add-search.php:35, ../template/directorist/my_search.php:23
+msgid "Keyword"
+msgstr ""
+
+#: ../app/Module/Core/Admin/Admin_Menu.php:102
+msgid "Category (only works with Directorist)"
+msgstr ""
+
+#: ../app/Module/Core/Admin/Admin_Menu.php:103, ../template/directorist/my_search.php:27
+msgid "Status"
+msgstr ""
+
+#: ../app/Module/Core/Admin/Admin_Menu.php:104, ../template/directorist/my_search.php:25
+msgid "Date"
+msgstr ""
+
+#. translators: 1: Author name
+#: ../app/Module/Core/Admin/Admin_Menu.php:133
+msgctxt "Author filter link"
+msgid "Filter by %1$s"
+msgstr ""
+
+#: ../app/Module/Core/Admin/Admin_Menu.php:157, ../template/directorist/my_search.php:85
+msgid "Sent"
+msgstr ""
+
+#: ../app/Module/Core/Admin/Admin_Menu.php:153, ../template/directorist/my_search.php:79
+msgid "Waiting"
 msgstr ""
 
 #: ../app/Module/Core/Admin/Admin_Menu.php:182
@@ -120,6 +162,52 @@ msgstr ""
 msgid "Not Alerts found in Trash"
 msgstr ""
 
+#: ../app/Module/Core/Admin/Admin_Menu.php:228
+msgctxt "Keyword general name"
+msgid "Keywords"
+msgstr ""
+
+#: ../app/Module/Core/Admin/Admin_Menu.php:229
+msgctxt "Keyword singular name"
+msgid "Keyword"
+msgstr ""
+
+#: ../app/Module/Core/Admin/Admin_Menu.php:230
+msgid "Search keyword"
+msgstr ""
+
+#: ../app/Module/Core/Admin/Admin_Menu.php:231
+msgid "All Keywords"
+msgstr ""
+
+#: ../app/Module/Core/Admin/Admin_Menu.php:232
+msgid "Parent keyword"
+msgstr ""
+
+#: ../app/Module/Core/Admin/Admin_Menu.php:233
+msgid "Parent keyword:"
+msgstr ""
+
+#: ../app/Module/Core/Admin/Admin_Menu.php:234
+msgid "Edit keyword"
+msgstr ""
+
+#: ../app/Module/Core/Admin/Admin_Menu.php:235
+msgid "Update keyword"
+msgstr ""
+
+#: ../app/Module/Core/Admin/Admin_Menu.php:236
+msgid "Add New keyword"
+msgstr ""
+
+#: ../app/Module/Core/Admin/Admin_Menu.php:237
+msgid "New keyword Name"
+msgstr ""
+
+#: ../app/Module/Core/Admin/Admin_Menu.php:238
+msgid "Keywords"
+msgstr ""
+
 #: ../app/Module/Core/Admin/Admin_Menu.php:255, ../app/Module/Core/Admin/Admin_Menu.php:255
 msgid "Settings"
 msgstr ""
@@ -128,7 +216,7 @@ msgstr ""
 msgid "Delete Search Alert"
 msgstr ""
 
-#: ../app/Module/Core/Asset/Admin_Asset.php:89, ../app/Module/Core/Asset/Public_Asset.php:99, ../template/search.php:14
+#: ../app/Module/Core/Asset/Admin_Asset.php:89, ../app/Module/Core/Asset/Public_Asset.php:99, ../template/add-search-form.php:17, ../template/search.php:14
 msgid "Set Search Alert"
 msgstr ""
 
@@ -138,6 +226,26 @@ msgstr ""
 
 #: ../app/Module/Core/Rest_API/Base.php:52
 msgid "Operation Failed"
+msgstr ""
+
+#. translators: %s: image URL
+#: ../app/Module/Core/Rest_API/Rest_Helper.php:77
+msgid "Invalid URL %s."
+msgstr ""
+
+#. translators: %s: image URL
+#: ../app/Module/Core/Rest_API/Rest_Helper.php:99
+msgid "Error getting remote image %s."
+msgstr ""
+
+#. translators: %s: error message
+#: ../app/Module/Core/Rest_API/Rest_Helper.php:101
+msgid "Error: %s"
+msgstr ""
+
+#. translators: %s: error message
+#: ../app/Module/Core/Rest_API/Rest_Helper.php:120
+msgid "Invalid image: %s"
 msgstr ""
 
 #: ../app/Module/Integrations/Directorist/Dashboard.php:28
@@ -349,8 +457,32 @@ msgstr ""
 msgid "Cheatin&#8217; huh?"
 msgstr ""
 
-#: ../helper/functions.php:1078
+#: ../helper/functions.php:1084
 msgid "Error inserting user "
+msgstr ""
+
+#: ../template/add-search.php:27
+msgid "Add New Keyword"
+msgstr ""
+
+#: ../template/add-search.php:36
+msgid "Best Company"
+msgstr ""
+
+#: ../template/add-search.php:43
+msgid "example@mail.com"
+msgstr ""
+
+#: ../template/add-search.php:50
+msgid "Category"
+msgstr ""
+
+#: ../template/add-search.php:52
+msgid "Select Category"
+msgstr ""
+
+#: ../template/add-search.php:67
+msgid "Add New"
 msgstr ""
 
 #: ../template/add-subscriber.php:16
@@ -359,4 +491,16 @@ msgstr ""
 
 #: ../template/add-subscriber.php:18
 msgid "Add"
+msgstr ""
+
+#: ../template/import.php:16
+msgid "Import Subscribers from CSV"
+msgstr ""
+
+#: ../template/directorist/my_search.php:107
+msgid "No items found"
+msgstr ""
+
+#: ../template/directorist/my_search.php:82
+msgid "Contact Admin"
 msgstr ""

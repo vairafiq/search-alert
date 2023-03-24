@@ -20,11 +20,11 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 			<thead>
 				<tr>
 
-					<th class="directorist-table-listing"><?php esc_html_e( 'Keyword', 'directorist' ); ?></th>
+					<th class="directorist-table-listing"><?php esc_html_e( 'Keyword', 'search-alert' ); ?></th>
 					
-					<th class="directorist-table-ex-date"><?php esc_html_e( 'Date', 'directorist' ); ?></th>
+					<th class="directorist-table-ex-date"><?php esc_html_e( 'Date', 'search-alert' ); ?></th>
 																					
-					<th class="directorist-table-status"><?php esc_html_e( 'Status', 'directorist' ); ?></th>
+					<th class="directorist-table-status"><?php esc_html_e( 'Status', 'search-alert' ); ?></th>
 
 				</tr>
 			</thead>
@@ -76,13 +76,13 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 									<?php
 									if( ! $time ) { ?>
 										<span class="directorist_badge dashboard-badge directorist_status_pending">
-											<?php esc_html_e( 'Waiting', 'directorist' ); ?>
+											<?php esc_html_e( 'Waiting', 'search-alert' ); ?>
 										</span>
 										<br>
-										<small><a style="color: red;" target="_blank" class="" href="<?php echo esc_url( site_url( '/contact' ) ); ?>"><?php esc_html_e( 'Contact Admin', 'directorist' ); ?></a></small>
+										<small><a style="color: red;" target="_blank" class="" href="<?php echo esc_url( site_url( '/contact' ) ); ?>"><?php esc_html_e( 'Contact Admin', 'search-alert' ); ?></a></small>
 										
 									<?php }else{
-										echo '<span class="directorist_badge dashboard-badge directorist_status_published">' . __( 'Sent', 'directorist' ) . '</span>';
+										echo '<span class="directorist_badge dashboard-badge directorist_status_published">' . __( 'Sent', 'search-alert' ) . '</span>';
 										echo '<br><span>@' . $time . '</span>';
 									}
 									?>
@@ -104,7 +104,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 				}
 				else {
 					?>
-					<tr><td colspan="5"><?php esc_html_e( 'No items found', 'directorist' ); ?></td></tr>
+					<tr><td colspan="5"><?php esc_html_e( 'No items found', 'search-alert' ); ?></td></tr>
 					<?php
 				}
 				?>
