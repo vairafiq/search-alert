@@ -74,7 +74,7 @@ class Rest_Helper {
         // Check parsed URL.
         if ( ! $parsed_url || ! is_array( $parsed_url ) ) {
             /* translators: %s: image URL */
-            return new WP_Error( 'exlac_customer_support_app_rest_invalid_image_url', sprintf( __( 'Invalid URL %s.', 'directorist' ), $image_url ), array( 'status' => 400 ) );
+            return new WP_Error( 'exlac_customer_support_app_rest_invalid_image_url', sprintf( __( 'Invalid URL %s.', 'search-alert' ), $image_url ), array( 'status' => 400 ) );
         }
 
         // Ensure url is valid.
@@ -96,9 +96,9 @@ class Rest_Helper {
             return new WP_Error(
                 'exlac_customer_support_app_rest_invalid_remote_image_url',
                 /* translators: %s: image URL */
-                sprintf( __( 'Error getting remote image %s.', 'directorist' ), $image_url ) . ' '
+                sprintf( __( 'Error getting remote image %s.', 'search-alert' ), $image_url ) . ' '
                 /* translators: %s: error message */
-                . sprintf( __( 'Error: %s', 'directorist' ), $file_array['tmp_name']->get_error_message() ),
+                . sprintf( __( 'Error: %s', 'search-alert' ), $file_array['tmp_name']->get_error_message() ),
                 array( 'status' => 400 )
             );
         }
@@ -117,7 +117,7 @@ class Rest_Helper {
             @unlink( $file_array['tmp_name'] ); // @codingStandardsIgnoreLine.
 
             /* translators: %s: error message */
-            return new WP_Error( 'exlac_customer_support_app_rest_invalid_image', sprintf( __( 'Invalid image: %s', 'directorist' ), $file['error'] ), array( 'status' => 400 ) );
+            return new WP_Error( 'exlac_customer_support_app_rest_invalid_image', sprintf( __( 'Invalid image: %s', 'search-alert' ), $file['error'] ), array( 'status' => 400 ) );
         }
 
         do_action( 'exlac_customer_support_app_rest_api_uploaded_image_from_url', $file, $image_url );

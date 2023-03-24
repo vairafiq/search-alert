@@ -58,7 +58,7 @@ class Admin_Menu {
     
             ?>
             <select name="alert_keyword">
-                <option value=""><?php esc_html_e('Filter by Keyword ', 'directorist'); ?></option>
+                <option value=""><?php esc_html_e('Filter by Keyword ', 'search-alert'); ?></option>
                 <?php
                   foreach ($keywords as $keyword) { 
                     ?>
@@ -96,12 +96,12 @@ class Admin_Menu {
     public function new_columns() {
         $columns = [
             'cb'        => '<input type="checkbox" />',
-            'author'   => __('Author', 'directorist'),
-            'email'   => __('Email', 'directorist'),
-            'keyword'   => __('Keyword', 'directorist'),
-            'category'   => __('Category (only works with Directorist)', 'directorist'),
-            'sent_at' => __('Status', 'directorist'),
-            'date'      => __('Date', 'directorist'),
+            'author'   => __('Author', 'search-alert'),
+            'email'   => __('Email', 'search-alert'),
+            'keyword'   => __('Keyword', 'search-alert'),
+            'category'   => __('Category (only works with Directorist)', 'search-alert'),
+            'sent_at' => __('Status', 'search-alert'),
+            'date'      => __('Date', 'search-alert'),
         ];
         return $columns;
     }
@@ -130,7 +130,7 @@ class Admin_Menu {
                     '<a href="%1$s" title="%2$s">%3$s</a>',
                     esc_url( add_query_arg( $args, 'edit.php' ) ),
                     /* translators: 1: Author name */
-                    sprintf( esc_attr_x( 'Filter by %1$s', 'Author filter link', 'directorist' ), get_the_author() ),
+                    sprintf( esc_attr_x( 'Filter by %1$s', 'Author filter link', 'search-alert' ), get_the_author() ),
                     get_the_author()
                 );
                 break;
@@ -150,11 +150,11 @@ class Admin_Menu {
                 
                 if( ! $time ) { ?>
                     <span class="directorist_badge dashboard-badge directorist_status_pending">
-                        <?php esc_html_e( 'Waiting', 'directorist' ); ?>
+                        <?php esc_html_e( 'Waiting', 'search-alert' ); ?>
                     </span>
                     
                 <?php }else{
-                    echo '<span class="directorist_badge dashboard-badge directorist_status_published">' . __( 'Sent', 'directorist' ) . '</span>';
+                    echo '<span class="directorist_badge dashboard-badge directorist_status_published">' . __( 'Sent', 'search-alert' ) . '</span>';
                     echo '<br><span>@' . $time . '</span>';
                 }
 
@@ -225,17 +225,17 @@ class Admin_Menu {
 
 
         $labels = array(
-            'name'              => _x( 'Keywords', 'Keyword general name', 'directorist' ),
-            'singular_name'     => _x( 'Keyword', 'Keyword singular name', 'directorist' ),
-            'search_items'      => __( 'Search keyword', 'directorist' ),
-            'all_items'         => __( 'All Keywords', 'directorist' ),
-            'parent_item'       => __( 'Parent keyword', 'directorist' ),
-            'parent_item_colon' => __( 'Parent keyword:', 'directorist' ),
-            'edit_item'         => __( 'Edit keyword', 'directorist' ),
-            'update_item'       => __( 'Update keyword', 'directorist' ),
-            'add_new_item'      => __( 'Add New keyword', 'directorist' ),
-            'new_item_name'     => __( 'New keyword Name', 'directorist' ),
-            'menu_name'         => __( 'Keywords', 'directorist' ),
+            'name'              => _x( 'Keywords', 'Keyword general name', 'search-alert' ),
+            'singular_name'     => _x( 'Keyword', 'Keyword singular name', 'search-alert' ),
+            'search_items'      => __( 'Search keyword', 'search-alert' ),
+            'all_items'         => __( 'All Keywords', 'search-alert' ),
+            'parent_item'       => __( 'Parent keyword', 'search-alert' ),
+            'parent_item_colon' => __( 'Parent keyword:', 'search-alert' ),
+            'edit_item'         => __( 'Edit keyword', 'search-alert' ),
+            'update_item'       => __( 'Update keyword', 'search-alert' ),
+            'add_new_item'      => __( 'Add New keyword', 'search-alert' ),
+            'new_item_name'     => __( 'New keyword Name', 'search-alert' ),
+            'menu_name'         => __( 'Keywords', 'search-alert' ),
         );
 
         $args        = array(
