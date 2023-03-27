@@ -310,7 +310,7 @@ class Send_Alert
                                                         <table border="0" cellpadding="20" cellspacing="0" width="100%">
                                                             <tr>
                                                                 <td valign="top" style="padding: 50px 30px;">
-                                                                    <div id="body_content_inner" style=\'color: #636363; font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; font-size: 16px; line-height: 0%; text-align: left;\'>
+                                                                    <div id="body_content_inner" style=\'color: #636363; font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; font-size: 16px; line-height: 160%; text-align: left;\'>
                                                                         '.$message.'
                                                                     </div>
                                                                 </td>
