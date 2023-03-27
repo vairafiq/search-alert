@@ -280,63 +280,63 @@ class Send_Alert
         }
 
         return '<!DOCTYPE html>
-  <html lang="en-US">
-      <head>
-          <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-          <title>Directorist</title>
-      </head>
-      <body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" style="padding: 0;">
-          <div id="wrapper" dir="ltr" style="background-color: #f7f7f7; margin: 0; padding: 70px 0; width: 100%; -webkit-text-size-adjust: none;">
-              <table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%">
-                  <tr>
-                      <td align="center" valign="top">
-                          <div id="template_header_image">
-                          </div>
-                          <table border="0" cellpadding="0" cellspacing="0" width="600" id="template_container" style="background-color: #ffffff; border: 1px solid #dedede; box-shadow: 0 20px 50px rgba(0,0,0,.10); border-radius: 20px;">
-                              <tr>
-                                  <td align="center" valign="top">
-                                      <!-- Header -->
-                                      ' . $header . '
-                                      <!-- End Header -->
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <td align="center" valign="top">
-                                      <!-- Body -->
-                                      <table border="0" cellpadding="0" cellspacing="0" width="600" id="template_body">
-                                          <tr>
-                                              <td valign="top" id="body_content" style="background-color: #ffffff; border-radius: 20px;">
-                                                  <!-- Content -->
-                                                  <table border="0" cellpadding="20" cellspacing="0" width="100%">
-                                                      <tr>
-                                                          <td valign="top" style="padding: 50px 30px;">
-                                                              <div id="body_content_inner" style=\'color: #636363; font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; font-size: 16px; line-height: 150%; text-align: left;\'>
-                                                                  ' . $message . '
-                                                              </div>
-                                                          </td>
-                                                      </tr>
-                                                  </table>
-                                                  <!-- End Content -->
-                                              </td>
-                                          </tr>
-                                      </table>
-                                      <!-- End Body -->
-                                  </td>
-                              </tr>
-                          </table>
-                      </td>
-                  </tr>
-            
-                  <tr>
-                      <td align="center" valign="top">
-                          <!-- Footer -->
-                          ' . $footer . '
-                          <!-- End Footer -->
-                      </td>
-                  </tr>
-              </table>
-          </div>
-      </body>
-  </html>';
-    }
+        <html lang="en-US">
+            <head>
+                <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+                <title>Directorist</title>
+            </head>
+            <body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" style="padding: 0;">
+                <div id="wrapper" dir="ltr" style="background-color: #f7f7f7; margin: 0; padding: 70px 0; width: 100%; -webkit-text-size-adjust: none;">
+                  <table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%">
+                        <tr>
+                            <td align="center" valign="top">
+                                <div id="template_header_image">
+                                </div>
+                                <table border="0" cellpadding="0" cellspacing="0" width="600" id="template_container" style="background-color: #ffffff; border: 1px solid #dedede; box-shadow: 0 20px 50px rgba(0,0,0,.10); border-radius: 20px;">
+                                    <tr>
+                                        <td align="center" valign="top">
+                                            <!-- Header -->
+                                            '.$header.'
+                                            <!-- End Header -->
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="center" valign="top">
+                                            <!-- Body -->
+                                            <table border="0" cellpadding="0" cellspacing="0" width="600" id="template_body">
+                                                <tr>
+                                                    <td valign="top" id="body_content" style="background-color: #ffffff; border-radius: 20px;">
+                                                        <!-- Content -->
+                                                        <table border="0" cellpadding="20" cellspacing="0" width="100%">
+                                                            <tr>
+                                                                <td valign="top" style="padding: 50px 30px;">
+                                                                    <div id="body_content_inner" style=\'color: #636363; font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif; font-size: 16px; line-height: 0%; text-align: left;\'>
+                                                                        '.$message.'
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                        <!-- End Content -->
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <!-- End Body -->
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                  
+                        <tr>
+                            <td align="center" valign="top">
+                                <!-- Footer -->
+                                '. $footer .'
+                                <!-- End Footer -->
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </body>
+        </html>';
+        }
 }
