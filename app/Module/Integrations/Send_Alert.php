@@ -163,22 +163,22 @@ class Send_Alert
             $author_id = get_post_field( 'post_author', $alert );
             $user = get_user_by( 'id', $author_id );
             $user_email = ! is_wp_error( $user ) ? $user->user_email : '';
-            $this->email($user_email, $post);
+            $this->email($user_email, $post, [ 'alert' => $alert ] );
 
             update_post_meta( $alert, '_sent_at', date( 'Y-m-d H:i' ) );
             
         }
     }
 
-    public function email($to, $post)
+    public function email($to, $post, $data = [] )
     {
         $post_link = get_the_permalink($post);
         $post_link = sprintf('<a href="%s" style="color: #1b83fb;">%s</a>', $post_link, $post_link);
-        $subject = Helper\get_option('emailSubject', 'New Post Available');
+        $subject = Helper\get_option('emailSubject', 'New Post Available for {{KEYWORD}}');
         $body = Helper\get_option('emailBody', 'Hi there, The post you were searching is just found! Let\'s check this out {{POST_LINK}}');
 
-        $subject = self::replace_in_content($subject);
-        $body = self::replace_in_content($body, $post, []);
+        $subject = self::replace_in_content($subject, $post, $data );
+        $body = self::replace_in_content($body, $post, $data );
 
         $content = self::email_html($subject, $body);
 
@@ -186,7 +186,7 @@ class Send_Alert
     }
 
 
-    public static function replace_in_content($content, $post = '', $args = [])
+    public static function replace_in_content($content, $post = null, $args = [])
     {
         $site_name      = get_option('blogname');
         $site_url       = site_url();
@@ -194,6 +194,12 @@ class Send_Alert
         $time_format    = get_option('time_format');
         $current_time   = current_time('timestamp');
         $post_link      = get_the_permalink($post);
+        $keyword        = '';
+
+        if( ! empty( $args['alert'] ) ) {
+            $keyword_term   = get_the_terms( $args['alert'], 'esl_keyword' );
+            $keyword        = ! is_wp_error( $keyword_term[0] ) ? $keyword_term[0]->name : '';
+        }
 
         $find_replace = array(
 
@@ -203,6 +209,7 @@ class Send_Alert
             '{{TODAY}}'             => date_i18n($date_format, $current_time),
             '{{NOW}}'               => date_i18n($date_format . ' ' . $time_format, $current_time),
             '{{POST_LINK}}'         => sprintf('<a href="%s" style="color: #1b83fb;">%s</a>', $post_link, $post_link),
+            '{{KEYWORD}}'           => ucfirst( $keyword ),
         );
 
         $c = nl2br(strtr($content, $find_replace));
@@ -220,9 +227,10 @@ class Send_Alert
      */
     public function get_email_headers($data = array())
     {
+        $email    = get_option( 'admin_email' );
         $headers  = 'MIME-Version: 1.0' . "\r\n";
-        $headers .= 'Content-Type: text/html; charset=ISO-8859-1' . "\r\n";
-        $headers .= 'From: abc@gmail.com' . "\r\n";
+        $headers .= "Content-Type: text/html; charset=UTF-8\r\n <{$email}>\r\nReply-To: {$email}\r\n";
+
         return $headers;
     }
 

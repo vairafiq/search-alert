@@ -957,20 +957,48 @@ function post_type_allow( $type = '' )
     
 }
 
+function get_user_alert_by_keyword( $user_id, $keyword ) {
+    $args = [
+        'author' => $user_id,
+        'meta_key' => 'keyword',
+        'meta_value' => $keyword,
+        'meta_compare' => '=',
+
+    ];
+    return get_search( $args );
+}
+
 function process_post( $data ) {
 
     $keyword = ! empty( $data['keyword'] ) ? search_alert_clean( wp_unslash( $data['keyword'] ) ) : '';
     $email   = ! empty( $data['email'] ) ? search_alert_clean( wp_unslash( $data['email'] ) ) : '';
     
-    $user_id = email_exists( $email );
-        
-    if( ! $user_id ) {
-        $user_id = create_user( $email );
+    if( ! $keyword ) {
+        wp_send_json( [ 'error' => esc_html__( 'Keyword is missing', 'search-alert' ) ], 200 );
     }
 
-    if( ! $keyword ) {
-        wp_send_json_error( esc_html__( 'Keyword is missing', 'search-alert' ), 400 );
+    if( ! empty( $email ) ) {
+        
+        $user_id = email_exists( $email );
+        
+        if( ! $user_id ) {
+            $user_id = create_user( $email );
+        }
     }
+
+    $subscribed = get_user_alert_by_keyword( $user_id, $keyword );
+    $total = get_user_search();
+    $limit = get_option( 'maxPer', 30 );
+
+    if( $subscribed  && ( count( $total ) > (int) $limit  ) ) {
+        wp_send_json( [ 'error' => esc_html__( 'User limit exited', 'search-alert' ) ], 200 );
+    }
+
+    if( $subscribed ) {
+       return $subscribed;
+    }
+
+    
 
     unset( $data['action'] );
     unset( $data['nonce'] );

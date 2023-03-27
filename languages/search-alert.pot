@@ -6,7 +6,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2023-03-24 18:09+0000\n"
+"POT-Creation-Date: 2023-03-26 21:37+0000\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SearchPath-0: .\n"
@@ -58,7 +58,7 @@ msgstr ""
 msgid "Successfully saved"
 msgstr ""
 
-#: ../app/Module/Integrations/Set_Alert.php:87, ../helper/functions.php:972, ../helper/functions.php:1019
+#: ../app/Module/Integrations/Set_Alert.php:87, ../helper/functions.php:977, ../helper/functions.php:1047
 msgid "Keyword is missing"
 msgstr ""
 
@@ -212,12 +212,16 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: ../app/Module/Core/Asset/Admin_Asset.php:88, ../app/Module/Core/Asset/Public_Asset.php:98
+#: ../app/Module/Core/Asset/Admin_Asset.php:88, ../app/Module/Core/Asset/Public_Asset.php:99
 msgid "Delete Search Alert"
 msgstr ""
 
-#: ../app/Module/Core/Asset/Admin_Asset.php:89, ../app/Module/Core/Asset/Public_Asset.php:99, ../template/search.php:14
+#: ../app/Module/Core/Asset/Admin_Asset.php:89, ../app/Module/Core/Asset/Public_Asset.php:100, ../template/search.php:14
 msgid "Set Search Alert"
+msgstr ""
+
+#: ../app/Module/Core/Asset/Public_Asset.php:101
+msgid "Please wait..."
 msgstr ""
 
 #: ../app/Module/Core/Rest_API/Base.php:52
@@ -457,7 +461,11 @@ msgstr ""
 msgid "Cheatin&#8217; huh?"
 msgstr ""
 
-#: ../helper/functions.php:1084
+#: ../helper/functions.php:994
+msgid "User limit exited"
+msgstr ""
+
+#: ../helper/functions.php:1112
 msgid "Error inserting user "
 msgstr ""
 

@@ -19,7 +19,7 @@ The Administrator`;
 const SettingContent = props => {
 
     const { optionState, setOptionState } = props;
-    const { emailBody, enable_search_alert, excludedPages, included_single_post, defaultRole, optionLoader, loader, email_footer, emailSubject, context, cancelOnTapOutside, parentDomain, delay, updateExistingUser } = optionState;
+    const { emailBody, enable_search_alert, excludedPages, included_single_post, defaultRole, optionLoader, loader, email_footer, emailSubject, maxPer, cancelOnTapOutside, parentDomain, delay, updateExistingUser } = optionState;
     const dispatch = useDispatch();
 
     const fetchOptions = async ()=>{
@@ -40,6 +40,7 @@ const SettingContent = props => {
                 defaultRole: typeof(options['defaultRole']) !== 'undefined' ? options['defaultRole'] : 'subscriber',
                 email_footer: typeof(options['email_footer']) !== 'undefined' ? options['email_footer'] : true,
                 emailSubject: typeof(options['emailSubject']) !== 'undefined' ? options['emailSubject'] : '',
+                maxPer: typeof(options['maxPer']) !== 'undefined' ? options['maxPer'] : '',
                 context: typeof(options['context']) !== 'undefined' ? options['context'] : 'signin',
                 cancelOnTapOutside: typeof(options['cancelOnTapOutside']) !== 'undefined' ? options['cancelOnTapOutside'] : false,
                 parentDomain: typeof(options['parentDomain']) !== 'undefined' ? options['parentDomain'] : '',
@@ -101,10 +102,10 @@ const SettingContent = props => {
             emailSubject: e.target.value
         });
     }
-    const handlContext = ( selectedList, selectedItem ) => { 
+    const handleMaxPer = ( e ) => { 
         setOptionState({
             ...optionState,
-            context: selectedList
+            maxPer: e.target.value
         });
     }
     const handleCancelOnTapOutside = (e) => { 
@@ -132,6 +133,8 @@ const SettingContent = props => {
             updateExistingUser: !updateExistingUser,
         });
     }
+
+    const bodyInfoText = 'Supports HTML tags placeholders like {{SITE_NAME}} {{SITE_LINK}} {{SITE_URL}} {{TODAY}} {{NOW}} {{POST_LINK}} {{KEYWORD}}';
 
     // console.log( enable_search_alert );
     const SettingContentData = [
@@ -168,8 +171,20 @@ const SettingContent = props => {
                             }
                             onChange={handleemailBody}
                         />
+                        <div className="exlac-vm-setting-has-info">
+                            <small className="exlac-vm-setting-has-info__text">{bodyInfoText}</small>
+                        </div>
+                    </div>
+                    
+                },
+                {
+                    label: "Max Alert Per Email",
+                    pro: false,
+                    component: <div className="exlac-vm-setting-has-info">
+                        <input type="number" name="maxPer" className="exlac-vm-form__element" id="exlac-vm-chat-btn-text" value={maxPer || 30} onChange={handleMaxPer} />
                     </div>
                 },
+
                 {
                     label: "Email Footer",
                     pro: false,

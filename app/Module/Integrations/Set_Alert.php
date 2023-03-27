@@ -24,7 +24,7 @@ class Set_Alert {
     public function set_alert() {
 
         if( ! Helper\verify_nonce( 'nonce' ) ) {
-          wp_send_json_error( esc_html__( 'Invalid nonce, please refresh the page try again', 'search-alert' ), 400 );
+          wp_send_json( [ 'error' => esc_html__( 'Invalid nonce, please refresh the page try again', 'search-alert' ) ], 200 );
         }
   
         if( ! is_user_logged_in() ) {
@@ -35,7 +35,7 @@ class Set_Alert {
         $post_id = Helper\process_post( $_POST );
 
         if( is_wp_error( $post_id ) ) {
-          wp_send_json_error( esc_html__( 'Failed to saved', 'search-alert' ), 400 );
+          wp_send_json( [ 'error' => esc_html__( 'Failed to saved', 'search-alert' ) ], 200 );
         }
 
         wp_send_json_success(esc_html__( 'Successfully saved', 'search-alert' ), 200);

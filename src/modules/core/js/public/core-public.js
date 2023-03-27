@@ -17,10 +17,10 @@ import './../../sass/core-public.scss';
 
 
 	function requet( selector, task = 'add', data = [] ) {
-		var elmText  	= ( task !== 'delete' ) ? searchAlert.deleteText : searchAlert.addText ;
+		var elmText  	= ( task !== 'delete' ) ? searchAlert.i18.deleteText : searchAlert.i18.addText ;
 
 		if( data.form ) {
-			elmText = searchAlert.addText;
+			elmText = searchAlert.i18.addText;
 			$( selector ).text( 'Adding..' );
 		}
 
@@ -98,10 +98,11 @@ import './../../sass/core-public.scss';
 
 		$.post( searchAlert.ajaxurl, data, function (response) {
 
-			if( response.success ) {
-				$( '.searchalert_add' ).html( 'Success! Alert saved for ' ).prop('disabled', true).css('cursor', 'not-allowed');
+			if( ! response.error ) {
+				// $( '.searchalert_add' ).html( 'Success! Alert saved for ' ).prop('disabled', true).css('cursor', 'not-allowed');
+				$( '.searchalert_add' ).html( response.error ).prop('disabled', true).css('cursor', 'not-allowed');
 			}else{
-				$( '.searchalert_add' ).html( 'Error! Try again? ' );
+				$( '.searchalert_add' ).html( response );
 			}
 
 
@@ -115,14 +116,14 @@ import './../../sass/core-public.scss';
             
         e.preventDefault();
         var form_data = $( this ).serialize();
-		$('#directorist-save-search-notice').html('<span class="directorist-alert directorist-alert-info">Please wait...</span>');
+		$('#directorist-save-search-notice').html('<span class="directorist-alert directorist-alert-info">'+ searchAlert.i18.onRequest +'</span>');
 
         $.post(
             searchAlert.ajaxurl,
             form_data,
             function (response) {
-                if ( ! response.success ) {
-                    $('#directorist-save-search-notice').html('<span class="directorist-alert directorist-alert-danger">' + response.data + '</span>');
+                if ( response.error ) {
+                    $('#directorist-save-search-notice').html('<span class="directorist-alert directorist-alert-danger">' + response.error + '</span>');
                 } else {
                     $('#directorist-save-search-notice').html('<span class="directorist-alert directorist-alert-success">' + response.data + '</span>');
 					setTimeout(() => {

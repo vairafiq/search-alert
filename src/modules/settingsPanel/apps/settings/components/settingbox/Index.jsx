@@ -21,6 +21,7 @@ const SettingBox = () => {
 		loader: false,
         email_footer: true,
         emailSubject: '',
+        maxPer: '',
         context: 'signin',
         cancelOnTapOutside: false,
         parentDomain: '',

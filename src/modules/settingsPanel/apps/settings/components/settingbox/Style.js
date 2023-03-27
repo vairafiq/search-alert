@@ -267,7 +267,7 @@ const SettingContentWrap = Styled.div`
                     width: 100%;
                 }
                 textarea.exlac-vm-form__element{
-                    min-height: 120px;
+                    min-height: 180px;
                 }
             }
         }

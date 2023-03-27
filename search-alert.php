@@ -8,9 +8,9 @@
  * @license           GPL-2.0-or-later
  *
  * @wordpress-plugin
- * Plugin Name:       Search Alert - Set Notification for New Post
+ * Plugin Name:       Search Alert - Set Notification for New Post Pro
  * Description:       Notify user based on previous search when a post available in your site.
- * Version:           1.1.2
+ * Version:           2.1.2
  * Requires at least: 5.2
  * Requires PHP:      7.2
  * Author:            Exlac

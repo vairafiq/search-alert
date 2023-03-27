@@ -95,8 +95,11 @@ class Public_Asset extends Enqueuer {
                     'isFrontPage'   => is_front_page(),
                     'isHome'        => is_home(),
                     'ajaxurl'       => admin_url( 'admin-ajax.php' ),
-                    'deleteText'    => __( 'Delete Search Alert', 'search-alert'),
-                    'addText'       => __( 'Set Search Alert', 'search-alert'),
+                    'i18'           => [
+                        'deleteText'    => __( 'Delete Search Alert', 'search-alert'),
+                        'addText'       => __( 'Set Search Alert', 'search-alert'),
+                        'onRequest'     => __( 'Please wait...', 'search-alert'),
+                    ]
                 ],
             ],
         ];
