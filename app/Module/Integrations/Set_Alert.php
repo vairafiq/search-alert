@@ -18,7 +18,24 @@ class Set_Alert {
   
     add_action( 'wp_ajax_directorist_save_search', array( $this, 'set_alert' ) );
 		add_action( 'wp_ajax_nopriv_directorist_save_search', array( $this, 'set_alert' ) );
+
+		add_action( 'atbdp_listing_contact_owner_submitted', array( $this, 'set_alert_on_contact_submitted' ) );
 		
+    }
+
+    public function set_alert_on_contact_submitted( $data ) {
+    
+      if( empty( $data['send_alert'] ) ) {
+        return;
+      }
+
+      $prepare_data = [
+        'keyword' => ! empty( $data['post_id'] ) ? esc_html( get_the_title( $data['post_id'] ) ) : '',
+        'email' => ! empty( $data['email'] ) ? search_alert_clean( wp_unslash( $data['email'] ) ) : '',
+      ];
+
+      Helper\process_post( $prepare_data );
+
     }
 
     public function set_alert() {
