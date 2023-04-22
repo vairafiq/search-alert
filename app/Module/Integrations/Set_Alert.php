@@ -25,16 +25,24 @@ class Set_Alert {
 
     public function set_alert_on_contact_submitted( $data ) {
     
-      if( empty( $data['send_alert'] ) ) {
+      if( 'on' !== $data['send_alert'] ) {
         return;
       }
 
-      $prepare_data = [
-        'keyword' => ! empty( $data['post_id'] ) ? esc_html( get_the_title( $data['post_id'] ) ) : '',
-        'email' => ! empty( $data['email'] ) ? search_alert_clean( wp_unslash( $data['email'] ) ) : '',
-      ];
+      $post_title = ! empty( $data['post_id'] ) ? esc_html( get_the_title( $data['post_id'] ) ) : '';
+      $email      = ! empty( $data['email'] ) ? search_alert_clean( wp_unslash( $data['email'] ) ) : '';
+      $keywords   = explode(' ', $post_title);
 
-      Helper\process_post( $prepare_data );
+      if( $keywords ) {
+        foreach( $keywords as $keyword ) {
+          $prepare_data = [
+            'keyword' => $keyword,
+            'email' => $email,
+          ];
+    
+          Helper\process_post( $prepare_data );
+        }
+      }
 
     }
 

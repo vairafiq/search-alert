@@ -26,7 +26,7 @@ class Send_Alert
         // die;
 
 
-        $keywords = explode(' ', 'this is rafiq');
+        $keywords = explode(' ', 'William uguu77777');
         // $keywords = explode( ' ', 'bmw for sell!!');
 
 
@@ -34,8 +34,6 @@ class Send_Alert
             'post_type' => 'esl_search_alerts',
             'post_status' => 'publish',
             'fields' => 'ids',
-            'meta_key' => '_sent_at',
-            'meta_compare' => 'NOT EXISTS',
             'orderby' => 'ASC',
             'posts_per_page'=> -1
         ];
@@ -50,6 +48,7 @@ class Send_Alert
                ]
             ];
         }
+
 
         $alerts = new WP_Query($args);
         $alerts = $alerts->posts;
@@ -105,7 +104,7 @@ class Send_Alert
 
         $is_admin = ( isset( $_REQUEST['_locale'] ) || is_admin() ) ? true : false;
 
-        // var_dump([
+        // e_var_dump([
         //     '1st' => !Helper\get_option('enable_search_alert', true),
         //     '2nd' => !Helper\post_type_allow(get_post_type($post)),
         //     'new_status' => $new_status,
