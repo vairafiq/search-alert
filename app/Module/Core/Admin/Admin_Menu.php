@@ -20,7 +20,23 @@ class Admin_Menu {
         add_action('restrict_manage_posts', array($this, 'alert_filter'));
         add_filter('parse_query', array($this, 'filer_by_keyword'));
 
+        add_action('post_submitbox_misc_actions', array($this, 'post_submitbox_meta'));
+
+
     }
+
+    public function post_submitbox_meta( $post ) {
+
+        if( 'at_biz_dir' !==$post->post_type ) return;
+        ?>
+        <div class="misc-pub-section misc-pub-atbdp-never-expires">
+            <label>
+                <input type="checkbox" name="new_listing_alert" value="1">
+                <strong><?php esc_html_e( "Send New Listing Alert", 'directorist' ); ?></strong>
+            </label>
+        </div>
+        <?php
+	}
 
     public function filer_by_keyword( $query )
     {

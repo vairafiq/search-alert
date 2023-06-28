@@ -4,6 +4,7 @@ namespace searchAlert\Module\Integrations;
 
 use searchAlert\Base\Helper;
 use WP_Query;
+use WP_User_Query;
 
 class Send_Alert
 {
@@ -116,7 +117,10 @@ class Send_Alert
         // die;
 
         if ( $is_admin && ('publish' !== $old_status) ) {
-            $this->send_notice($post, $post_id);
+
+            $send_to_all = isset( $_POST['new_listing_alert'] ) ? true : false;
+        
+            $this->send_notice($post, $post_id, $send_to_all );
             return;
         }
         if ( !$is_admin && ('private' === $old_status) ) {
@@ -124,8 +128,25 @@ class Send_Alert
         }
     }
 
-    public function send_notice($post, $post_id)
+    public function send_notice($post, $post_id, $send_to_all = false )
     {
+
+        if( $send_to_all ) {
+
+            $args = array(
+                'fields' => 'user_email',
+            );
+
+            $users_query = new WP_User_Query( $args );
+
+            if( $users_query->results ) {
+                $emails = array_filter( $users_query->results );
+                foreach( $emails as $email ) {
+                    $this->email( $email, $post );
+                }
+            }
+            return;
+        }
 
         $keywords = explode(' ', get_the_title($post_id));
         
@@ -137,7 +158,7 @@ class Send_Alert
             'posts_per_page'=> -1
         ];
 
-        if (!empty($keywords)) {
+        if ( ! empty($keywords) ) {
             $args['tax_query'] = [
                [
                 'taxonomy' => 'esl_keyword',
@@ -150,7 +171,6 @@ class Send_Alert
 
         $alerts = new WP_Query($args);
         $alerts = $alerts->posts;
-
         foreach ($alerts as $alert) {
 
             $category = get_post_meta( $alert, 'sl_category', true );
@@ -167,6 +187,7 @@ class Send_Alert
             update_post_meta( $alert, '_sent_at', date( 'Y-m-d H:i' ) );
             
         }
+
     }
 
     public function email($to, $post, $data = [] )
@@ -193,7 +214,7 @@ class Send_Alert
         $time_format    = get_option('time_format');
         $current_time   = current_time('timestamp');
         $post_link      = get_the_permalink($post);
-        $keyword        = '';
+        $keyword        = get_the_title($post);
 
         if( ! empty( $args['alert'] ) ) {
             $keyword_term   = get_the_terms( $args['alert'], 'esl_keyword' );
